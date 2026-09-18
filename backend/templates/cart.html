@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}
+Your Cart | CAVELLE
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="section-label">
+        YOUR SELECTION
+    </p>
+
+    <h1>
+        Shopping Cart
+    </h1>
+
+</section>
+
+
+<section class="cart-section">
+
+    {% if cart_items %}
+
+    <div class="cart-list">
+
+        {% for item in cart_items %}
+
+        <div class="cart-item">
+
+            <div class="cart-item-image">
+
+                {% if item.cake.image %}
+
+                <img
+                    src="{{ item.cake.image.url }}"
+                    alt="{{ item.cake.name }}"
+                >
+
+                {% else %}
+
+                <span>CAVELLE</span>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="cart-item-info">
+
+                <p>
+                    {{ item.cake.category.name }}
+                </p>
+
+                <h3>
+                    {{ item.cake.name }}
+                </h3>
+
+                <span>
+                    ₹{{ item.cake.price }}
+                </span>
+
+            </div>
+
+
+            <div class="cart-quantity">
+
+                <span>
+                    Quantity
+                </span>
+
+                <strong>
+                    {{ item.quantity }}
+                </strong>
+
+            </div>
+
+
+            <div class="cart-subtotal">
+
+                ₹{{ item.subtotal }}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <div class="cart-summary">
+
+        <div>
+
+            <span>
+                Total
+            </span>
+
+            <strong>
+                ₹{{ total }}
+            </strong>
+
+        </div>
+
+        <a href="/checkout/" class="primary-btn">
+            Proceed to Checkout
+        </a>
+
+    </div>
+
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <h2>
+            Your cart is empty
+        </h2>
+
+        <p>
+            Add something sweet to your cart.
+        </p>
+
+        <a href="/products/" class="primary-btn">
+            Explore Cakes
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

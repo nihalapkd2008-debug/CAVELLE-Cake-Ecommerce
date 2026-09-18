@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}
+CAVELLE | Cakes
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="section-label">
+        CAVELLE COLLECTION
+    </p>
+
+    <h1>
+        Our Cakes
+    </h1>
+
+    <p>
+        Explore our collection of handcrafted cakes.
+    </p>
+
+</section>
+
+
+<section class="products-section">
+
+    <div class="products-toolbar">
+
+        <div>
+            <span>
+                Explore our collection
+            </span>
+        </div>
+
+        <div class="product-filters">
+
+            <select>
+                <option>All Categories</option>
+                <option>Birthday</option>
+                <option>Chocolate</option>
+                <option>Celebration</option>
+                <option>Eggless</option>
+            </select>
+
+            <select>
+                <option>Sort By</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+                <option>Newest</option>
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="product-grid">
+
+        {% for cake in cakes %}
+
+        <article class="product-card">
+
+            <a href="/products/{{ cake.id }}/">
+
+                <div class="product-image">
+
+                    {% if cake.image %}
+
+                    <img src="{{ cake.image.url }}" alt="{{ cake.name }}">
+
+                    {% else %}
+
+                    <div class="image-placeholder">
+                        CAVELLE
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="product-info">
+
+                    <p class="product-category">
+                        {{ cake.category.name }}
+                    </p>
+
+                    <h3>
+                        {{ cake.name }}
+                    </h3>
+
+                    <p class="product-flavour">
+                        {{ cake.flavour }}
+                    </p>
+
+                    <div class="product-bottom">
+
+                        <span class="product-price">
+                            ₹{{ cake.price }}
+                        </span>
+
+                        {% if cake.is_available and cake.stock > 0 %}
+
+                        <span class="stock-status">
+                            Available
+                        </span>
+
+                        {% else %}
+
+                        <span class="stock-status">
+                            Out of stock
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </a>
+
+        </article>
+
+        {% empty %}
+
+        <div class="empty-state">
+
+            <h2>
+                No cakes available
+            </h2>
+
+            <p>
+                Our collection is being prepared.
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

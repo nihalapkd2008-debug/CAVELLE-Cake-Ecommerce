@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}
+CAVELLE | Artisan Cakes
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="hero-small">
+            THE ART OF CELEBRATION
+        </p>
+
+        <h1>
+            Cakes made<br>
+            for moments<br>
+            worth remembering.
+        </h1>
+
+        <p class="hero-description">
+            Discover beautifully crafted cakes made with
+            carefully selected ingredients and a touch of elegance.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="/products/" class="primary-btn">
+                Explore Cakes
+            </a>
+
+            <a href="#about" class="secondary-btn">
+                Our Story
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-visual">
+
+    <div class="hero-image-wrapper">
+
+       <div class="hero-visual">
+
+    {% if featured_cake and featured_cake.image %}
+
+        <img
+            src="{{ featured_cake.image.url }}"
+            alt="{{ featured_cake.name }}"
+            class="hero-cake-image"
+        >
+
+    {% else %}
+
+        <div class="cake-placeholder">
+            CAVELLE
+        </div>
+
+    {% endif %}
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="categories-section">
+
+    <div class="section-heading">
+
+        <p class="section-label">
+            DISCOVER
+        </p>
+
+        <h2>
+            Something for every celebration
+        </h2>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        <a href="/products/" class="category-card">
+
+            <span class="category-number">
+                01
+            </span>
+
+            <h3>
+                Birthday Cakes
+            </h3>
+
+            <p>
+                Beautiful cakes for unforgettable birthdays.
+            </p>
+
+        </a>
+
+
+        <a href="/products/" class="category-card">
+
+            <span class="category-number">
+                02
+            </span>
+
+            <h3>
+                Celebration Cakes
+            </h3>
+
+            <p>
+                Elegant creations for life's special moments.
+            </p>
+
+        </a>
+
+
+        <a href="/products/" class="category-card">
+
+            <span class="category-number">
+                03
+            </span>
+
+            <h3>
+                Chocolate Cakes
+            </h3>
+
+            <p>
+                Rich, indulgent and beautifully crafted.
+            </p>
+
+        </a>
+
+
+        <a href="/products/" class="category-card">
+
+            <span class="category-number">
+                04
+            </span>
+
+            <h3>
+                Eggless Cakes
+            </h3>
+
+            <p>
+                Thoughtfully crafted without compromising taste.
+            </p>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="about-section" id="about">
+
+    <div class="about-content">
+
+        <p class="section-label">
+            ABOUT CAVELLE
+        </p>
+
+        <h2>
+            Where baking meets artistry.
+        </h2>
+
+        <p>
+            At CAVELLE, every cake is created with attention
+            to detail, thoughtful flavours and a love for
+            beautiful celebrations.
+        </p>
+
+        <a href="/products/" class="text-link">
+            Discover our collection →
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="cta-section">
+
+    <p class="section-label">
+        YOUR NEXT CELEBRATION
+    </p>
+
+    <h2>
+        Make it a little sweeter.
+    </h2>
+
+    <a href="/products/" class="primary-btn">
+        Shop Cakes
+    </a>
+
+</section>
+
+{% endblock %}

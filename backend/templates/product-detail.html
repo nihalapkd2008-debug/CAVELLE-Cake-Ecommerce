@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ cake.name }} | CAVELLE
+{% endblock %}
+
+{% block content %}
+
+<section class="product-detail">
+
+    <div class="detail-image">
+
+        {% if cake.image %}
+
+        <img src="{{ cake.image.url }}" alt="{{ cake.name }}">
+
+        {% else %}
+
+        <div class="detail-placeholder">
+            CAVELLE
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-content">
+
+        <p class="section-label">
+            {{ cake.category.name }}
+        </p>
+
+        <h1>
+            {{ cake.name }}
+        </h1>
+
+        <p class="detail-flavour">
+            {{ cake.flavour }}
+        </p>
+
+        <p class="detail-description">
+            {{ cake.description }}
+        </p>
+
+
+        <div class="detail-price">
+            ₹{{ cake.price }}
+        </div>
+
+
+        <div class="cake-details">
+
+            <div>
+                <span>Weight</span>
+                <strong>{{ cake.weight }} kg</strong>
+            </div>
+
+            <div>
+                <span>Eggless</span>
+
+                {% if cake.eggless %}
+                <strong>Yes</strong>
+                {% else %}
+                <strong>No</strong>
+                {% endif %}
+
+            </div>
+
+            <div>
+                <span>Availability</span>
+
+                {% if cake.is_available and cake.stock > 0 %}
+                <strong>Available</strong>
+                {% else %}
+                <strong>Unavailable</strong>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        {% if cake.is_available and cake.stock > 0 %}
+
+        <form method="POST" action="/cart/add/">
+
+            {% csrf_token %}
+
+            <input
+                type="hidden"
+                name="cake"
+                value="{{ cake.id }}"
+            >
+
+            <div class="quantity-box">
+
+                <label for="quantity">
+                    Quantity
+                </label>
+
+                <input
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                    value="1"
+                    min="1"
+                    max="{{ cake.stock }}"
+                >
+
+            </div>
+
+            <button type="submit" class="primary-btn">
+                Add to Cart
+            </button>
+
+        </form>
+
+        {% else %}
+
+        <button class="disabled-btn" disabled>
+            Currently Unavailable
+        </button>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

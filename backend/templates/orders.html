@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Orders | CAVELLE
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="section-label">
+        YOUR CAVELLE JOURNEY
+    </p>
+
+    <h1>
+        My Orders
+    </h1>
+
+</section>
+
+
+<section class="orders-section">
+
+    {% if orders %}
+
+        {% for order in orders %}
+
+        <article class="order-card">
+
+            <div class="order-header">
+
+                <div>
+
+                    <span>
+                        Order #{{ order.id }}
+                    </span>
+
+                    <h3>
+                        {{ order.created_at|date:"d M Y" }}
+                    </h3>
+
+                </div>
+
+
+                <span class="order-status">
+                    {{ order.status }}
+                </span>
+
+            </div>
+
+
+            <div class="order-items">
+
+                {% for item in order.items.all %}
+
+                <div class="order-item">
+
+                    <span>
+                        {{ item.cake.name }}
+                        × {{ item.quantity }}
+                    </span>
+
+                    <strong>
+                        ₹{{ item.subtotal }}
+                    </strong>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <div class="order-footer">
+
+                <span>
+                    Total
+                </span>
+
+                <strong>
+                    ₹{{ order.total_amount }}
+                </strong>
+
+            </div>
+
+        </article>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h2>
+                No orders yet
+            </h2>
+
+            <p>
+                Your future celebrations will appear here.
+            </p>
+
+            <a href="/products/" class="primary-btn">
+                Explore Cakes
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

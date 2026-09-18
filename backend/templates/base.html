@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}CAVELLE{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+
+            <a href="/" class="logo">
+    <img
+        src="{% static 'images/cavelle-logo.png' %}"
+        alt="CAVELLE"
+    >
+</a>
+
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/products/">Cakes</a>
+                <a href="/cart/">Cart</a>
+                <a href="/orders/">Orders</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="/login/" class="login-btn">
+                    Login
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div class="footer-brand">
+                <h2>CAVELLE</h2>
+                <p>
+                    Crafted with elegance,<br>
+                    baked with love.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <h3>Explore</h3>
+                <a href="/">Home</a>
+                <a href="/products/">Cakes</a>
+                <a href="/cart/">Cart</a>
+                <a href="/orders/">Orders</a>
+            </div>
+
+            <div class="footer-links">
+                <h3>Account</h3>
+                <a href="/login/">Login</a>
+                <a href="/register/">Register</a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 CAVELLE. All rights reserved.</p>
+        </div>
+
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>

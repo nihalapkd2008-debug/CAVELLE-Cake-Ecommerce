@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}
+Checkout | CAVELLE
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="section-label">
+        FINAL STEP
+    </p>
+
+    <h1>
+        Checkout
+    </h1>
+
+</section>
+
+
+<section class="checkout-section">
+
+    <div class="checkout-form-container">
+
+        <h2>
+            Delivery Address
+        </h2>
+
+
+        <form method="POST" class="auth-form">
+
+            {% csrf_token %}
+
+
+            <div class="form-group">
+
+                <label>
+                    Select Address
+                </label>
+
+                <select name="address" required>
+
+                    <option value="">
+                        Choose an address
+                    </option>
+
+                    {% for address in addresses %}
+
+                    <option value="{{ address.id }}">
+
+                        {{ address.full_name }}
+                        — {{ address.city }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Payment Method
+                </label>
+
+                <select name="payment_method" required>
+
+                    <option value="cod">
+                        Cash on Delivery
+                    </option>
+
+                    <option value="upi">
+                        UPI
+                    </option>
+
+                    <option value="card">
+                        Card
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary-btn full-btn"
+            >
+                Place Order
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="checkout-summary">
+
+        <p class="section-label">
+            ORDER SUMMARY
+        </p>
+
+        <h2>
+            Your Order
+        </h2>
+
+
+        {% for item in cart_items %}
+
+        <div class="summary-item">
+
+            <span>
+                {{ item.cake.name }}
+                × {{ item.quantity }}
+            </span>
+
+            <strong>
+                ₹{{ item.subtotal }}
+            </strong>
+
+        </div>
+
+        {% endfor %}
+
+
+        <div class="summary-total">
+
+            <span>
+                Total
+            </span>
+
+            <strong>
+                ₹{{ total }}
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -31,7 +31,10 @@ class Cake(models.Model):
     flavour = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     weight = models.DecimalField(max_digits=5, decimal_places=2)
-    image = models.ImageField(upload_to="cakes/", blank=True)
+    image = models.ImageField(
+    upload_to="cakes/",
+    blank=True
+)
     stock = models.PositiveIntegerField(default=0)
     is_available = models.BooleanField(default=True)
     eggless = models.BooleanField(default=False)

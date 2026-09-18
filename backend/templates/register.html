@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register | CAVELLE
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-section">
+
+    <div class="auth-container">
+
+        <p class="section-label">
+            JOIN CAVELLE
+        </p>
+
+        <h1>
+            Create your account
+        </h1>
+
+        <p class="auth-description">
+            Create an account to shop, save favourites and manage orders.
+        </p>
+
+
+        <form id="registerForm" class="auth-form">
+
+            {% csrf_token %}
+
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Choose a username"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create a password"
+                    required
+                >
+
+            </div>
+
+
+            <p
+                id="registerMessage"
+                class="form-message"
+            ></p>
+
+
+            <button
+                type="submit"
+                class="primary-btn full-btn"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+
+        <p class="auth-footer">
+
+            Already have an account?
+
+            <a href="/login/">
+                Login
+            </a>
+
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
