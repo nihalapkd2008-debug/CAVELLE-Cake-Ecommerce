@@ -29,25 +29,44 @@ CAVELLE | Cakes
 
         <div>
             <span>
-                Explore our collection
+                {{ cakes|length }} Cakes
             </span>
         </div>
 
         <div class="product-filters">
 
-            <select>
-                <option>All Categories</option>
-                <option>Birthday</option>
-                <option>Chocolate</option>
-                <option>Celebration</option>
-                <option>Eggless</option>
+            <select id="categoryFilter">
+                <option value="all">
+                    All Categories
+                </option>
+
+                {% for cake in cakes %}
+                    <option value="{{ cake.category.name }}">
+                        {{ cake.category.name }}
+                    </option>
+                {% endfor %}
+
             </select>
 
-            <select>
-                <option>Sort By</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-                <option>Newest</option>
+
+            <select id="sortFilter">
+
+                <option value="">
+                    Sort By
+                </option>
+
+                <option value="price-low">
+                    Price: Low to High
+                </option>
+
+                <option value="price-high">
+                    Price: High to Low
+                </option>
+
+                <option value="newest">
+                    Newest
+                </option>
+
             </select>
 
         </div>
@@ -59,21 +78,28 @@ CAVELLE | Cakes
 
         {% for cake in cakes %}
 
-        <article class="product-card">
+        <article
+            class="product-card"
+            data-category="{{ cake.category.name }}"
+            data-price="{{ cake.price }}"
+        >
 
-            <a href="/products/{{ cake.id }}/">
+            <a href="{% url 'product-detail' cake.id %}">
 
                 <div class="product-image">
 
                     {% if cake.image %}
 
-                    <img src="{{ cake.image.url }}" alt="{{ cake.name }}">
+                        <img
+                            src="{{ cake.image.url }}"
+                            alt="{{ cake.name }}"
+                        >
 
                     {% else %}
 
-                    <div class="image-placeholder">
-                        CAVELLE
-                    </div>
+                        <div class="image-placeholder">
+                            CAVELLE
+                        </div>
 
                     {% endif %}
 
@@ -94,23 +120,25 @@ CAVELLE | Cakes
                         {{ cake.flavour }}
                     </p>
 
+
                     <div class="product-bottom">
 
                         <span class="product-price">
                             ₹{{ cake.price }}
                         </span>
 
+
                         {% if cake.is_available and cake.stock > 0 %}
 
-                        <span class="stock-status">
-                            Available
-                        </span>
+                            <span class="stock-status">
+                                Available
+                            </span>
 
                         {% else %}
 
-                        <span class="stock-status">
-                            Out of stock
-                        </span>
+                            <span class="stock-status">
+                                Out of stock
+                            </span>
 
                         {% endif %}
 
@@ -121,6 +149,7 @@ CAVELLE | Cakes
             </a>
 
         </article>
+
 
         {% empty %}
 

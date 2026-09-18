@@ -17,12 +17,13 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-
 from django.urls import include, path
+
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+
 from .views import (
     home,
     products_page,
@@ -36,34 +37,75 @@ from .views import (
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/users/login/", TokenObtainPairView.as_view()),
-    path("api/users/token/refresh/", TokenRefreshView.as_view()),
+
+    # ==============================
+    # ADMIN
+    # ==============================
+
+    path(
+        "admin/",
+        admin.site.urls
+    ),
 
 
-    path("", home, name="home"),
-    path("products/", products_page, name="products"),
+    # ==============================
+    # WEBSITE PAGES
+    # ==============================
+
+    path(
+        "",
+        home,
+        name="home"
+    ),
+
+    path(
+        "products/",
+        products_page,
+        name="products"
+    ),
+
     path(
         "products/<int:cake_id>/",
         product_detail,
         name="product-detail"
     ),
 
+    path(
+        "login/",
+        login_page,
+        name="login"
+    ),
 
-    path("login/", login_page, name="login"),
-    path("register/", register_page, name="register"),
+    path(
+        "register/",
+        register_page,
+        name="register"
+    ),
 
-    path("cart/", cart_page, name="cart"),
-    path("checkout/", checkout_page, name="checkout"),
-    path("orders/", orders_page, name="orders"),
-    
-    path("api/users/", include("users.urls")),
-    path("api/products/", include("products.urls")),
-    path("api/orders/", include("orders.urls")),
-    path("api/payments/", include("payments.urls")),
-    path("api/reviews/", include("reviews.urls")),
-    
-        path(
+    path(
+        "cart/",
+        cart_page,
+        name="cart"
+    ),
+
+    path(
+        "checkout/",
+        checkout_page,
+        name="checkout"
+    ),
+
+    path(
+        "orders/",
+        orders_page,
+        name="orders"
+    ),
+
+
+    # ==============================
+    # JWT AUTHENTICATION
+    # ==============================
+
+    path(
         "api/token/",
         TokenObtainPairView.as_view(),
         name="token_obtain_pair"
@@ -75,7 +117,43 @@ urlpatterns = [
         name="token_refresh"
     ),
 
+
+    # ==============================
+    # API ROUTES
+    # ==============================
+
+    path(
+        "api/users/",
+        include("users.urls")
+    ),
+
+    path(
+        "api/products/",
+        include("products.urls")
+    ),
+
+    path(
+        "api/orders/",
+        include("orders.urls")
+    ),
+
+    path(
+        "api/payments/",
+        include("payments.urls")
+    ),
+
+    path(
+        "api/reviews/",
+        include("reviews.urls")
+    ),
 ]
+
+
+# ==============================
+# MEDIA FILES
+# Development only
+# ==============================
+
 urlpatterns += static(
     settings.MEDIA_URL,
     document_root=settings.MEDIA_ROOT

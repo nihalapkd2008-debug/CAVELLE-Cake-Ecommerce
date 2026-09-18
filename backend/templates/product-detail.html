@@ -12,7 +12,10 @@
 
         {% if cake.image %}
 
-        <img src="{{ cake.image.url }}" alt="{{ cake.name }}">
+        <img
+            src="{{ cake.image.url }}"
+            alt="{{ cake.name }}"
+        >
 
         {% else %}
 
@@ -53,27 +56,48 @@
 
             <div>
                 <span>Weight</span>
-                <strong>{{ cake.weight }} kg</strong>
+
+                <strong>
+                    {{ cake.weight }} kg
+                </strong>
             </div>
+
 
             <div>
                 <span>Eggless</span>
 
                 {% if cake.eggless %}
-                <strong>Yes</strong>
+
+                <strong>
+                    Yes
+                </strong>
+
                 {% else %}
-                <strong>No</strong>
+
+                <strong>
+                    No
+                </strong>
+
                 {% endif %}
 
             </div>
+
 
             <div>
                 <span>Availability</span>
 
                 {% if cake.is_available and cake.stock > 0 %}
-                <strong>Available</strong>
+
+                <strong>
+                    Available
+                </strong>
+
                 {% else %}
-                <strong>Unavailable</strong>
+
+                <strong>
+                    Unavailable
+                </strong>
+
                 {% endif %}
 
             </div>
@@ -83,15 +107,10 @@
 
         {% if cake.is_available and cake.stock > 0 %}
 
-        <form method="POST" action="/cart/add/">
-
-            {% csrf_token %}
-
-            <input
-                type="hidden"
-                name="cake"
-                value="{{ cake.id }}"
-            >
+        <form
+            id="addToCartForm"
+            data-cake-id="{{ cake.id }}"
+        >
 
             <div class="quantity-box">
 
@@ -110,15 +129,28 @@
 
             </div>
 
-            <button type="submit" class="primary-btn">
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
                 Add to Cart
             </button>
+
+
+            <p
+                id="cartMessage"
+                class="form-message"
+            ></p>
 
         </form>
 
         {% else %}
 
-        <button class="disabled-btn" disabled>
+        <button
+            class="disabled-btn"
+            disabled
+        >
             Currently Unavailable
         </button>
 

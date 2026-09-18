@@ -16,7 +16,9 @@ document.addEventListener(
         ===================================== */
 
         const registerForm =
-            document.getElementById("registerForm");
+            document.getElementById(
+                "registerForm"
+            );
 
 
         if (registerForm) {
@@ -69,6 +71,7 @@ document.addEventListener(
                                     },
 
                                     body: JSON.stringify({
+
                                         username:
                                             username,
 
@@ -80,6 +83,7 @@ document.addEventListener(
 
                                         password:
                                             password
+
                                     })
                                 }
                             );
@@ -115,6 +119,7 @@ document.addEventListener(
 
                             message.className =
                                 "form-message error";
+
                         }
 
 
@@ -139,7 +144,9 @@ document.addEventListener(
         ===================================== */
 
         const loginForm =
-            document.getElementById("loginForm");
+            document.getElementById(
+                "loginForm"
+            );
 
 
         if (loginForm) {
@@ -255,6 +262,166 @@ document.addEventListener(
 
         }
 
+
+        /* =====================================
+           ADD TO CART
+        ===================================== */
+
+        const addToCartForm =
+            document.getElementById(
+                "addToCartForm"
+            );
+
+
+        if (addToCartForm) {
+
+            addToCartForm.addEventListener(
+                "submit",
+                async function (event) {
+
+                    event.preventDefault();
+
+
+                    const token =
+                        localStorage.getItem(
+                            "access_token"
+                        );
+
+
+                    const message =
+                        document.getElementById(
+                            "cartMessage"
+                        );
+
+
+                    const cakeId =
+                        addToCartForm.dataset.cakeId;
+
+
+                    const quantity =
+                        parseInt(
+                            document.getElementById(
+                                "quantity"
+                            ).value
+                        );
+
+
+                    /* =========================
+                       LOGIN CHECK
+                    ========================= */
+
+                    if (!token) {
+
+                        message.textContent =
+                            "Please login to add items to your cart.";
+
+                        message.className =
+                            "form-message error";
+
+
+                        setTimeout(
+                            function () {
+
+                                window.location.href =
+                                    "/login/";
+
+                            },
+                            1000
+                        );
+
+                        return;
+                    }
+
+
+                    /* =========================
+                       QUANTITY CHECK
+                    ========================= */
+
+                    if (
+                        !quantity ||
+                        quantity < 1
+                    ) {
+
+                        message.textContent =
+                            "Please enter a valid quantity.";
+
+                        message.className =
+                            "form-message error";
+
+                        return;
+                    }
+
+
+                    try {
+
+                        const response =
+                            await fetch(
+                                "/api/orders/cart-items/",
+                                {
+                                    method: "POST",
+
+                                    headers: {
+
+                                        "Content-Type":
+                                            "application/json",
+
+                                        "Authorization":
+                                            "Bearer " + token
+
+                                    },
+
+                                    body: JSON.stringify({
+
+                                        cake:
+                                            cakeId,
+
+                                        quantity:
+                                            quantity
+
+                                    })
+                                }
+                            );
+
+
+                        const data =
+                            await response.json();
+
+
+                        if (response.ok) {
+
+                            message.textContent =
+                                "Cake added to cart successfully!";
+
+                            message.className =
+                                "form-message success";
+
+
+                        } else {
+
+                            message.textContent =
+                                getErrorMessage(data);
+
+                            message.className =
+                                "form-message error";
+
+                        }
+
+
+                    } catch (error) {
+
+                        message.textContent =
+                            "Something went wrong. Please try again.";
+
+                        message.className =
+                            "form-message error";
+
+                    }
+
+                }
+            );
+
+        }
+
     }
 );
 
@@ -269,18 +436,32 @@ function getErrorMessage(data) {
         return data.username[0];
     }
 
+
     if (data.email) {
         return data.email[0];
     }
+
 
     if (data.password) {
         return data.password[0];
     }
 
+
+    if (data.quantity) {
+        return data.quantity[0];
+    }
+
+
+    if (data.cake) {
+        return data.cake[0];
+    }
+
+
     if (data.detail) {
         return data.detail;
     }
 
-    return "Unable to create account.";
+
+    return "Something went wrong. Please try again.";
 
 }

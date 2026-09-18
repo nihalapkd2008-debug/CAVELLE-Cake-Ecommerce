@@ -21,116 +21,614 @@ Your Cart | CAVELLE
 
 <section class="cart-section">
 
-    {% if cart_items %}
+    <div id="cartContainer">
 
-    <div class="cart-list">
+        <div class="empty-state">
 
-        {% for item in cart_items %}
-
-        <div class="cart-item">
-
-            <div class="cart-item-image">
-
-                {% if item.cake.image %}
-
-                <img
-                    src="{{ item.cake.image.url }}"
-                    alt="{{ item.cake.name }}"
-                >
-
-                {% else %}
-
-                <span>CAVELLE</span>
-
-                {% endif %}
-
-            </div>
-
-
-            <div class="cart-item-info">
-
-                <p>
-                    {{ item.cake.category.name }}
-                </p>
-
-                <h3>
-                    {{ item.cake.name }}
-                </h3>
-
-                <span>
-                    ₹{{ item.cake.price }}
-                </span>
-
-            </div>
-
-
-            <div class="cart-quantity">
-
-                <span>
-                    Quantity
-                </span>
-
-                <strong>
-                    {{ item.quantity }}
-                </strong>
-
-            </div>
-
-
-            <div class="cart-subtotal">
-
-                ₹{{ item.subtotal }}
-
-            </div>
+            <h2>
+                Loading your cart...
+            </h2>
 
         </div>
 
-        {% endfor %}
-
     </div>
-
-
-    <div class="cart-summary">
-
-        <div>
-
-            <span>
-                Total
-            </span>
-
-            <strong>
-                ₹{{ total }}
-            </strong>
-
-        </div>
-
-        <a href="/checkout/" class="primary-btn">
-            Proceed to Checkout
-        </a>
-
-    </div>
-
-
-    {% else %}
-
-    <div class="empty-state">
-
-        <h2>
-            Your cart is empty
-        </h2>
-
-        <p>
-            Add something sweet to your cart.
-        </p>
-
-        <a href="/products/" class="primary-btn">
-            Explore Cakes
-        </a>
-
-    </div>
-
-    {% endif %}
 
 </section>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadCart
+);
+
+
+/* =========================================
+   LOAD CART
+========================================= */
+
+async function loadCart() {
+
+    const container =
+        document.getElementById(
+            "cartContainer"
+        );
+
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    /* =====================================
+       LOGIN CHECK
+    ===================================== */
+
+    if (!token) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <h2>
+                    Please login
+                </h2>
+
+                <p>
+                    Login to view your cart.
+                </p>
+
+                <a
+                    href="/login/"
+                    class="primary-btn"
+                >
+                    Login
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/orders/cart-items/",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        /* =================================
+           TOKEN EXPIRED
+        ================================= */
+
+        if (response.status === 401) {
+
+            localStorage.removeItem(
+                "access_token"
+            );
+
+            localStorage.removeItem(
+                "refresh_token"
+            );
+
+            window.location.href =
+                "/login/";
+
+            return;
+        }
+
+
+        const items =
+            await response.json();
+
+
+        /* =================================
+           EMPTY CART
+        ================================= */
+
+        if (
+            !response.ok ||
+            !items.length
+        ) {
+
+            container.innerHTML = `
+
+                <div class="empty-state">
+
+                    <h2>
+                        Your cart is empty
+                    </h2>
+
+                    <p>
+                        Add something sweet
+                        to your cart.
+                    </p>
+
+                    <a
+                        href="/products/"
+                        class="primary-btn"
+                    >
+                        Explore Cakes
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        let total = 0;
+
+
+        let cartHTML = `
+
+            <div class="cart-list">
+
+        `;
+
+
+        /* =================================
+           CART ITEMS
+        ================================= */
+
+        items.forEach(
+            function (item) {
+
+                const price =
+                    parseFloat(
+                        item.cake_price
+                    );
+
+
+                const subtotal =
+                    parseFloat(
+                        item.subtotal
+                    );
+
+
+                total += subtotal;
+
+
+                let imageHTML = "";
+
+
+                if (item.cake_image) {
+
+                    imageHTML = `
+
+                        <img
+                            src="${item.cake_image}"
+                            alt="${item.cake_name}"
+                        >
+
+                    `;
+
+                } else {
+
+                    imageHTML = `
+
+                        <span>
+                            CAVELLE
+                        </span>
+
+                    `;
+
+                }
+
+
+                cartHTML += `
+
+                    <div
+                        class="cart-item"
+                        data-item-id="${item.id}"
+                    >
+
+                        <div class="cart-item-image">
+
+                            ${imageHTML}
+
+                        </div>
+
+
+                        <div class="cart-item-info">
+
+                            <p>
+                                CAVELLE COLLECTION
+                            </p>
+
+                            <h3>
+                                ${item.cake_name}
+                            </h3>
+
+                            <span>
+                                ₹${price.toFixed(2)}
+                            </span>
+
+                        </div>
+
+
+                        <div class="cart-quantity">
+
+                            <span>
+                                Quantity
+                            </span>
+
+
+                            <div class="quantity-controls">
+
+                                <button
+                                    type="button"
+                                    onclick="
+                                        updateCartQuantity(
+                                            ${item.id},
+                                            ${item.quantity - 1}
+                                        )
+                                    "
+                                    ${item.quantity <= 1
+                                        ? "disabled"
+                                        : ""}
+                                >
+                                    −
+                                </button>
+
+
+                                <strong>
+                                    ${item.quantity}
+                                </strong>
+
+
+                                <button
+                                    type="button"
+                                    onclick="
+                                        updateCartQuantity(
+                                            ${item.id},
+                                            ${item.quantity + 1}
+                                        )
+                                    "
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="cart-subtotal">
+
+                            ₹${subtotal.toFixed(2)}
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="remove-cart-btn"
+                            onclick="
+                                removeCartItem(
+                                    ${item.id}
+                                )
+                            "
+                        >
+                            Remove
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        cartHTML += `
+
+            </div>
+
+
+            <div class="cart-summary">
+
+                <div>
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ₹${total.toFixed(2)}
+                    </strong>
+
+                </div>
+
+
+                <a
+                    href="/checkout/"
+                    class="primary-btn"
+                >
+                    Proceed to Checkout
+                </a>
+
+            </div>
+
+        `;
+
+
+        container.innerHTML =
+            cartHTML;
+
+
+    } catch (error) {
+
+        console.error(
+            "Cart error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <h2>
+                    Something went wrong
+                </h2>
+
+                <p>
+                    Please try again.
+                </p>
+
+                <a
+                    href="/products/"
+                    class="primary-btn"
+                >
+                    Explore Cakes
+                </a>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   UPDATE CART QUANTITY
+========================================= */
+
+async function updateCartQuantity(
+    itemId,
+    quantity
+) {
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            "/login/";
+
+        return;
+    }
+
+
+    if (quantity < 1) {
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/orders/cart-items/${itemId}/`,
+                {
+                    method: "PATCH",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " + token
+
+                    },
+
+                    body: JSON.stringify({
+                        quantity: quantity
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        /* =================================
+           TOKEN EXPIRED
+        ================================= */
+
+        if (response.status === 401) {
+
+            localStorage.removeItem(
+                "access_token"
+            );
+
+            localStorage.removeItem(
+                "refresh_token"
+            );
+
+            window.location.href =
+                "/login/";
+
+            return;
+        }
+
+
+        /* =================================
+           SUCCESS
+        ================================= */
+
+        if (response.ok) {
+
+            loadCart();
+
+        } else {
+
+            alert(
+                getErrorMessage(data)
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Quantity update error:",
+            error
+        );
+
+        alert(
+            "Something went wrong. Please try again."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   REMOVE CART ITEM
+========================================= */
+
+async function removeCartItem(itemId) {
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            "/login/";
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/orders/cart-items/${itemId}/`,
+                {
+                    method: "DELETE",
+
+                    headers: {
+
+                        "Authorization":
+                            "Bearer " + token
+
+                    }
+                }
+            );
+
+
+        if (response.status === 401) {
+
+            localStorage.removeItem(
+                "access_token"
+            );
+
+            localStorage.removeItem(
+                "refresh_token"
+            );
+
+            window.location.href =
+                "/login/";
+
+            return;
+        }
+
+
+        if (response.ok) {
+
+            loadCart();
+
+        } else {
+
+            alert(
+                "Unable to remove this item."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Remove cart item error:",
+            error
+        );
+
+        alert(
+            "Something went wrong. Please try again."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   ERROR MESSAGE
+========================================= */
+
+function getErrorMessage(data) {
+
+    if (data.quantity) {
+
+        return data.quantity[0];
+
+    }
+
+
+    if (data.detail) {
+
+        return data.detail;
+
+    }
+
+
+    return "Something went wrong. Please try again.";
+
+}
+
+</script>
 
 {% endblock %}
