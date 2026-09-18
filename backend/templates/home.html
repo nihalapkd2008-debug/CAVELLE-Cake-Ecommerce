@@ -6,6 +6,10 @@ CAVELLE | Artisan Cakes
 
 {% block content %}
 
+<!-- =========================================
+     HERO
+========================================= -->
+
 <section class="hero">
 
     <div class="hero-content">
@@ -31,8 +35,8 @@ CAVELLE | Artisan Cakes
                 Explore Cakes
             </a>
 
-            <a href="#about" class="secondary-btn">
-                Our Story
+            <a href="#categories" class="secondary-btn">
+                Explore Categories
             </a>
 
         </div>
@@ -40,125 +44,203 @@ CAVELLE | Artisan Cakes
     </div>
 
 
+    <!-- HERO CAKE -->
+
     <div class="hero-visual">
 
-    <div class="hero-image-wrapper">
+        {% if featured_cake and featured_cake.image %}
 
-       <div class="hero-visual">
+            <img
+                src="{{ featured_cake.image.url }}"
+                alt="{{ featured_cake.name }}"
+                class="hero-cake-image"
+            >
 
-    {% if featured_cake and featured_cake.image %}
+        {% else %}
 
-        <img
-            src="{{ featured_cake.image.url }}"
-            alt="{{ featured_cake.name }}"
-            class="hero-cake-image"
-        >
+            <div class="cake-placeholder">
+                CAVELLE
+            </div>
 
-    {% else %}
+        {% endif %}
 
-        <div class="cake-placeholder">
-            CAVELLE
-        </div>
-
-    {% endif %}
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-<section class="categories-section">
+<!-- =========================================
+     SHOP BY CATEGORY
+========================================= -->
+
+<section
+    class="categories-section"
+    id="categories"
+>
 
     <div class="section-heading">
 
         <p class="section-label">
-            DISCOVER
+            EXPLORE THE COLLECTION
         </p>
 
         <h2>
-            Something for every celebration
+            Find something made for your moment.
         </h2>
+
+        <p class="section-description">
+            From timeless classics to indulgent favourites,
+            discover a cake for every kind of celebration.
+        </p>
 
     </div>
 
 
-    <div class="category-grid">
+    <div class="category-circle-grid">
 
-        <a href="/products/" class="category-card">
+        {% for category in categories %}
 
-            <span class="category-number">
-                01
-            </span>
+        <a
+            href="/products/?category={{ category.name|urlencode }}"
+            class="category-circle-item"
+        >
+
+            <div class="category-circle-image">
+
+                {% if category.image %}
+
+                    <img
+                        src="{{ category.image.url }}"
+                        alt="{{ category.name }} Cakes"
+                    >
+
+                {% else %}
+
+                    <div class="category-circle-placeholder">
+                        C
+                    </div>
+
+                {% endif %}
+
+            </div>
 
             <h3>
-                Birthday Cakes
+                {{ category.name }}
             </h3>
 
-            <p>
-                Beautiful cakes for unforgettable birthdays.
-            </p>
+            <span>
+                Explore →
+            </span>
 
         </a>
 
-
-        <a href="/products/" class="category-card">
-
-            <span class="category-number">
-                02
-            </span>
-
-            <h3>
-                Celebration Cakes
-            </h3>
-
-            <p>
-                Elegant creations for life's special moments.
-            </p>
-
-        </a>
-
-
-        <a href="/products/" class="category-card">
-
-            <span class="category-number">
-                03
-            </span>
-
-            <h3>
-                Chocolate Cakes
-            </h3>
-
-            <p>
-                Rich, indulgent and beautifully crafted.
-            </p>
-
-        </a>
-
-
-        <a href="/products/" class="category-card">
-
-            <span class="category-number">
-                04
-            </span>
-
-            <h3>
-                Eggless Cakes
-            </h3>
-
-            <p>
-                Thoughtfully crafted without compromising taste.
-            </p>
-
-        </a>
+        {% endfor %}
 
     </div>
 
 </section>
 
 
-<section class="about-section" id="about">
+<!-- =========================================
+     CAVELLE EXPERIENCE
+========================================= -->
+
+<section class="experience-section">
+
+    <div class="experience-content">
+
+        <p class="section-label">
+            THE CAVELLE EXPERIENCE
+        </p>
+
+        <h2>
+            More than a cake.<br>
+            A moment to remember.
+        </h2>
+
+        <p>
+            Every CAVELLE creation is thoughtfully crafted
+            to bring together beautiful presentation,
+            indulgent flavours and unforgettable moments.
+        </p>
+
+    </div>
+
+
+    <div class="experience-features">
+
+        <div class="experience-item">
+
+            <span class="experience-number">
+                01
+            </span>
+
+            <div>
+                <h3>
+                    Thoughtfully Crafted
+                </h3>
+
+                <p>
+                    Every detail is considered,
+                    from flavour to finish.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="experience-item">
+
+            <span class="experience-number">
+                02
+            </span>
+
+            <div>
+                <h3>
+                    Made for Moments
+                </h3>
+
+                <p>
+                    Cakes created to become part
+                    of your special memories.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="experience-item">
+
+            <span class="experience-number">
+                03
+            </span>
+
+            <div>
+                <h3>
+                    Elegant by Nature
+                </h3>
+
+                <p>
+                    Simple, refined and beautifully
+                    presented.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     ABOUT
+========================================= -->
+
+<section
+    class="about-section"
+    id="about"
+>
 
     <div class="about-content">
 
@@ -176,7 +258,10 @@ CAVELLE | Artisan Cakes
             beautiful celebrations.
         </p>
 
-        <a href="/products/" class="text-link">
+        <a
+            href="/products/"
+            class="text-link"
+        >
             Discover our collection →
         </a>
 
@@ -184,6 +269,10 @@ CAVELLE | Artisan Cakes
 
 </section>
 
+
+<!-- =========================================
+     FINAL CTA
+========================================= -->
 
 <section class="cta-section">
 
@@ -195,7 +284,14 @@ CAVELLE | Artisan Cakes
         Make it a little sweeter.
     </h2>
 
-    <a href="/products/" class="primary-btn">
+    <p>
+        Find the cake that makes your moment memorable.
+    </p>
+
+    <a
+        href="/products/"
+        class="primary-btn"
+    >
         Shop Cakes
     </a>
 

@@ -13,17 +13,28 @@
 
 <body>
 
+    <!-- BACKGROUND WATERMARK -->
+    <div class="site-watermark" aria-hidden="true">
+        <img
+            src="{% static 'images/cavelle-logo.png' %}"
+            alt=""
+        >
+    </div>
+
+
     <!-- NAVBAR -->
     <header class="navbar">
         <div class="nav-container">
 
+            <!-- CAVELLE LOGO -->
             <a href="/" class="logo">
-    <img
-        src="{% static 'images/cavelle-logo.png' %}"
-        alt="CAVELLE"
-    >
-</a>
+                <img
+                    src="{% static 'images/cavelle-logo.png' %}"
+                    alt="CAVELLE"
+                >
+            </a>
 
+            <!-- NAVIGATION -->
             <nav class="nav-links">
                 <a href="/">Home</a>
                 <a href="/products/">Cakes</a>
@@ -31,6 +42,7 @@
                 <a href="/orders/">Orders</a>
             </nav>
 
+            <!-- NAV ACTION -->
             <div class="nav-actions">
                 <a href="/login/" class="login-btn">
                     Login
@@ -53,36 +65,50 @@
 
         <div class="footer-container">
 
+            <!-- BRAND -->
             <div class="footer-brand">
                 <h2>CAVELLE</h2>
+
                 <p>
                     Crafted with elegance,<br>
                     baked with love.
                 </p>
             </div>
 
+
+            <!-- EXPLORE -->
             <div class="footer-links">
                 <h3>Explore</h3>
+
                 <a href="/">Home</a>
                 <a href="/products/">Cakes</a>
                 <a href="/cart/">Cart</a>
                 <a href="/orders/">Orders</a>
             </div>
 
+
+            <!-- ACCOUNT -->
             <div class="footer-links">
                 <h3>Account</h3>
+
                 <a href="/login/">Login</a>
                 <a href="/register/">Register</a>
             </div>
 
         </div>
 
+
+        <!-- COPYRIGHT -->
         <div class="footer-bottom">
-            <p>© 2026 CAVELLE. All rights reserved.</p>
+            <p>
+                © 2026 CAVELLE. All rights reserved.
+            </p>
         </div>
 
     </footer>
 
+
+    <!-- JAVASCRIPT -->
     <script src="{% static 'js/main.js' %}"></script>
 
 </body>

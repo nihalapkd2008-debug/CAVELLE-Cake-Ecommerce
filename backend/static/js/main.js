@@ -29,7 +29,6 @@ document.addEventListener(
 
                     event.preventDefault();
 
-
                     const username =
                         document.getElementById(
                             "username"
@@ -49,7 +48,6 @@ document.addEventListener(
                         document.getElementById(
                             "password"
                         ).value;
-
 
                     const message =
                         document.getElementById(
@@ -306,10 +304,6 @@ document.addEventListener(
                         );
 
 
-                    /* =========================
-                       LOGIN CHECK
-                    ========================= */
-
                     if (!token) {
 
                         message.textContent =
@@ -332,10 +326,6 @@ document.addEventListener(
                         return;
                     }
 
-
-                    /* =========================
-                       QUANTITY CHECK
-                    ========================= */
 
                     if (
                         !quantity ||
@@ -419,6 +409,365 @@ document.addEventListener(
 
                 }
             );
+
+        }
+
+
+        /* =====================================
+           PRODUCT FILTER / SEARCH / SORT
+        ===================================== */
+
+        const categoryFilter =
+            document.getElementById(
+                "categoryFilter"
+            );
+
+        const sortFilter =
+            document.getElementById(
+                "sortFilter"
+            );
+
+        const cakeSearch =
+            document.getElementById(
+                "cakeSearch"
+            );
+
+        const productGrid =
+            document.getElementById(
+                "productGrid"
+            );
+
+        const cakeCount =
+            document.getElementById(
+                "cakeCount"
+            );
+
+        const noSearchResults =
+            document.getElementById(
+                "noSearchResults"
+            );
+
+
+        if (
+            categoryFilter &&
+            sortFilter &&
+            cakeSearch &&
+            productGrid
+        ) {
+
+            const productCards =
+                Array.from(
+                    productGrid.querySelectorAll(
+                        ".product-card"
+                    )
+                );
+
+
+            /* =================================
+               GET CATEGORY FROM URL
+            ================================= */
+
+            const urlParams =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+            const urlCategory =
+                urlParams.get(
+                    "category"
+                );
+
+
+            if (urlCategory) {
+
+                categoryFilter.value =
+                    urlCategory;
+
+            }
+
+
+            /* =================================
+               APPLY FILTERS
+            ================================= */
+
+            function applyProductFilters() {
+
+                const selectedCategory =
+                    categoryFilter.value;
+
+                const selectedSort =
+                    sortFilter.value;
+
+                const searchText =
+                    cakeSearch.value
+                        .trim()
+                        .toLowerCase();
+
+
+                let visibleCards = [];
+
+
+                /* =============================
+                   FILTER
+                ============================= */
+
+                productCards.forEach(
+                    function (card) {
+
+                        const cardCategory =
+                            card.dataset.category;
+
+                        const cardName =
+                            card.dataset.name;
+
+                        const cardFlavour =
+                            card.dataset.flavour;
+
+
+                        const categoryMatch =
+                            selectedCategory === "all" ||
+                            cardCategory === selectedCategory;
+
+
+                        const searchMatch =
+                            !searchText ||
+                            cardName.includes(
+                                searchText
+                            ) ||
+                            cardFlavour.includes(
+                                searchText
+                            ) ||
+                            cardCategory
+                                .toLowerCase()
+                                .includes(
+                                    searchText
+                                );
+
+
+                        if (
+                            categoryMatch &&
+                            searchMatch
+                        ) {
+
+                            card.style.display =
+                                "";
+
+                            visibleCards.push(
+                                card
+                            );
+
+                        } else {
+
+                            card.style.display =
+                                "none";
+
+                        }
+
+                    }
+                );
+
+
+                /* =============================
+                   SORT
+                ============================= */
+
+                visibleCards.sort(
+                    function (a, b) {
+
+                        if (
+                            selectedSort ===
+                            "price-low"
+                        ) {
+
+                            return (
+                                parseFloat(
+                                    a.dataset.price
+                                ) -
+                                parseFloat(
+                                    b.dataset.price
+                                )
+                            );
+
+                        }
+
+
+                        if (
+                            selectedSort ===
+                            "price-high"
+                        ) {
+
+                            return (
+                                parseFloat(
+                                    b.dataset.price
+                                ) -
+                                parseFloat(
+                                    a.dataset.price
+                                )
+                            );
+
+                        }
+
+
+                        if (
+                            selectedSort ===
+                            "newest"
+                        ) {
+
+                            return (
+                                parseInt(
+                                    b.dataset.created
+                                ) -
+                                parseInt(
+                                    a.dataset.created
+                                )
+                            );
+
+                        }
+
+
+                        return 0;
+
+                    }
+                );
+
+
+                /* =============================
+                   REORDER CARDS
+                ============================= */
+
+                visibleCards.forEach(
+                    function (card) {
+
+                        productGrid.appendChild(
+                            card
+                        );
+
+                    }
+                );
+
+
+                /* =============================
+                   COUNT
+                ============================= */
+
+                if (cakeCount) {
+
+                    cakeCount.textContent =
+                        visibleCards.length +
+                        (
+                            visibleCards.length === 1
+                                ? " Cake"
+                                : " Cakes"
+                        );
+
+                }
+
+
+                /* =============================
+                   EMPTY SEARCH STATE
+                ============================= */
+
+                if (noSearchResults) {
+
+                    if (
+                        visibleCards.length === 0 &&
+                        productCards.length > 0
+                    ) {
+
+                        noSearchResults.style.display =
+                            "block";
+
+                    } else {
+
+                        noSearchResults.style.display =
+                            "none";
+
+                    }
+
+                }
+
+            }
+
+
+            /* =================================
+               CATEGORY CHANGE
+            ================================= */
+
+            categoryFilter.addEventListener(
+                "change",
+                function () {
+
+                    const selectedCategory =
+                        categoryFilter.value;
+
+
+                    if (
+                        selectedCategory ===
+                        "all"
+                    ) {
+
+                        window.history.replaceState(
+                            {},
+                            "",
+                            "/products/"
+                        );
+
+                    } else {
+
+                        const newUrl =
+                            "/products/?category=" +
+                            encodeURIComponent(
+                                selectedCategory
+                            );
+
+                        window.history.replaceState(
+                            {},
+                            "",
+                            newUrl
+                        );
+
+                    }
+
+
+                    applyProductFilters();
+
+                }
+            );
+
+
+            /* =================================
+               SORT CHANGE
+            ================================= */
+
+            sortFilter.addEventListener(
+                "change",
+                function () {
+
+                    applyProductFilters();
+
+                }
+            );
+
+
+            /* =================================
+               SEARCH
+            ================================= */
+
+            cakeSearch.addEventListener(
+                "input",
+                function () {
+
+                    applyProductFilters();
+
+                }
+            );
+
+
+            /* =================================
+               INITIAL FILTER
+            ================================= */
+
+            applyProductFilters();
 
         }
 

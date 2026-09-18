@@ -6,6 +6,10 @@ CAVELLE | Cakes
 
 {% block content %}
 
+<!-- =========================================
+     PAGE HEADER
+========================================= -->
+
 <section class="page-header">
 
     <p class="section-label">
@@ -23,31 +27,57 @@ CAVELLE | Cakes
 </section>
 
 
+<!-- =========================================
+     PRODUCTS
+========================================= -->
+
 <section class="products-section">
 
     <div class="products-toolbar">
 
         <div>
-            <span>
+
+            <span id="cakeCount">
                 {{ cakes|length }} Cakes
             </span>
+
         </div>
+
 
         <div class="product-filters">
 
+            <!-- SEARCH -->
+
+            <input
+                type="text"
+                id="cakeSearch"
+                placeholder="Search cakes..."
+                aria-label="Search cakes"
+            >
+
+
+            <!-- CATEGORY -->
+
             <select id="categoryFilter">
+
                 <option value="all">
                     All Categories
                 </option>
 
                 {% for cake in cakes %}
-                    <option value="{{ cake.category.name }}">
+
+                    <option
+                        value="{{ cake.category.name }}"
+                    >
                         {{ cake.category.name }}
                     </option>
+
                 {% endfor %}
 
             </select>
 
+
+            <!-- SORT -->
 
             <select id="sortFilter">
 
@@ -74,7 +104,14 @@ CAVELLE | Cakes
     </div>
 
 
-    <div class="product-grid">
+    <!-- =====================================
+         PRODUCT GRID
+    ====================================== -->
+
+    <div
+        class="product-grid"
+        id="productGrid"
+    >
 
         {% for cake in cakes %}
 
@@ -82,9 +119,14 @@ CAVELLE | Cakes
             class="product-card"
             data-category="{{ cake.category.name }}"
             data-price="{{ cake.price }}"
+            data-created="{{ cake.created_at|date:'U' }}"
+            data-name="{{ cake.name|lower }}"
+            data-flavour="{{ cake.flavour|lower }}"
         >
 
-            <a href="{% url 'product-detail' cake.id %}">
+            <a
+                href="{% url 'product-detail' cake.id %}"
+            >
 
                 <div class="product-image">
 
@@ -166,6 +208,25 @@ CAVELLE | Cakes
         </div>
 
         {% endfor %}
+
+
+        <!-- NO SEARCH RESULT -->
+
+        <div
+            id="noSearchResults"
+            class="empty-state"
+            style="display: none;"
+        >
+
+            <h2>
+                No cakes found
+            </h2>
+
+            <p>
+                Try another cake name or category.
+            </p>
+
+        </div>
 
     </div>
 
