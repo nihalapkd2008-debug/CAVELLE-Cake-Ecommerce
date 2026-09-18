@@ -1212,3 +1212,259 @@ main {
 .hero-image-wrapper:hover .hero-cake-image {
     transform: scale(1.03);
 }
+/* =========================================
+   STAFF ORDER DASHBOARD
+========================================= */
+
+.staff-dashboard {
+    width: 92%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 0 100px;
+}
+
+
+.staff-orders-container {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(380px, 1fr)
+    );
+    gap: 28px;
+}
+
+
+.staff-order-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(
+        43,
+        29,
+        24,
+        0.15
+    );
+    padding: 30px;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.staff-order-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 15px 40px
+        rgba(43, 29, 24, 0.08);
+}
+
+
+.staff-order-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid
+        rgba(43, 29, 24, 0.12);
+}
+
+
+.staff-order-header h2 {
+    margin: 5px 0 0;
+
+    color: #2B1D18;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size: 28px;
+}
+
+
+.staff-status {
+    padding: 8px 14px;
+
+    border: 1px solid
+        rgba(43, 29, 24, 0.2);
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+}
+
+
+.staff-order-customer,
+.staff-order-items {
+    margin-top: 25px;
+}
+
+
+.staff-order-customer h3,
+.staff-order-items h3 {
+    margin-bottom: 12px;
+
+    font-size: 14px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+
+    color: #8C5F4A;
+}
+
+
+.staff-order-customer p {
+    margin: 5px 0;
+
+    color: #2B1D18;
+
+    font-size: 14px;
+}
+
+
+.staff-order-item {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid
+        rgba(43, 29, 24, 0.08);
+
+    font-size: 14px;
+}
+
+
+.staff-order-item div {
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+
+.staff-order-item span {
+    color: #8C5F4A;
+}
+
+
+.staff-order-total {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 22px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid
+        rgba(43, 29, 24, 0.15);
+}
+
+
+.staff-order-total span {
+    color: #8C5F4A;
+
+    font-size: 14px;
+}
+
+
+.staff-order-total strong {
+    color: #2B1D18;
+
+    font-size: 20px;
+}
+
+
+.staff-order-actions {
+    margin-top: 25px;
+}
+
+
+.staff-order-actions label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+
+    color: #8C5F4A;
+}
+
+
+.status-select {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    background: #F5EDE5;
+
+    border: 1px solid
+        rgba(43, 29, 24, 0.25);
+
+    color: #2B1D18;
+
+    font-size: 14px;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+
+.status-select:focus {
+    border-color: #2B1D18;
+}
+
+
+.staff-order-date {
+    margin-top: 20px;
+
+    color: #8C5F4A;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .staff-dashboard {
+        width: 90%;
+    }
+
+
+    .staff-orders-container {
+        grid-template-columns: 1fr;
+    }
+
+
+    .staff-order-card {
+        padding: 22px;
+    }
+
+
+    .staff-order-header {
+        flex-direction: column;
+    }
+
+
+    .staff-order-item {
+        font-size: 13px;
+    }
+
+}

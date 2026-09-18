@@ -1,0 +1,772 @@
+{% extends "base.html" %}
+
+{% block title %}
+Staff Orders | CAVELLE
+{% endblock %}
+
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="section-label">
+        CAVELLE MANAGEMENT
+    </p>
+
+    <h1>
+        Order Management
+    </h1>
+
+    <p>
+        Manage customer orders and update their status.
+    </p>
+
+</section>
+
+
+<section class="staff-dashboard">
+
+    <div
+        id="dashboardMessage"
+        class="form-message"
+    ></div>
+
+
+    <div
+        id="ordersContainer"
+        class="staff-orders-container"
+    >
+
+        <div class="empty-state">
+
+            <h2>
+                Loading orders...
+            </h2>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadStaffOrders
+);
+
+
+/* =========================================
+   LOAD STAFF ORDERS
+========================================= */
+
+async function loadStaffOrders() {
+
+    const container =
+        document.getElementById(
+            "ordersContainer"
+        );
+
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    /* =====================================
+       LOGIN CHECK
+    ===================================== */
+
+    if (!token) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <h2>
+                    Login required
+                </h2>
+
+                <p>
+                    Please login to access
+                    the staff dashboard.
+                </p>
+
+                <a
+                    href="/login/"
+                    class="primary-btn"
+                >
+                    Login
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/orders/staff/orders/",
+                {
+                    method: "GET",
+
+                    headers: {
+
+                        "Authorization":
+                            "Bearer " + token
+
+                    }
+
+                }
+            );
+
+
+        /* ================================
+           UNAUTHORIZED
+        ================================= */
+
+        if (response.status === 401) {
+
+            logoutUser();
+
+            return;
+        }
+
+
+        /* ================================
+           FORBIDDEN
+        ================================= */
+
+        if (response.status === 403) {
+
+            container.innerHTML = `
+
+                <div class="empty-state">
+
+                    <h2>
+                        Access denied
+                    </h2>
+
+                    <p>
+                        Staff or Admin access is required.
+                    </p>
+
+                    <a
+                        href="/"
+                        class="primary-btn"
+                    >
+                        Back to Home
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        const orders =
+            await response.json();
+
+
+        /* =================================
+           NO ORDERS
+        ================================= */
+
+        if (
+            !response.ok ||
+            !orders.length
+        ) {
+
+            container.innerHTML = `
+
+                <div class="empty-state">
+
+                    <h2>
+                        No orders found
+                    </h2>
+
+                    <p>
+                        There are currently no customer orders.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        /* =================================
+           CREATE DASHBOARD
+        ================================= */
+
+        let ordersHTML = "";
+
+
+        orders.forEach(
+            function (order) {
+
+                let itemsHTML = "";
+
+
+                if (
+                    order.items &&
+                    order.items.length
+                ) {
+
+                    order.items.forEach(
+                        function (item) {
+
+                            const subtotal =
+                                parseFloat(
+                                    item.unit_price
+                                ) *
+                                item.quantity;
+
+
+                            itemsHTML += `
+
+                                <div class="staff-order-item">
+
+                                    <div>
+
+                                        <strong>
+                                            ${item.cake_name || "Cake #" + item.cake}
+                                        </strong>
+
+                                        <span>
+                                            × ${item.quantity}
+                                        </span>
+
+                                    </div>
+
+
+                                    <strong>
+                                        ₹${subtotal.toFixed(2)}
+                                    </strong>
+
+                                </div>
+
+                            `;
+
+                        }
+                    );
+
+                }
+
+
+                ordersHTML += `
+
+                    <article
+                        class="staff-order-card"
+                        id="order-${order.id}"
+                    >
+
+                        <div class="staff-order-header">
+
+                            <div>
+
+                                <p class="section-label">
+                                    ORDER
+                                </p>
+
+                                <h2>
+                                    #${order.id}
+                                </h2>
+
+                            </div>
+
+
+                            <span
+                                class="staff-status status-${order.status}"
+                            >
+                                ${formatStatus(order.status)}
+                            </span>
+
+                        </div>
+
+
+                        <div class="staff-order-customer">
+
+                            <h3>
+                                Customer
+                            </h3>
+
+                            <p>
+                                User ID:
+                                ${order.user}
+                            </p>
+
+                            <p>
+                                Address ID:
+                                ${order.address}
+                            </p>
+
+                        </div>
+
+
+                        <div class="staff-order-items">
+
+                            <h3>
+                                Order Items
+                            </h3>
+
+                            ${itemsHTML}
+
+                        </div>
+
+
+                        <div class="staff-order-total">
+
+                            <span>
+                                Total Amount
+                            </span>
+
+                            <strong>
+                                ₹${parseFloat(
+                                    order.total_amount
+                                ).toFixed(2)}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="staff-order-actions">
+
+                            <label for="status-${order.id}">
+                                Update Status
+                            </label>
+
+
+                            <select
+                                id="status-${order.id}"
+                                class="status-select"
+                                onchange="
+                                    updateOrderStatus(
+                                        ${order.id}
+                                    )
+                                "
+                            >
+
+                                <option
+                                    value="pending"
+                                    ${order.status === "pending"
+                                        ? "selected"
+                                        : ""}
+                                >
+                                    Pending
+                                </option>
+
+
+                                <option
+                                    value="confirmed"
+                                    ${order.status === "confirmed"
+                                        ? "selected"
+                                        : ""}
+                                >
+                                    Confirmed
+                                </option>
+
+
+                                <option
+                                    value="preparing"
+                                    ${order.status === "preparing"
+                                        ? "selected"
+                                        : ""}
+                                >
+                                    Preparing
+                                </option>
+
+
+                                <option
+                                    value="ready"
+                                    ${order.status === "ready"
+                                        ? "selected"
+                                        : ""}
+                                >
+                                    Ready
+                                </option>
+
+
+                                <option
+                                    value="delivered"
+                                    ${order.status === "delivered"
+                                        ? "selected"
+                                        : ""}
+                                >
+                                    Delivered
+                                </option>
+
+
+                                <option
+                                    value="cancelled"
+                                    ${order.status === "cancelled"
+                                        ? "selected"
+                                        : ""}
+                                >
+                                    Cancelled
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="staff-order-date">
+
+                            Ordered:
+                            ${formatDate(
+                                order.created_at
+                            )}
+
+                        </div>
+
+                    </article>
+
+                `;
+
+            }
+        );
+
+
+        container.innerHTML =
+            ordersHTML;
+
+
+    } catch (error) {
+
+        console.error(
+            "Staff orders error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <h2>
+                    Something went wrong
+                </h2>
+
+                <p>
+                    Unable to load orders.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   UPDATE ORDER STATUS
+========================================= */
+
+async function updateOrderStatus(orderId) {
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    const select =
+        document.getElementById(
+            `status-${orderId}`
+        );
+
+
+    const newStatus =
+        select.value;
+
+
+    try {
+
+        select.disabled = true;
+
+
+        const response =
+            await fetch(
+                `/api/orders/staff/orders/${orderId}/`,
+                {
+                    method: "PATCH",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " + token
+
+                    },
+
+                    body: JSON.stringify({
+
+                        status:
+                            newStatus
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        /* ================================
+           TOKEN EXPIRED
+        ================================= */
+
+        if (response.status === 401) {
+
+            logoutUser();
+
+            return;
+        }
+
+
+        /* ================================
+           ACCESS DENIED
+        ================================= */
+
+        if (response.status === 403) {
+
+            showMessage(
+                "You do not have permission to update orders.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        /* ================================
+           SUCCESS
+        ================================= */
+
+        if (response.ok) {
+
+            showMessage(
+                `Order #${orderId} updated successfully.`,
+                "success"
+            );
+
+
+            updateStatusBadge(
+                orderId,
+                newStatus
+            );
+
+        } else {
+
+            showMessage(
+                getErrorMessage(data),
+                "error"
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Status update error:",
+            error
+        );
+
+
+        showMessage(
+            "Unable to update order status.",
+            "error"
+        );
+
+    } finally {
+
+        select.disabled = false;
+
+    }
+
+}
+
+
+/* =========================================
+   UPDATE STATUS BADGE
+========================================= */
+
+function updateStatusBadge(
+    orderId,
+    status
+) {
+
+    const card =
+        document.getElementById(
+            `order-${orderId}`
+        );
+
+
+    if (!card) {
+        return;
+    }
+
+
+    const badge =
+        card.querySelector(
+            ".staff-status"
+        );
+
+
+    if (!badge) {
+        return;
+    }
+
+
+    badge.textContent =
+        formatStatus(status);
+
+
+    badge.className =
+        `staff-status status-${status}`;
+
+}
+
+
+/* =========================================
+   FORMAT STATUS
+========================================= */
+
+function formatStatus(status) {
+
+    return status
+        .charAt(0)
+        .toUpperCase()
+        + status.slice(1);
+
+}
+
+
+/* =========================================
+   FORMAT DATE
+========================================= */
+
+function formatDate(dateString) {
+
+    const date =
+        new Date(dateString);
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(
+    message,
+    type
+) {
+
+    const element =
+        document.getElementById(
+            "dashboardMessage"
+        );
+
+
+    element.textContent =
+        message;
+
+
+    element.className =
+        `form-message ${type}`;
+
+
+    setTimeout(
+        function () {
+
+            element.textContent = "";
+
+            element.className =
+                "form-message";
+
+        },
+        2500
+    );
+
+}
+
+
+/* =========================================
+   ERROR MESSAGE
+========================================= */
+
+function getErrorMessage(data) {
+
+    if (data.status) {
+
+        return data.status[0];
+
+    }
+
+
+    if (data.detail) {
+
+        return data.detail;
+
+    }
+
+
+    return "Something went wrong.";
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logoutUser() {
+
+    localStorage.removeItem(
+        "access_token"
+    );
+
+    localStorage.removeItem(
+        "refresh_token"
+    );
+
+    window.location.href =
+        "/login/";
+
+}
+
+</script>
+
+{% endblock %}

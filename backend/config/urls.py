@@ -33,6 +33,7 @@ from .views import (
     cart_page,
     checkout_page,
     orders_page,
+    staff_orders_page,
 )
 
 
@@ -98,6 +99,16 @@ urlpatterns = [
         "orders/",
         orders_page,
         name="orders"
+    ),
+
+    # ==============================
+    # STAFF ORDER MANAGEMENT
+    # ==============================
+
+    path(
+        "staff/orders/",
+        staff_orders_page,
+        name="staff-orders"
     ),
 
 

@@ -9,7 +9,7 @@ My Orders | CAVELLE
 <section class="page-header">
 
     <p class="section-label">
-        YOUR CAVELLE JOURNEY
+        YOUR CAVELLE
     </p>
 
     <h1>
@@ -21,93 +21,360 @@ My Orders | CAVELLE
 
 <section class="orders-section">
 
-    {% if orders %}
-
-        {% for order in orders %}
-
-        <article class="order-card">
-
-            <div class="order-header">
-
-                <div>
-
-                    <span>
-                        Order #{{ order.id }}
-                    </span>
-
-                    <h3>
-                        {{ order.created_at|date:"d M Y" }}
-                    </h3>
-
-                </div>
-
-
-                <span class="order-status">
-                    {{ order.status }}
-                </span>
-
-            </div>
-
-
-            <div class="order-items">
-
-                {% for item in order.items.all %}
-
-                <div class="order-item">
-
-                    <span>
-                        {{ item.cake.name }}
-                        × {{ item.quantity }}
-                    </span>
-
-                    <strong>
-                        ₹{{ item.subtotal }}
-                    </strong>
-
-                </div>
-
-                {% endfor %}
-
-            </div>
-
-
-            <div class="order-footer">
-
-                <span>
-                    Total
-                </span>
-
-                <strong>
-                    ₹{{ order.total_amount }}
-                </strong>
-
-            </div>
-
-        </article>
-
-        {% endfor %}
-
-
-    {% else %}
+    <div id="ordersContainer">
 
         <div class="empty-state">
 
             <h2>
-                No orders yet
+                Loading your orders...
             </h2>
-
-            <p>
-                Your future celebrations will appear here.
-            </p>
-
-            <a href="/products/" class="primary-btn">
-                Explore Cakes
-            </a>
 
         </div>
 
-    {% endif %}
+    </div>
 
 </section>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadOrders
+);
+
+
+/* =========================================
+   LOAD ORDERS
+========================================= */
+
+async function loadOrders() {
+
+    const container =
+        document.getElementById(
+            "ordersContainer"
+        );
+
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    /* =====================================
+       LOGIN CHECK
+    ===================================== */
+
+    if (!token) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <h2>
+                    Please login
+                </h2>
+
+                <p>
+                    Login to view your orders.
+                </p>
+
+                <a
+                    href="/login/"
+                    class="primary-btn"
+                >
+                    Login
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/orders/orders/",
+                {
+                    method: "GET",
+
+                    headers: {
+
+                        "Authorization":
+                            "Bearer " + token
+
+                    }
+
+                }
+            );
+
+
+        /* ================================
+           TOKEN EXPIRED
+        ================================= */
+
+        if (response.status === 401) {
+
+            logoutUser();
+
+            return;
+        }
+
+
+        const orders =
+            await response.json();
+
+
+        /* =================================
+           NO ORDERS
+        ================================= */
+
+        if (
+            !response.ok ||
+            !orders.length
+        ) {
+
+            container.innerHTML = `
+
+                <div class="empty-state">
+
+                    <h2>
+                        No orders yet
+                    </h2>
+
+                    <p>
+                        Your sweet journey
+                        starts here.
+                    </p>
+
+                    <a
+                        href="/products/"
+                        class="primary-btn"
+                    >
+                        Explore Cakes
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        /* =================================
+           DISPLAY ORDERS
+        ================================= */
+
+        let ordersHTML = "";
+
+
+        orders.forEach(
+            function (order) {
+
+                let itemsHTML = "";
+
+
+                if (
+                    order.items &&
+                    order.items.length
+                ) {
+
+                    order.items.forEach(
+                        function (item) {
+
+                            const subtotal =
+                                parseFloat(
+                                    item.unit_price
+                                ) *
+                                item.quantity;
+
+
+                            itemsHTML += `
+
+                                <div class="order-item">
+
+                                    <div>
+
+                                        <strong>
+                                            Cake #${item.cake}
+                                        </strong>
+
+                                        <span>
+                                            × ${item.quantity}
+                                        </span>
+
+                                    </div>
+
+
+                                    <strong>
+                                        ₹${subtotal.toFixed(2)}
+                                    </strong>
+
+                                </div>
+
+                            `;
+
+                        }
+                    );
+
+                }
+
+
+                ordersHTML += `
+
+                    <div
+                        class="order-card"
+                        data-order-id="${order.id}"
+                    >
+
+                        <div class="order-header">
+
+                            <div>
+
+                                <p class="section-label">
+                                    CAVELLE ORDER
+                                </p>
+
+                                <h2>
+                                    Order #${order.id}
+                                </h2>
+
+                            </div>
+
+
+                            <span class="order-status">
+                                ${order.status}
+                            </span>
+
+                        </div>
+
+
+                        <div class="order-items">
+
+                            ${itemsHTML}
+
+                        </div>
+
+
+                        <div class="order-footer">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong>
+                                ₹${parseFloat(
+                                    order.total_amount
+                                ).toFixed(2)}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="order-date">
+
+                            Ordered on:
+                            ${formatDate(
+                                order.created_at
+                            )}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        container.innerHTML =
+            ordersHTML;
+
+
+    } catch (error) {
+
+        console.error(
+            "Orders error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <h2>
+                    Something went wrong
+                </h2>
+
+                <p>
+                    Please try again.
+                </p>
+
+                <a
+                    href="/products/"
+                    class="primary-btn"
+                >
+                    Explore Cakes
+                </a>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   DATE FORMAT
+========================================= */
+
+function formatDate(dateString) {
+
+    const date =
+        new Date(dateString);
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logoutUser() {
+
+    localStorage.removeItem(
+        "access_token"
+    );
+
+    localStorage.removeItem(
+        "refresh_token"
+    );
+
+    window.location.href =
+        "/login/";
+
+}
+
+</script>
 
 {% endblock %}

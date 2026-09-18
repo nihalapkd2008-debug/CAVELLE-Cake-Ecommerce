@@ -257,3 +257,47 @@ class OrderItemViewSet(viewsets.ModelViewSet):
         return OrderItem.objects.filter(
             order__user=self.request.user
         )
+class StaffOrderViewSet(viewsets.ModelViewSet):
+
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+
+        return Order.objects.select_related(
+            "user",
+            "address"
+        ).prefetch_related(
+            "items"
+        ).all()
+
+    def get_permissions(self):
+
+        from users.permissions import IsStaffOrAdmin
+
+        return [IsStaffOrAdmin()]
+
+    def perform_update(self, serializer):
+
+        order = self.get_object()
+
+        new_status = serializer.validated_data.get(
+            "status",
+            order.status
+        )
+
+        allowed_statuses = [
+            Order.Status.PENDING,
+            Order.Status.CONFIRMED,
+            Order.Status.PREPARING,
+            Order.Status.READY,
+            Order.Status.DELIVERED,
+            Order.Status.CANCELLED,
+        ]
+
+        if new_status not in allowed_statuses:
+
+            raise ValidationError(
+                "Invalid order status."
+            )
+
+        serializer.save()    

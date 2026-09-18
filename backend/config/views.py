@@ -21,7 +21,10 @@ def home(request):
 
 
 def products_page(request):
-    cakes = Cake.objects.select_related("category").all()
+
+    cakes = Cake.objects.select_related(
+        "category"
+    ).all()
 
     return render(
         request,
@@ -33,6 +36,7 @@ def products_page(request):
 
 
 def product_detail(request, cake_id):
+
     cake = get_object_or_404(
         Cake.objects.select_related("category"),
         id=cake_id
@@ -48,14 +52,23 @@ def product_detail(request, cake_id):
 
 
 def login_page(request):
-    return render(request, "login.html")
+
+    return render(
+        request,
+        "login.html"
+    )
 
 
 def register_page(request):
-    return render(request, "register.html")
+
+    return render(
+        request,
+        "register.html"
+    )
 
 
 def cart_page(request):
+
     return render(
         request,
         "cart.html",
@@ -67,6 +80,7 @@ def cart_page(request):
 
 
 def checkout_page(request):
+
     return render(
         request,
         "checkout.html",
@@ -79,10 +93,23 @@ def checkout_page(request):
 
 
 def orders_page(request):
+
     return render(
         request,
         "orders.html",
         {
             "orders": []
         }
+    )
+
+
+# =========================================
+# STAFF ORDER MANAGEMENT PAGE
+# =========================================
+
+def staff_orders_page(request):
+
+    return render(
+        request,
+        "staff-orders.html"
     )

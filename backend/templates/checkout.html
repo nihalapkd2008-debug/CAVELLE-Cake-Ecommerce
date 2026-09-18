@@ -21,6 +21,11 @@ Checkout | CAVELLE
 
 <section class="checkout-section">
 
+
+    <!-- ================================
+         DELIVERY ADDRESS
+    ================================= -->
+
     <div class="checkout-form-container">
 
         <h2>
@@ -28,35 +33,124 @@ Checkout | CAVELLE
         </h2>
 
 
-        <form method="POST" class="auth-form">
+        <div id="addressContainer">
 
-            {% csrf_token %}
+            <p>
+                Loading addresses...
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="secondary-btn"
+            id="addAddressBtn"
+        >
+            Add New Address
+        </button>
+
+
+        <!-- ================================
+             NEW ADDRESS FORM
+        ================================= -->
+
+        <form
+            id="addressForm"
+            class="auth-form"
+            style="display: none;"
+        >
+
+            <h3>
+                New Address
+            </h3>
 
 
             <div class="form-group">
 
-                <label>
-                    Select Address
+                <label for="full_name">
+                    Full Name
                 </label>
 
-                <select name="address" required>
+                <input
+                    type="text"
+                    id="full_name"
+                    required
+                >
 
-                    <option value="">
-                        Choose an address
-                    </option>
+            </div>
 
-                    {% for address in addresses %}
 
-                    <option value="{{ address.id }}">
+            <div class="form-group">
 
-                        {{ address.full_name }}
-                        — {{ address.city }}
+                <label for="phone">
+                    Phone
+                </label>
 
-                    </option>
+                <input
+                    type="text"
+                    id="phone"
+                    required
+                >
 
-                    {% endfor %}
+            </div>
 
-                </select>
+
+            <div class="form-group">
+
+                <label for="address_line">
+                    Address
+                </label>
+
+                <textarea
+                    id="address_line"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="city">
+                    City
+                </label>
+
+                <input
+                    type="text"
+                    id="city"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="state">
+                    State
+                </label>
+
+                <input
+                    type="text"
+                    id="state"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="pincode">
+                    Pincode
+                </label>
+
+                <input
+                    type="text"
+                    id="pincode"
+                    required
+                >
 
             </div>
 
@@ -64,39 +158,88 @@ Checkout | CAVELLE
             <div class="form-group">
 
                 <label>
-                    Payment Method
+
+                    <input
+                        type="checkbox"
+                        id="is_default"
+                    >
+
+                    Set as default address
+
                 </label>
-
-                <select name="payment_method" required>
-
-                    <option value="cod">
-                        Cash on Delivery
-                    </option>
-
-                    <option value="upi">
-                        UPI
-                    </option>
-
-                    <option value="card">
-                        Card
-                    </option>
-
-                </select>
 
             </div>
 
 
             <button
                 type="submit"
-                class="primary-btn full-btn"
+                class="primary-btn"
             >
-                Place Order
+                Save Address
             </button>
+
+
+            <p
+                id="addressMessage"
+                class="form-message"
+            ></p>
 
         </form>
 
+
+        <!-- ================================
+             PAYMENT METHOD
+        ================================= -->
+
+        <div class="form-group payment-group">
+
+            <label for="payment_method">
+                Payment Method
+            </label>
+
+
+            <select
+                id="payment_method"
+                required
+            >
+
+                <option value="cod">
+                    Cash on Delivery
+                </option>
+
+                <option value="upi">
+                    UPI
+                </option>
+
+                <option value="card">
+                    Card
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="placeOrderBtn"
+            class="primary-btn full-btn"
+        >
+            Place Order
+        </button>
+
+
+        <p
+            id="checkoutMessage"
+            class="form-message"
+        ></p>
+
     </div>
 
+
+    <!-- ================================
+         ORDER SUMMARY
+    ================================= -->
 
     <div class="checkout-summary">
 
@@ -104,27 +247,19 @@ Checkout | CAVELLE
             ORDER SUMMARY
         </p>
 
+
         <h2>
             Your Order
         </h2>
 
 
-        {% for item in cart_items %}
+        <div id="checkoutItems">
 
-        <div class="summary-item">
-
-            <span>
-                {{ item.cake.name }}
-                × {{ item.quantity }}
-            </span>
-
-            <strong>
-                ₹{{ item.subtotal }}
-            </strong>
+            <p>
+                Loading your order...
+            </p>
 
         </div>
-
-        {% endfor %}
 
 
         <div class="summary-total">
@@ -133,8 +268,8 @@ Checkout | CAVELLE
                 Total
             </span>
 
-            <strong>
-                ₹{{ total }}
+            <strong id="checkoutTotal">
+                ₹0.00
             </strong>
 
         </div>
@@ -142,5 +277,851 @@ Checkout | CAVELLE
     </div>
 
 </section>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadCheckout();
+
+        loadAddresses();
+
+    }
+);
+
+
+/* =========================================
+   LOAD CHECKOUT
+========================================= */
+
+async function loadCheckout() {
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            "/login/";
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/orders/cart-items/",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if (response.status === 401) {
+
+            logoutUser();
+
+            return;
+        }
+
+
+        const items =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !items.length
+        ) {
+
+            document.getElementById(
+                "checkoutItems"
+            ).innerHTML = `
+
+                <p>
+                    Your cart is empty.
+                </p>
+
+                <a
+                    href="/products/"
+                    class="primary-btn"
+                >
+                    Explore Cakes
+                </a>
+
+            `;
+
+            document.getElementById(
+                "placeOrderBtn"
+            ).disabled = true;
+
+            return;
+        }
+
+
+        let total = 0;
+
+
+        let itemsHTML = "";
+
+
+        items.forEach(
+            function (item) {
+
+                const subtotal =
+                    parseFloat(
+                        item.subtotal
+                    );
+
+
+                total += subtotal;
+
+
+                itemsHTML += `
+
+                    <div class="summary-item">
+
+                        <span>
+
+                            ${item.cake_name}
+
+                            × ${item.quantity}
+
+                        </span>
+
+
+                        <strong>
+
+                            ₹${subtotal.toFixed(2)}
+
+                        </strong>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        document.getElementById(
+            "checkoutItems"
+        ).innerHTML =
+            itemsHTML;
+
+
+        document.getElementById(
+            "checkoutTotal"
+        ).textContent =
+            "₹" + total.toFixed(2);
+
+
+    } catch (error) {
+
+        console.error(
+            "Checkout loading error:",
+            error
+        );
+
+        document.getElementById(
+            "checkoutItems"
+        ).innerHTML = `
+
+            <p>
+                Unable to load your cart.
+            </p>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   LOAD ADDRESSES
+========================================= */
+
+async function loadAddresses() {
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    if (!token) {
+
+        return;
+    }
+
+
+    const container =
+        document.getElementById(
+            "addressContainer"
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/orders/addresses/",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if (response.status === 401) {
+
+            logoutUser();
+
+            return;
+        }
+
+
+        const addresses =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !addresses.length
+        ) {
+
+            container.innerHTML = `
+
+                <p>
+                    No saved addresses.
+                    Please add one.
+                </p>
+
+            `;
+
+            return;
+        }
+
+
+        let addressHTML = `
+
+            <div class="address-list">
+
+        `;
+
+
+        addresses.forEach(
+            function (address, index) {
+
+                addressHTML += `
+
+                    <label class="address-card">
+
+                        <input
+                            type="radio"
+                            name="selected_address"
+                            value="${address.id}"
+                            ${index === 0
+                                ? "checked"
+                                : ""}
+                        >
+
+
+                        <div>
+
+                            <strong>
+                                ${address.full_name}
+                            </strong>
+
+
+                            <p>
+                                ${address.address_line}
+                            </p>
+
+
+                            <p>
+                                ${address.city},
+                                ${address.state}
+                                - ${address.pincode}
+                            </p>
+
+
+                            <p>
+                                Phone:
+                                ${address.phone}
+                            </p>
+
+                        </div>
+
+                    </label>
+
+                `;
+
+            }
+        );
+
+
+        addressHTML += `
+
+            </div>
+
+        `;
+
+
+        container.innerHTML =
+            addressHTML;
+
+
+    } catch (error) {
+
+        console.error(
+            "Address loading error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <p>
+                Unable to load addresses.
+            </p>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   SHOW NEW ADDRESS FORM
+========================================= */
+
+document.getElementById(
+    "addAddressBtn"
+).addEventListener(
+    "click",
+    function () {
+
+        const form =
+            document.getElementById(
+                "addressForm"
+            );
+
+
+        if (
+            form.style.display ===
+            "none"
+        ) {
+
+            form.style.display =
+                "block";
+
+        } else {
+
+            form.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   CREATE NEW ADDRESS
+========================================= */
+
+document.getElementById(
+    "addressForm"
+).addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+
+        const token =
+            localStorage.getItem(
+                "access_token"
+            );
+
+
+        const message =
+            document.getElementById(
+                "addressMessage"
+            );
+
+
+        const addressData = {
+
+            full_name:
+                document.getElementById(
+                    "full_name"
+                ).value,
+
+            phone:
+                document.getElementById(
+                    "phone"
+                ).value,
+
+            address_line:
+                document.getElementById(
+                    "address_line"
+                ).value,
+
+            city:
+                document.getElementById(
+                    "city"
+                ).value,
+
+            state:
+                document.getElementById(
+                    "state"
+                ).value,
+
+            pincode:
+                document.getElementById(
+                    "pincode"
+                ).value,
+
+            is_default:
+                document.getElementById(
+                    "is_default"
+                ).checked
+
+        };
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/orders/addresses/",
+                    {
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " + token
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                addressData
+                            )
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (response.status === 401) {
+
+                logoutUser();
+
+                return;
+            }
+
+
+            if (response.ok) {
+
+                message.textContent =
+                    "Address saved successfully.";
+
+                message.className =
+                    "form-message success";
+
+
+                document.getElementById(
+                    "addressForm"
+                ).reset();
+
+
+                document.getElementById(
+                    "addressForm"
+                ).style.display =
+                    "none";
+
+
+                loadAddresses();
+
+
+            } else {
+
+                message.textContent =
+                    getCheckoutError(data);
+
+                message.className =
+                    "form-message error";
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Address error:",
+                error
+            );
+
+            message.textContent =
+                "Unable to save address.";
+
+            message.className =
+                "form-message error";
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   PLACE ORDER
+========================================= */
+
+document.getElementById(
+    "placeOrderBtn"
+).addEventListener(
+    "click",
+    async function () {
+
+        const token =
+            localStorage.getItem(
+                "access_token"
+            );
+
+
+        const message =
+            document.getElementById(
+                "checkoutMessage"
+            );
+
+
+        const selectedAddress =
+            document.querySelector(
+                'input[name="selected_address"]:checked'
+            );
+
+
+        const paymentMethod =
+            document.getElementById(
+                "payment_method"
+            ).value;
+
+
+        if (!selectedAddress) {
+
+            message.textContent =
+                "Please select a delivery address.";
+
+            message.className =
+                "form-message error";
+
+            return;
+        }
+
+
+        this.disabled = true;
+
+        this.textContent =
+            "Processing Order...";
+
+
+        try {
+
+            /* =============================
+               CREATE ORDER
+            ============================= */
+
+            const orderResponse =
+                await fetch(
+                    "/api/orders/orders/checkout/",
+                    {
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " + token
+
+                        },
+
+                        body: JSON.stringify({
+
+                            address:
+                                selectedAddress.value
+
+                        })
+
+                    }
+                );
+
+
+            const orderData =
+                await orderResponse.json();
+
+
+            if (
+                orderResponse.status ===
+                401
+            ) {
+
+                logoutUser();
+
+                return;
+            }
+
+
+            if (!orderResponse.ok) {
+
+                message.textContent =
+                    getCheckoutError(
+                        orderData
+                    );
+
+                message.className =
+                    "form-message error";
+
+                this.disabled = false;
+
+                this.textContent =
+                    "Place Order";
+
+                return;
+            }
+
+
+            /* =============================
+               CREATE PAYMENT
+            ============================= */
+
+            const paymentResponse =
+                await fetch(
+                    "/api/payments/payments/create_payment/",
+                    {
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " + token
+
+                        },
+
+                        body: JSON.stringify({
+
+                            order:
+                                orderData.id,
+
+                            payment_method:
+                                paymentMethod
+
+                        })
+
+                    }
+                );
+
+
+            const paymentData =
+                await paymentResponse.json();
+
+
+            if (
+                paymentResponse.status ===
+                401
+            ) {
+
+                logoutUser();
+
+                return;
+            }
+
+
+            if (!paymentResponse.ok) {
+
+                message.textContent =
+                    "Order created, but payment could not be created.";
+
+                message.className =
+                    "form-message error";
+
+                this.disabled = false;
+
+                this.textContent =
+                    "Place Order";
+
+                return;
+            }
+
+
+            /* =============================
+               SUCCESS
+            ============================= */
+
+            message.textContent =
+                "Order placed successfully!";
+
+            message.className =
+                "form-message success";
+
+
+            setTimeout(
+                function () {
+
+                    window.location.href =
+                        "/orders/";
+
+                },
+                1200
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Order error:",
+                error
+            );
+
+
+            message.textContent =
+                "Something went wrong. Please try again.";
+
+            message.className =
+                "form-message error";
+
+
+            this.disabled = false;
+
+            this.textContent =
+                "Place Order";
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   LOGOUT HELPER
+========================================= */
+
+function logoutUser() {
+
+    localStorage.removeItem(
+        "access_token"
+    );
+
+    localStorage.removeItem(
+        "refresh_token"
+    );
+
+    window.location.href =
+        "/login/";
+
+}
+
+
+/* =========================================
+   ERROR HELPER
+========================================= */
+
+function getCheckoutError(data) {
+
+    if (data.address) {
+
+        return data.address[0];
+
+    }
+
+
+    if (data.full_name) {
+
+        return data.full_name[0];
+
+    }
+
+
+    if (data.phone) {
+
+        return data.phone[0];
+
+    }
+
+
+    if (data.address_line) {
+
+        return data.address_line[0];
+
+    }
+
+
+    if (data.city) {
+
+        return data.city[0];
+
+    }
+
+
+    if (data.state) {
+
+        return data.state[0];
+
+    }
+
+
+    if (data.pincode) {
+
+        return data.pincode[0];
+
+    }
+
+
+    if (data.detail) {
+
+        return data.detail;
+
+    }
+
+
+    return "Something went wrong. Please try again.";
+
+}
+
+</script>
 
 {% endblock %}
