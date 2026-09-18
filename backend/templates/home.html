@@ -44,25 +44,21 @@ CAVELLE | Artisan Cakes
     </div>
 
 
-    <!-- HERO CAKE -->
-
     <div class="hero-visual">
 
-        {% if featured_cake and featured_cake.image %}
-
-            <img
-                src="{{ featured_cake.image.url }}"
-                alt="{{ featured_cake.name }}"
-                class="hero-cake-image"
+        <video
+            class="hero-cake-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+        >
+            <source
+                src="{% static 'videos/cavelle-hero-video.mp4' %}"
+                type="video/mp4"
             >
-
-        {% else %}
-
-            <div class="cake-placeholder">
-                CAVELLE
-            </div>
-
-        {% endif %}
+        </video>
 
     </div>
 
