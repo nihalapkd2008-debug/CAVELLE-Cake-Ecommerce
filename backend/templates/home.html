@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 CAVELLE | Artisan Cakes
@@ -35,8 +36,8 @@ CAVELLE | Artisan Cakes
                 Explore Cakes
             </a>
 
-            <a href="#categories" class="secondary-btn">
-                Explore Categories
+            <a href="#bakery-collection" class="secondary-btn">
+                Discover More
             </a>
 
         </div>
@@ -66,69 +67,87 @@ CAVELLE | Artisan Cakes
 
 
 <!-- =========================================
-     SHOP BY CATEGORY
+     BAKERY COLLECTION
 ========================================= -->
 
 <section
-    class="categories-section"
-    id="categories"
+    class="bakery-section"
+    id="bakery-collection"
 >
 
     <div class="section-heading">
 
         <p class="section-label">
-            EXPLORE THE COLLECTION
+            A LITTLE SOMETHING
         </p>
 
         <h2>
-            Find something made for your moment.
+            Sweet details,<br>
+            beautifully crafted.
         </h2>
 
         <p class="section-description">
-            From timeless classics to indulgent favourites,
-            discover a cake for every kind of celebration.
+            Beyond cakes, discover little indulgences
+            made to brighten every kind of moment.
         </p>
 
     </div>
 
 
-    <div class="category-circle-grid">
+    <div class="bakery-showcase">
 
-        {% for category in categories %}
+        {% for item in bakery_items %}
 
-        <a
-            href="/products/?category={{ category.name|urlencode }}"
-            class="category-circle-item"
-        >
+        <div class="bakery-item">
 
-            <div class="category-circle-image">
+            <div class="bakery-image">
 
-                {% if category.image %}
+                {% if item.image %}
 
                     <img
-                        src="{{ category.image.url }}"
-                        alt="{{ category.name }} Cakes"
+                        src="{{ item.image.url }}"
+                        alt="{{ item.name }}"
                     >
-
-                {% else %}
-
-                    <div class="category-circle-placeholder">
-                        C
-                    </div>
 
                 {% endif %}
 
             </div>
 
-            <h3>
-                {{ category.name }}
-            </h3>
+            <div class="bakery-info">
 
-            <span>
-                Explore →
-            </span>
+                <span>
+                    {% if forloop.counter < 10 %}
+                        0{{ forloop.counter }}
+                    {% else %}
+                        {{ forloop.counter }}
+                    {% endif %}
+                </span>
 
-        </a>
+                <h3>
+                    {{ item.name }}
+                </h3>
+
+                {% if item.description %}
+
+                    <p>
+                        {{ item.description }}
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="bakery-empty">
+
+            <p>
+                Beautiful treats are coming soon.
+            </p>
+
+        </div>
 
         {% endfor %}
 
@@ -172,6 +191,7 @@ CAVELLE | Artisan Cakes
             </span>
 
             <div>
+
                 <h3>
                     Thoughtfully Crafted
                 </h3>
@@ -180,6 +200,7 @@ CAVELLE | Artisan Cakes
                     Every detail is considered,
                     from flavour to finish.
                 </p>
+
             </div>
 
         </div>
@@ -192,6 +213,7 @@ CAVELLE | Artisan Cakes
             </span>
 
             <div>
+
                 <h3>
                     Made for Moments
                 </h3>
@@ -200,6 +222,7 @@ CAVELLE | Artisan Cakes
                     Cakes created to become part
                     of your special memories.
                 </p>
+
             </div>
 
         </div>
@@ -212,6 +235,7 @@ CAVELLE | Artisan Cakes
             </span>
 
             <div>
+
                 <h3>
                     Elegant by Nature
                 </h3>
@@ -220,6 +244,7 @@ CAVELLE | Artisan Cakes
                     Simple, refined and beautifully
                     presented.
                 </p>
+
             </div>
 
         </div>
@@ -249,9 +274,9 @@ CAVELLE | Artisan Cakes
         </h2>
 
         <p>
-            At CAVELLE, every cake is created with attention
-            to detail, thoughtful flavours and a love for
-            beautiful celebrations.
+            At CAVELLE, every creation is made with
+            attention to detail, thoughtful flavours
+            and a love for beautiful celebrations.
         </p>
 
         <a

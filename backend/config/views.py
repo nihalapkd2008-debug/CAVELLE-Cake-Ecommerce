@@ -1,25 +1,20 @@
 from django.shortcuts import render, get_object_or_404
 
-from products.models import Cake, Category
+from products.models import Cake, Category, BakeryItem
 from orders.models import CartItem, Address, Order
 
 
 def home(request):
 
-    featured_cake = Cake.objects.filter(
-        image__isnull=False,
-        is_available=True,
-        stock__gt=0
-    ).first()
-
-    categories = Category.objects.all()
+    bakery_items = BakeryItem.objects.filter(
+        is_active=True
+    ).order_by("created_at")
 
     return render(
         request,
         "home.html",
         {
-            "featured_cake": featured_cake,
-            "categories": categories,
+            "bakery_items": bakery_items,
         }
     )
 
@@ -74,6 +69,7 @@ def register_page(request):
 
 
 def cart_page(request):
+
     return render(
         request,
         "cart.html",
@@ -85,6 +81,7 @@ def cart_page(request):
 
 
 def checkout_page(request):
+
     return render(
         request,
         "checkout.html",
@@ -97,6 +94,7 @@ def checkout_page(request):
 
 
 def orders_page(request):
+
     return render(
         request,
         "orders.html",
@@ -107,6 +105,7 @@ def orders_page(request):
 
 
 def staff_orders_page(request):
+
     return render(
         request,
         "staff-orders.html"

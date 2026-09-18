@@ -73,5 +73,12 @@ class Cake(models.Model):
         auto_now=True
     )
 
+class BakeryItem(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to="cakes/")
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return self.name
