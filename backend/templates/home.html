@@ -75,32 +75,35 @@ CAVELLE | Artisan Cakes
     id="bakery-collection"
 >
 
-    <div class="section-heading">
+    <div class="bakery-heading">
 
         <p class="section-label">
-            A LITTLE SOMETHING
+            EXPLORE OUR SWEET SIDE
         </p>
 
         <h2>
-            Sweet details,<br>
-            beautifully crafted.
+            Something sweet<br>
+            for every moment.
         </h2>
 
         <p class="section-description">
-            Beyond cakes, discover little indulgences
-            made to brighten every kind of moment.
+            From delicate pastries to celebration cakes,
+            discover something made for every craving.
         </p>
 
     </div>
 
 
-    <div class="bakery-showcase">
+    <div class="bakery-grid">
 
         {% for item in bakery_items %}
 
-        <div class="bakery-item">
+        <a
+            href="/products/?category={{ item.category.name|urlencode }}"
+            class="bakery-card"
+        >
 
-            <div class="bakery-image">
+            <div class="bakery-card-image">
 
                 {% if item.image %}
 
@@ -113,9 +116,10 @@ CAVELLE | Artisan Cakes
 
             </div>
 
-            <div class="bakery-info">
 
-                <span>
+            <div class="bakery-card-content">
+
+                <span class="bakery-number">
                     {% if forloop.counter < 10 %}
                         0{{ forloop.counter }}
                     {% else %}
@@ -127,17 +131,13 @@ CAVELLE | Artisan Cakes
                     {{ item.name }}
                 </h3>
 
-                {% if item.description %}
-
-                    <p>
-                        {{ item.description }}
-                    </p>
-
-                {% endif %}
+                <span class="bakery-arrow">
+                    →
+                </span>
 
             </div>
 
-        </div>
+        </a>
 
         {% empty %}
 
