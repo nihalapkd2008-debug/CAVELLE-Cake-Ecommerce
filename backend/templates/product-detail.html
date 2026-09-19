@@ -6,7 +6,12 @@
 
 {% block content %}
 
+
 <section class="product-detail">
+
+    <!-- =========================================
+         PRODUCT IMAGE
+    ========================================= -->
 
     <div class="detail-image">
 
@@ -28,19 +33,26 @@
     </div>
 
 
+    <!-- =========================================
+         PRODUCT INFORMATION
+    ========================================= -->
+
     <div class="detail-content">
 
         <p class="section-label">
             {{ cake.category.name }}
         </p>
 
+
         <h1>
             {{ cake.name }}
         </h1>
 
+
         <p class="detail-flavour">
             {{ cake.flavour }}
         </p>
+
 
         <p class="detail-description">
             {{ cake.description }}
@@ -52,19 +64,30 @@
         </div>
 
 
+        <!-- =====================================
+             CAKE DETAILS
+        ====================================== -->
+
         <div class="cake-details">
 
             <div>
-                <span>Weight</span>
+
+                <span>
+                    Weight
+                </span>
 
                 <strong>
                     {{ cake.weight }} kg
                 </strong>
+
             </div>
 
 
             <div>
-                <span>Eggless</span>
+
+                <span>
+                    Eggless
+                </span>
 
                 {% if cake.eggless %}
 
@@ -84,7 +107,10 @@
 
 
             <div>
-                <span>Availability</span>
+
+                <span>
+                    Availability
+                </span>
 
                 {% if cake.is_available and cake.stock > 0 %}
 
@@ -104,6 +130,10 @@
 
         </div>
 
+
+        <!-- =====================================
+             ADD TO CART
+        ====================================== -->
 
         {% if cake.is_available and cake.stock > 0 %}
 
@@ -159,5 +189,920 @@
     </div>
 
 </section>
+
+
+<!-- =========================================
+     REVIEWS SECTION
+========================================= -->
+
+<section class="reviews-section">
+
+    <div class="reviews-header">
+
+        <p class="section-label">
+            CUSTOMER EXPERIENCES
+        </p>
+
+        <h2>
+            Reviews
+        </h2>
+
+        <div
+            id="reviewSummary"
+            class="review-summary"
+        >
+            Loading reviews...
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         REVIEW LIST
+    ====================================== -->
+
+    <div
+        id="reviewsContainer"
+        class="reviews-container"
+    >
+
+        <div class="empty-state">
+
+            <h2>
+                Loading reviews...
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         ADD REVIEW
+    ====================================== -->
+
+    <div
+        id="reviewFormContainer"
+        class="review-form-container"
+    >
+
+        <h3>
+            Share your experience
+        </h3>
+
+
+        <form
+            id="reviewForm"
+            class="auth-form"
+        >
+
+            <div class="form-group">
+
+                <label for="reviewRating">
+                    Rating
+                </label>
+
+                <select
+                    id="reviewRating"
+                    required
+                >
+
+                    <option value="">
+                        Select rating
+                    </option>
+
+                    <option value="5">
+                        ★★★★★ — Excellent
+                    </option>
+
+                    <option value="4">
+                        ★★★★☆ — Very Good
+                    </option>
+
+                    <option value="3">
+                        ★★★☆☆ — Good
+                    </option>
+
+                    <option value="2">
+                        ★★☆☆☆ — Fair
+                    </option>
+
+                    <option value="1">
+                        ★☆☆☆☆ — Poor
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="reviewComment">
+                    Comment
+                </label>
+
+                <textarea
+                    id="reviewComment"
+                    rows="5"
+                    placeholder="Share your thoughts about this cake..."
+                ></textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary-btn"
+                id="reviewSubmitBtn"
+            >
+                Submit Review
+            </button>
+
+
+            <p
+                id="reviewMessage"
+                class="form-message"
+            ></p>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =========================================
+   GLOBAL PRODUCT DATA
+========================================= */
+
+const currentCakeId =
+    "{{ cake.id }}";
+
+
+/* =========================================
+   ADD TO CART
+========================================= */
+
+const addToCartForm =
+    document.getElementById(
+        "addToCartForm"
+    );
+
+
+if (addToCartForm) {
+
+    addToCartForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const token =
+                localStorage.getItem(
+                    "access_token"
+                );
+
+
+            const message =
+                document.getElementById(
+                    "cartMessage"
+                );
+
+
+            const cakeId =
+                addToCartForm.dataset.cakeId;
+
+
+            const quantity =
+                parseInt(
+                    document.getElementById(
+                        "quantity"
+                    ).value
+                );
+
+
+            /* ================================
+               LOGIN CHECK
+            ================================= */
+
+            if (!token) {
+
+                message.textContent =
+                    "Please login to add items to your cart.";
+
+                message.className =
+                    "form-message error";
+
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "/login/";
+
+                    },
+                    1000
+                );
+
+                return;
+            }
+
+
+            /* ================================
+               QUANTITY CHECK
+            ================================= */
+
+            if (
+                !quantity ||
+                quantity < 1
+            ) {
+
+                message.textContent =
+                    "Please enter a valid quantity.";
+
+                message.className =
+                    "form-message error";
+
+                return;
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/orders/cart-items/",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+
+                                "Authorization":
+                                    "Bearer " + token
+                            },
+
+                            body: JSON.stringify({
+                                cake: cakeId,
+                                quantity: quantity
+                            })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                /* ================================
+                   TOKEN EXPIRED
+                ================================= */
+
+                if (
+                    response.status === 401
+                ) {
+
+                    logoutUser();
+
+                    return;
+                }
+
+
+                /* ================================
+                   SUCCESS
+                ================================= */
+
+                if (response.ok) {
+
+                    message.textContent =
+                        "Cake added to cart successfully!";
+
+                    message.className =
+                        "form-message success";
+
+                } else {
+
+                    message.textContent =
+                        getCartErrorMessage(
+                            data
+                        );
+
+                    message.className =
+                        "form-message error";
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "Cart error:",
+                    error
+                );
+
+
+                message.textContent =
+                    "Something went wrong. Please try again.";
+
+                message.className =
+                    "form-message error";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   LOAD REVIEWS
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadReviews
+);
+
+
+async function loadReviews() {
+
+    const reviewsContainer =
+        document.getElementById(
+            "reviewsContainer"
+        );
+
+
+    const summary =
+        document.getElementById(
+            "reviewSummary"
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/reviews/reviews/cake/${currentCakeId}/`,
+                {
+                    method: "GET"
+                }
+            );
+
+
+        const reviews =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            reviewsContainer.innerHTML = `
+
+                <div class="empty-state">
+
+                    <h2>
+                        Unable to load reviews
+                    </h2>
+
+                    <p>
+                        Please try again later.
+                    </p>
+
+                </div>
+
+            `;
+
+            summary.textContent =
+                "Reviews unavailable.";
+
+            return;
+        }
+
+
+        /* =================================
+           NO REVIEWS
+        ================================= */
+
+        if (!reviews.length) {
+
+            reviewsContainer.innerHTML = `
+
+                <div class="empty-state">
+
+                    <h2>
+                        No reviews yet
+                    </h2>
+
+                    <p>
+                        Be the first to share your experience.
+                    </p>
+
+                </div>
+
+            `;
+
+            summary.textContent =
+                "No ratings yet.";
+
+            return;
+        }
+
+
+        /* =================================
+           CALCULATE AVERAGE
+        ================================= */
+
+        let totalRating = 0;
+
+
+        reviews.forEach(
+            function (review) {
+
+                totalRating +=
+                    Number(
+                        review.rating
+                    );
+
+            }
+        );
+
+
+        const averageRating =
+            (
+                totalRating /
+                reviews.length
+            ).toFixed(1);
+
+
+        summary.innerHTML = `
+
+            <strong>
+                ${averageRating} / 5
+            </strong>
+
+            <span>
+                ★
+            </span>
+
+            <span>
+                ${reviews.length}
+                ${
+                    reviews.length === 1
+                        ? "Review"
+                        : "Reviews"
+                }
+            </span>
+
+        `;
+
+
+        /* =================================
+           RENDER REVIEWS
+        ================================= */
+
+        let reviewsHTML = "";
+
+
+        reviews.forEach(
+            function (review) {
+
+                const rating =
+                    Number(
+                        review.rating
+                    );
+
+
+                const stars =
+                    "★".repeat(rating) +
+                    "☆".repeat(5 - rating);
+
+
+                const username =
+                    review.username ||
+                    "CAVELLE Customer";
+
+
+                reviewsHTML += `
+
+                    <article
+                        class="review-card"
+                    >
+
+                        <div
+                            class="review-card-header"
+                        >
+
+                            <div>
+
+                                <strong>
+                                    ${username}
+                                </strong>
+
+                                <div
+                                    class="review-stars"
+                                >
+                                    ${stars}
+                                </div>
+
+                            </div>
+
+
+                            <span
+                                class="review-date"
+                            >
+                                ${formatReviewDate(
+                                    review.created_at
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        ${
+                            review.comment
+                                ? `
+                                    <p class="review-comment">
+                                        ${review.comment}
+                                    </p>
+                                `
+                                : ""
+                        }
+
+                    </article>
+
+                `;
+
+            }
+        );
+
+
+        reviewsContainer.innerHTML =
+            reviewsHTML;
+
+
+    } catch (error) {
+
+        console.error(
+            "Review loading error:",
+            error
+        );
+
+
+        reviewsContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <h2>
+                    Something went wrong
+                </h2>
+
+                <p>
+                    Unable to load reviews.
+                </p>
+
+            </div>
+
+        `;
+
+        summary.textContent =
+            "Unable to load ratings.";
+
+    }
+
+}
+
+
+/* =========================================
+   SUBMIT REVIEW
+========================================= */
+
+const reviewForm =
+    document.getElementById(
+        "reviewForm"
+    );
+
+
+if (reviewForm) {
+
+    reviewForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const token =
+                localStorage.getItem(
+                    "access_token"
+                );
+
+
+            const message =
+                document.getElementById(
+                    "reviewMessage"
+                );
+
+
+            const rating =
+                document.getElementById(
+                    "reviewRating"
+                ).value;
+
+
+            const comment =
+                document.getElementById(
+                    "reviewComment"
+                ).value.trim();
+
+
+            /* ================================
+               LOGIN CHECK
+            ================================= */
+
+            if (!token) {
+
+                message.textContent =
+                    "Please login to submit a review.";
+
+                message.className =
+                    "form-message error";
+
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "/login/";
+
+                    },
+                    1000
+                );
+
+                return;
+            }
+
+
+            /* ================================
+               RATING CHECK
+            ================================= */
+
+            if (!rating) {
+
+                message.textContent =
+                    "Please select a rating.";
+
+                message.className =
+                    "form-message error";
+
+                return;
+            }
+
+
+            const submitButton =
+                document.getElementById(
+                    "reviewSubmitBtn"
+                );
+
+
+            submitButton.disabled =
+                true;
+
+
+            submitButton.textContent =
+                "Submitting...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/reviews/reviews/",
+                        {
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json",
+
+                                "Authorization":
+                                    "Bearer " + token
+
+                            },
+
+                            body: JSON.stringify({
+
+                                cake:
+                                    currentCakeId,
+
+                                rating:
+                                    Number(
+                                        rating
+                                    ),
+
+                                comment:
+                                    comment
+
+                            })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                /* ================================
+                   TOKEN EXPIRED
+                ================================= */
+
+                if (
+                    response.status === 401
+                ) {
+
+                    logoutUser();
+
+                    return;
+                }
+
+
+                /* ================================
+                   SUCCESS
+                ================================= */
+
+                if (response.ok) {
+
+                    message.textContent =
+                        "Your review has been submitted successfully.";
+
+                    message.className =
+                        "form-message success";
+
+
+                    reviewForm.reset();
+
+
+                    await loadReviews();
+
+
+                } else {
+
+                    message.textContent =
+                        getReviewErrorMessage(
+                            data
+                        );
+
+                    message.className =
+                        "form-message error";
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "Review submit error:",
+                    error
+                );
+
+
+                message.textContent =
+                    "Something went wrong. Please try again.";
+
+                message.className =
+                    "form-message error";
+
+
+            } finally {
+
+                submitButton.disabled =
+                    false;
+
+                submitButton.textContent =
+                    "Submit Review";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   FORMAT REVIEW DATE
+========================================= */
+
+function formatReviewDate(
+    dateString
+) {
+
+    const date =
+        new Date(
+            dateString
+        );
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* =========================================
+   CART ERROR
+========================================= */
+
+function getCartErrorMessage(data) {
+
+    if (data.quantity) {
+
+        return data.quantity[0];
+
+    }
+
+
+    if (data.detail) {
+
+        return data.detail;
+
+    }
+
+
+    return "Something went wrong. Please try again.";
+
+}
+
+
+/* =========================================
+   REVIEW ERROR
+========================================= */
+
+function getReviewErrorMessage(data) {
+
+    if (data.cake) {
+
+        return data.cake[0];
+
+    }
+
+
+    if (data.rating) {
+
+        return data.rating[0];
+
+    }
+
+
+    if (data.comment) {
+
+        return data.comment[0];
+
+    }
+
+
+    if (data.detail) {
+
+        return data.detail;
+
+    }
+
+
+    return "Something went wrong. Please try again.";
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logoutUser() {
+
+    localStorage.removeItem(
+        "access_token"
+    );
+
+    localStorage.removeItem(
+        "refresh_token"
+    );
+
+    window.location.href =
+        "/login/";
+
+}
+
+</script>
 
 {% endblock %}

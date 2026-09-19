@@ -4,20 +4,57 @@ from products.models import Cake, Category, BakeryItem
 from orders.models import CartItem, Address, Order
 
 
+# =========================================
+# HOME PAGE
+# =========================================
+
 def home(request):
 
     bakery_items = BakeryItem.objects.filter(
         is_active=True
     ).order_by("created_at")
 
+    featured_cakes = Cake.objects.filter(
+        is_available=True
+    ).order_by("-created_at")[:4]
+
     return render(
         request,
         "home.html",
         {
             "bakery_items": bakery_items,
+            "featured_cakes": featured_cakes,
         }
     )
 
+
+# =========================================
+# BAKERY GALLERY
+# =========================================
+
+def bakery_gallery(request, item_id):
+
+    item = get_object_or_404(
+        BakeryItem,
+        id=item_id,
+        is_active=True
+    )
+
+    gallery_images = item.gallery_images.all()
+
+    return render(
+        request,
+        "bakery-gallery.html",
+        {
+            "item": item,
+            "gallery_images": gallery_images,
+        }
+    )
+
+
+# =========================================
+# PRODUCTS PAGE
+# =========================================
 
 def products_page(request):
 
@@ -44,6 +81,10 @@ def products_page(request):
     )
 
 
+# =========================================
+# PRODUCT DETAIL
+# =========================================
+
 def product_detail(request, cake_id):
 
     cake = get_object_or_404(
@@ -60,13 +101,33 @@ def product_detail(request, cake_id):
     )
 
 
-def login_page(request):
-    return render(request, "login.html")
+# =========================================
+# LOGIN
+# =========================================
 
+def login_page(request):
+
+    return render(
+        request,
+        "login.html"
+    )
+
+
+# =========================================
+# REGISTER
+# =========================================
 
 def register_page(request):
-    return render(request, "register.html")
 
+    return render(
+        request,
+        "register.html"
+    )
+
+
+# =========================================
+# CART
+# =========================================
 
 def cart_page(request):
 
@@ -79,6 +140,10 @@ def cart_page(request):
         }
     )
 
+
+# =========================================
+# CHECKOUT
+# =========================================
 
 def checkout_page(request):
 
@@ -93,6 +158,10 @@ def checkout_page(request):
     )
 
 
+# =========================================
+# ORDERS
+# =========================================
+
 def orders_page(request):
 
     return render(
@@ -103,6 +172,22 @@ def orders_page(request):
         }
     )
 
+
+# =========================================
+# WISHLIST
+# =========================================
+
+def wishlist_page(request):
+
+    return render(
+        request,
+        "wishlist.html"
+    )
+
+
+# =========================================
+# STAFF ORDERS
+# =========================================
 
 def staff_orders_page(request):
 

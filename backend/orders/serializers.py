@@ -9,6 +9,10 @@ from .models import (
 )
 
 
+# =========================================
+# CART ITEM SERIALIZER
+# =========================================
+
 class CartItemSerializer(serializers.ModelSerializer):
 
     cart = serializers.PrimaryKeyRelatedField(
@@ -61,6 +65,10 @@ class CartItemSerializer(serializers.ModelSerializer):
         return obj.cake.price * obj.quantity
 
 
+# =========================================
+# CART SERIALIZER
+# =========================================
+
 class CartSerializer(serializers.ModelSerializer):
 
     user = serializers.PrimaryKeyRelatedField(
@@ -78,6 +86,10 @@ class CartSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+# =========================================
+# ADDRESS SERIALIZER
+# =========================================
+
 class AddressSerializer(serializers.ModelSerializer):
 
     user = serializers.PrimaryKeyRelatedField(
@@ -89,11 +101,27 @@ class AddressSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+# =========================================
+# ORDER ITEM SERIALIZER
+# =========================================
+
 class OrderItemSerializer(serializers.ModelSerializer):
+
+    cake_name = serializers.CharField(
+        source="cake.name",
+        read_only=True
+    )
 
     class Meta:
         model = OrderItem
-        fields = "__all__"
+        fields = [
+            "id",
+            "order",
+            "cake",
+            "cake_name",
+            "quantity",
+            "unit_price",
+        ]
 
     def validate_quantity(self, value):
 
@@ -104,6 +132,10 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
         return value
 
+
+# =========================================
+# ORDER SERIALIZER
+# =========================================
 
 class OrderSerializer(serializers.ModelSerializer):
 

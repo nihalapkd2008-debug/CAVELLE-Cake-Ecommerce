@@ -6,6 +6,7 @@ CAVELLE | Cakes
 
 {% block content %}
 
+
 <!-- =========================================
      PAGE HEADER
 ========================================= -->
@@ -33,18 +34,29 @@ CAVELLE | Cakes
 
 <section class="products-section">
 
+
     <div class="products-toolbar">
+
 
         <div>
 
             <span id="cakeCount">
-                {{ cakes|length }} Cakes
+
+                {{ cakes|length }}
+
+                {% if cakes|length == 1 %}
+                    Cake
+                {% else %}
+                    Cakes
+                {% endif %}
+
             </span>
 
         </div>
 
 
         <div class="product-filters">
+
 
             <!-- SEARCH -->
 
@@ -58,18 +70,21 @@ CAVELLE | Cakes
 
             <!-- CATEGORY -->
 
-            <select id="categoryFilter">
+            <select
+                id="categoryFilter"
+            >
 
                 <option value="all">
                     All Categories
                 </option>
 
-                {% for cake in cakes %}
+
+                {% for category in categories %}
 
                     <option
-                        value="{{ cake.category.name }}"
+                        value="{{ category.name }}"
                     >
-                        {{ cake.category.name }}
+                        {{ category.name }}
                     </option>
 
                 {% endfor %}
@@ -79,7 +94,9 @@ CAVELLE | Cakes
 
             <!-- SORT -->
 
-            <select id="sortFilter">
+            <select
+                id="sortFilter"
+            >
 
                 <option value="">
                     Sort By
@@ -113,22 +130,34 @@ CAVELLE | Cakes
         id="productGrid"
     >
 
+
         {% for cake in cakes %}
+
 
         <article
             class="product-card"
+
             data-category="{{ cake.category.name }}"
+
             data-price="{{ cake.price }}"
+
             data-created="{{ cake.created_at|date:'U' }}"
+
             data-name="{{ cake.name|lower }}"
+
             data-flavour="{{ cake.flavour|lower }}"
+
+            data-cake-id="{{ cake.id }}"
         >
+
 
             <a
                 href="{% url 'product-detail' cake.id %}"
             >
 
+
                 <div class="product-image">
+
 
                     {% if cake.image %}
 
@@ -145,55 +174,92 @@ CAVELLE | Cakes
 
                     {% endif %}
 
+
+                    <!-- =================================
+                         WISHLIST HEART
+                    ================================== -->
+
+                    <button
+                        type="button"
+                        class="wishlist-heart"
+                        data-cake-id="{{ cake.id }}"
+                        data-wishlisted="false"
+                        aria-label="Add {{ cake.name }} to wishlist"
+                    >
+                        ♡
+                    </button>
+
+
                 </div>
 
 
                 <div class="product-info">
 
+
                     <p class="product-category">
+
                         {{ cake.category.name }}
+
                     </p>
 
+
                     <h3>
+
                         {{ cake.name }}
+
                     </h3>
 
+
                     <p class="product-flavour">
+
                         {{ cake.flavour }}
+
                     </p>
 
 
                     <div class="product-bottom">
 
+
                         <span class="product-price">
+
                             ₹{{ cake.price }}
+
                         </span>
 
 
                         {% if cake.is_available and cake.stock > 0 %}
 
                             <span class="stock-status">
+
                                 Available
+
                             </span>
 
                         {% else %}
 
                             <span class="stock-status">
+
                                 Out of stock
+
                             </span>
 
                         {% endif %}
 
+
                     </div>
+
 
                 </div>
 
+
             </a>
+
 
         </article>
 
 
         {% empty %}
+
 
         <div class="empty-state">
 
@@ -206,6 +272,7 @@ CAVELLE | Cakes
             </p>
 
         </div>
+
 
         {% endfor %}
 
@@ -228,8 +295,444 @@ CAVELLE | Cakes
 
         </div>
 
+
     </div>
 
 </section>
+
+
+<script>
+
+/* =========================================
+   WISHLIST STATE
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    initializeWishlist
+);
+
+
+async function initializeWishlist() {
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    const heartButtons =
+        document.querySelectorAll(
+            ".wishlist-heart"
+        );
+
+
+    /* =====================================
+       GUEST USER
+    ===================================== */
+
+    if (!token) {
+
+        heartButtons.forEach(
+            function (button) {
+
+                button.dataset.wishlisted =
+                    "false";
+
+                button.textContent =
+                    "♡";
+
+            }
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/products/cakes/wishlist/",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if (response.status === 401) {
+
+            localStorage.removeItem(
+                "access_token"
+            );
+
+            localStorage.removeItem(
+                "refresh_token"
+            );
+
+            return;
+        }
+
+
+        if (!response.ok) {
+
+            return;
+        }
+
+
+        const wishlistCakes =
+            await response.json();
+
+
+        const wishlistIds =
+            new Set(
+                wishlistCakes.map(
+                    function (cake) {
+
+                        return String(
+                            cake.id
+                        );
+
+                    }
+                )
+            );
+
+
+        heartButtons.forEach(
+            function (button) {
+
+                const cakeId =
+                    String(
+                        button.dataset.cakeId
+                    );
+
+
+                if (
+                    wishlistIds.has(
+                        cakeId
+                    )
+                ) {
+
+                    setWishlistState(
+                        button,
+                        true
+                    );
+
+                } else {
+
+                    setWishlistState(
+                        button,
+                        false
+                    );
+
+                }
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Wishlist loading error:",
+            error
+        );
+
+    }
+
+
+    /* =====================================
+       HEART CLICK
+    ===================================== */
+
+    heartButtons.forEach(
+        function (button) {
+
+            button.addEventListener(
+                "click",
+                handleWishlistClick
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   WISHLIST CLICK
+========================================= */
+
+async function handleWishlistClick(event) {
+
+    event.preventDefault();
+
+    event.stopPropagation();
+
+
+    const button =
+        event.currentTarget;
+
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    const cakeId =
+        button.dataset.cakeId;
+
+
+    /* =====================================
+       LOGIN
+    ===================================== */
+
+    if (!token) {
+
+        window.location.href =
+            "/login/";
+
+        return;
+    }
+
+
+    const isWishlisted =
+        button.dataset.wishlisted ===
+        "true";
+
+
+    const method =
+        isWishlisted
+            ? "DELETE"
+            : "POST";
+
+
+    button.disabled = true;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/products/cakes/${cakeId}/wishlist/`,
+                {
+                    method: method,
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (response.status === 401) {
+
+            localStorage.removeItem(
+                "access_token"
+            );
+
+            localStorage.removeItem(
+                "refresh_token"
+            );
+
+            window.location.href =
+                "/login/";
+
+            return;
+        }
+
+
+        if (response.ok) {
+
+            const newState =
+                method === "POST";
+
+
+            setWishlistState(
+                button,
+                newState
+            );
+
+
+            /* Update navbar count */
+
+            updateWishlistCount();
+
+        } else {
+
+            alert(
+                data.detail ||
+                "Unable to update wishlist."
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Wishlist error:",
+            error
+        );
+
+
+        alert(
+            "Something went wrong. Please try again."
+        );
+
+
+    } finally {
+
+        button.disabled = false;
+
+    }
+
+}
+
+
+/* =========================================
+   HEART STATE
+========================================= */
+
+function setWishlistState(
+    button,
+    isWishlisted
+) {
+
+    button.dataset.wishlisted =
+        isWishlisted
+            ? "true"
+            : "false";
+
+
+    button.textContent =
+        isWishlisted
+            ? "♥"
+            : "♡";
+
+
+    if (isWishlisted) {
+
+        button.classList.add(
+            "wishlisted"
+        );
+
+        button.setAttribute(
+            "aria-label",
+            "Remove from wishlist"
+        );
+
+    } else {
+
+        button.classList.remove(
+            "wishlisted"
+        );
+
+        button.setAttribute(
+            "aria-label",
+            "Add to wishlist"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   UPDATE NAVBAR COUNT
+========================================= */
+
+async function updateWishlistCount() {
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    const countElement =
+        document.getElementById(
+            "wishlistCount"
+        );
+
+
+    if (
+        !token ||
+        !countElement
+    ) {
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/products/cakes/wishlist/",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if (!response.ok) {
+
+            return;
+        }
+
+
+        const cakes =
+            await response.json();
+
+
+        const count =
+            cakes.length;
+
+
+        if (count > 0) {
+
+            countElement.textContent =
+                count;
+
+            countElement.style.display =
+                "inline-flex";
+
+        } else {
+
+            countElement.style.display =
+                "none";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Wishlist count error:",
+            error
+        );
+
+    }
+
+}
+
+</script>
 
 {% endblock %}

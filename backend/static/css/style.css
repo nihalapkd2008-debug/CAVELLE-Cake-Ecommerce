@@ -2576,7 +2576,7 @@ main {
     }
 
 
-    /* WATERMARK */
+    WATERMARK
 
     .site-watermark {
         width:
@@ -3041,7 +3041,6 @@ main {
 .bakery-section {
     position: relative;
     padding: 110px 7% 120px;
-    background: #F5EDE5;
     overflow: hidden;
     z-index: 1;
 }
@@ -3113,11 +3112,11 @@ main {
 
 .bakery-card-image {
     width: 100%;
-    aspect-ratio: 1 / 1.08;
+    aspect-ratio: 0.82;
     overflow: hidden;
     position: relative;
     background: #E8D9CC;
-    border-radius: 22px;
+    border-radius: 48% 48% 16px 16px;
 }
 
 .bakery-card-image img {
@@ -3252,7 +3251,7 @@ main {
     }
 
     .bakery-card-image {
-        border-radius: 17px;
+         border-radius: 45% 45% 12px 12px;
     }
 
     .bakery-card-content {
@@ -3297,10 +3296,946 @@ main {
     }
 
     .bakery-card-image {
-        border-radius: 15px;
+         border-radius: 42% 42% 10px 10px;
     }
 
     .bakery-card-content h3 {
         font-size: 16px;
     }
+}
+
+/* =========================================
+   CAVELLE FEATURED CAKES
+========================================= */
+
+.featured-section {
+    position: relative;
+    padding: 95px 7% 105px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+
+
+
+/* Heading */
+
+.featured-heading {
+    position: relative;
+    z-index: 1;
+
+    max-width: 1100px;
+    margin: 0 auto 55px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.featured-heading-text {
+    max-width: 620px;
+}
+
+.featured-heading .section-label {
+    margin-bottom: 15px;
+}
+
+.featured-heading h2 {
+    margin: 0;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(38px, 4.5vw, 58px);
+    line-height: 1.08;
+    font-weight: 400;
+    letter-spacing: -1.2px;
+
+    color: #2B1D18;
+}
+
+.featured-heading-description {
+    max-width: 320px;
+    padding-bottom: 4px;
+}
+
+.featured-heading-description p {
+    margin: 0 0 16px;
+
+    color: #6F5548;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.text-link {
+    color: #2B1D18;
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+
+    border-bottom: 1px solid rgba(43, 29, 24, 0.35);
+    padding-bottom: 3px;
+
+    transition: opacity 0.3s ease;
+}
+
+.text-link:hover {
+    opacity: 0.6;
+}
+
+
+/* SIGNATURE CAKES GRID */
+/* =========================================
+   SIGNATURE CAKES
+========================================= */
+
+.featured-grid {
+    width: min(960px, calc(100% - 80px));
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.featured-card {
+    min-width: 0;
+}
+
+.featured-card-image {
+    width: 100%;
+    height: 270px;
+
+    overflow: hidden;
+    border-radius: 14px;
+
+    background: #EFE4DB;
+}
+
+.featured-card-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+    object-position: center;
+
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.featured-card:hover .featured-card-image img {
+    transform: scale(1.04);
+}
+
+
+/* CARD INFORMATION */
+
+.featured-card-info {
+    padding-top: 20px;
+
+    min-height: 175px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.featured-card-category {
+    margin-bottom: 8px;
+
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    color: #8C5F4A;
+}
+
+.featured-card-info h3 {
+    margin: 0;
+
+    min-height: 68px;
+
+    font-family: Georgia, serif;
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 1.15;
+
+    color: #2B1D18;
+}
+
+.featured-card-meta {
+    margin-top: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.featured-card-flavour {
+    margin: 0;
+
+    font-size: 14px;
+    color: #8C6C5D;
+}
+
+.featured-card-price {
+    margin: 0;
+
+    font-size: 17px;
+    font-weight: 500;
+    color: #2B1D18;
+
+    white-space: nowrap;
+}
+
+
+/* Card Content */
+
+.featured-card-content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 16px 3px 0;
+}
+
+.featured-category {
+    margin: 0 0 5px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    color: #96786A;
+}
+
+.featured-card-content h3 {
+    margin: 0;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 23px;
+    line-height: 1.2;
+    font-weight: 400;
+
+    color: #2B1D18;
+}
+
+.featured-flavour {
+    margin: 6px 0 0;
+
+    color: #7A6256;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.featured-price {
+    flex-shrink: 0;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+
+    color: #2B1D18;
+}
+
+
+/* Empty State */
+
+.featured-empty {
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 55px 20px;
+
+    color: #6F5548;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .featured-section {
+        padding: 85px 6% 95px;
+    }
+
+    .featured-heading {
+        margin-bottom: 48px;
+        gap: 35px;
+    }
+
+    .featured-heading h2 {
+        font-size: 48px;
+    }
+
+    .featured-grid {
+        gap: 36px 20px;
+    }
+
+    .featured-card-content h3 {
+        font-size: 21px;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .featured-section {
+        padding: 70px 6% 80px;
+    }
+
+    .featured-section::before {
+        width: 340px;
+        height: 340px;
+        opacity: 0.045;
+    }
+
+    .featured-heading {
+        display: block;
+
+        margin-bottom: 38px;
+    }
+
+    .featured-heading-text {
+        max-width: 100%;
+    }
+
+    .featured-heading h2 {
+        font-size: 38px;
+        letter-spacing: -0.7px;
+    }
+
+    .featured-heading-description {
+        max-width: 450px;
+
+        padding: 0;
+        margin-top: 18px;
+    }
+
+    .featured-heading-description p {
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .featured-grid {
+        grid-template-columns: 1fr;
+        gap: 34px;
+    }
+
+    .featured-card-image {
+        border-radius: 16px;
+        aspect-ratio: 1 / 0.72;
+    }
+
+    .featured-card-content {
+        padding-top: 13px;
+    }
+
+    .featured-card-content h3 {
+        font-size: 20px;
+    }
+
+    .featured-price {
+        font-size: 17px;
+    }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 430px) {
+
+    .featured-section {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .featured-section::before {
+        width: 280px;
+        height: 280px;
+    }
+
+    .featured-heading h2 {
+        font-size: 33px;
+    }
+
+    .featured-grid {
+        gap: 30px;
+    }
+
+    .featured-card-image {
+        border-radius: 14px;
+    }
+
+    .featured-card-content h3 {
+        font-size: 18px;
+    }
+
+    .featured-flavour {
+        font-size: 11px;
+    }
+
+    .featured-price {
+        font-size: 16px;
+    }
+}
+
+/* =========================================
+   CAVELLE BAKERY GALLERY
+   SOFT ARCH EDITORIAL DESIGN
+========================================= */
+
+.bakery-gallery-page {
+    width: 92%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 100px 0 120px;
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================
+   GALLERY HEADER
+========================================= */
+
+.bakery-gallery-header {
+    max-width: 760px;
+    margin: 0 auto 75px;
+    text-align: center;
+}
+
+.gallery-eyebrow {
+    margin: 0 0 18px;
+
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+
+    color: #8C5F4A;
+}
+
+.bakery-gallery-header h1 {
+    margin: 0;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(48px, 6vw, 76px);
+    line-height: 1.02;
+    font-weight: 400;
+    letter-spacing: -1.5px;
+
+    color: #2B1D18;
+}
+
+.gallery-description {
+    max-width: 570px;
+
+    margin: 24px auto 0;
+
+    color: #6F5548;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   GALLERY GRID
+========================================= */
+
+.bakery-gallery-grid {
+    width: 100%;
+    max-width: 1120px;
+
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 55px 30px;
+
+    align-items: start;
+}
+
+
+/* =========================================
+   GALLERY CARD
+========================================= */
+
+.bakery-gallery-card {
+    position: relative;
+    overflow: hidden;
+    background: #E8D9CC;
+    border-radius: 22px;
+    aspect-ratio: 1 / 1.08;
+    cursor: pointer;
+    transition:
+        transform 0.5s ease,
+        box-shadow 0.5s ease;
+}
+
+/* =========================================
+   ALTERNATING ARCH HEIGHTS
+========================================= */
+
+.bakery-gallery-card:nth-child(2) {
+    margin-top: 55px;
+}
+
+.bakery-gallery-card:nth-child(3) {
+    margin-top: 0;
+}
+
+.bakery-gallery-card:nth-child(4) {
+    margin-top: 15px;
+}
+
+.bakery-gallery-card:nth-child(5) {
+    margin-top: -15px;
+}
+
+.bakery-gallery-card:nth-child(6) {
+    margin-top: 45px;
+}
+
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.bakery-gallery-card img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.8s
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+/* =========================================
+   HOVER
+========================================= */
+
+.bakery-gallery-card::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(43, 29, 24, 0.22),
+            transparent 45%
+        );
+
+    opacity: 0;
+
+    transition:
+        opacity 0.45s ease;
+
+    pointer-events: none;
+}
+
+.bakery-gallery-card:hover {
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 22px 45px
+        rgba(43, 29, 24, 0.13);
+}
+
+.bakery-gallery-card:hover img {
+    transform: scale(1.06);
+}
+
+.bakery-gallery-card:hover::after {
+    opacity: 1;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.gallery-empty {
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 100px 20px;
+
+    color: #6F5548;
+}
+
+.gallery-empty p {
+    margin: 0;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 22px;
+}
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+.gallery-back {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 95px;
+}
+
+.gallery-back .secondary-btn {
+    padding: 13px 28px;
+
+    border-radius: 999px;
+
+    font-size: 13px;
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+    .bakery-gallery-page {
+        width: 90%;
+
+        padding:
+            80px 0 100px;
+    }
+
+    .bakery-gallery-header {
+        margin-bottom: 60px;
+    }
+
+    .bakery-gallery-header h1 {
+        font-size: 58px;
+    }
+
+    .bakery-gallery-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 45px 22px;
+    }
+
+    .bakery-gallery-card:nth-child(2) {
+        margin-top: 35px;
+    }
+
+    .bakery-gallery-card:nth-child(4) {
+        margin-top: 25px;
+    }
+
+    .bakery-gallery-card:nth-child(5) {
+        margin-top: -5px;
+    }
+
+    .bakery-gallery-card:nth-child(6) {
+        margin-top: 30px;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 430px) {
+    .bakery-gallery-card {
+        border-radius: 15px;
+    }
+
+
+
+    /* HEADER */
+
+    .bakery-gallery-header {
+        margin-bottom: 45px;
+    }
+
+    .gallery-eyebrow {
+        font-size: 10px;
+        letter-spacing: 2.5px;
+    }
+
+    .bakery-gallery-header h1 {
+        font-size: 43px;
+        letter-spacing: -0.8px;
+    }
+
+    .gallery-description {
+        margin-top: 18px;
+
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+
+    /* GRID */
+
+    .bakery-gallery-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 30px 14px;
+    }
+
+
+    /* ARCH */
+
+    .bakery-gallery-card {
+        border-radius:
+            45% 45% 12px 12px;
+
+        aspect-ratio: 0.78;
+    }
+
+
+    /* REDUCE OFFSET */
+
+    .bakery-gallery-card:nth-child(2) {
+        margin-top: 25px;
+    }
+
+    .bakery-gallery-card:nth-child(4) {
+        margin-top: 12px;
+    }
+
+    .bakery-gallery-card:nth-child(5) {
+        margin-top: -5px;
+    }
+
+    .bakery-gallery-card:nth-child(6) {
+        margin-top: 20px;
+    }
+
+
+    /* MOBILE HOVER */
+
+    .bakery-gallery-card:hover {
+        transform: translateY(-4px);
+
+        box-shadow:
+            0 12px 25px
+            rgba(43, 29, 24, 0.10);
+    }
+
+
+    /* BACK */
+
+    .gallery-back {
+        margin-top: 65px;
+    }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 430px) {
+
+    .bakery-gallery-page {
+        width: 88%;
+
+        padding:
+            55px 0 70px;
+    }
+
+    .bakery-gallery-header {
+        margin-bottom: 38px;
+    }
+
+    .bakery-gallery-header h1 {
+        font-size: 36px;
+    }
+
+    .gallery-description {
+        font-size: 12px;
+    }
+
+    .bakery-gallery-grid {
+        gap: 25px 11px;
+    }
+
+    .bakery-gallery-card {
+        border-radius:
+            42% 42% 10px 10px;
+    }
+
+    .bakery-gallery-card:nth-child(2) {
+        margin-top: 18px;
+    }
+
+    .bakery-gallery-card:nth-child(4) {
+        margin-top: 8px;
+    }
+
+    .bakery-gallery-card:nth-child(6) {
+        margin-top: 15px;
+    }
+
+    .gallery-back {
+        margin-top: 50px;
+    }
+
+}
+
+/* =========================================
+   CAVELLE WISHLIST HEART
+========================================= */
+
+.product-image {
+    position: relative;
+}
+
+.wishlist-heart {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    color: #6F5548;
+
+    font-size: 21px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    z-index: 5;
+
+    box-shadow:
+        0 8px 22px rgba(43, 29, 24, 0.10);
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.wishlist-heart:hover {
+    transform: scale(1.08);
+
+    background: #FFFFFF;
+
+    color: #8C5F4A;
+
+    box-shadow:
+        0 10px 26px rgba(43, 29, 24, 0.15);
+}
+
+.wishlist-heart.wishlisted {
+    color: #8C5F4A;
+}
+
+.wishlist-heart:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+
+/* =========================================
+   NAVBAR WISHLIST COUNT
+========================================= */
+
+.wishlist-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.wishlist-count {
+    min-width: 19px;
+    height: 19px;
+
+    padding: 0 5px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 10px;
+    line-height: 1;
+
+    background: #2B1D18;
+    color: #FFFFFF;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .wishlist-heart {
+        top: 11px;
+        right: 11px;
+
+        width: 36px;
+        height: 36px;
+
+        font-size: 19px;
+    }
+
 }

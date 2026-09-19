@@ -77,19 +77,28 @@ CAVELLE | Artisan Cakes
 
     <div class="bakery-heading">
 
-        <p class="section-label">
-            EXPLORE OUR SWEET SIDE
-        </p>
+        <div class="bakery-heading-text">
 
-        <h2>
-            Something sweet<br>
-            for every moment.
-        </h2>
+            <p class="section-label">
+                EXPLORE OUR SWEET SIDE
+            </p>
 
-        <p class="section-description">
-            From delicate pastries to celebration cakes,
-            discover something made for every craving.
-        </p>
+            <h2>
+                Something sweet<br>
+                for every moment.
+            </h2>
+
+        </div>
+
+
+        <div class="bakery-heading-description">
+
+            <p>
+                From delicate pastries to celebration cakes,
+                discover something made for every craving.
+            </p>
+
+        </div>
 
     </div>
 
@@ -99,7 +108,7 @@ CAVELLE | Artisan Cakes
         {% for item in bakery_items %}
 
         <a
-            href="/products/?category={{ item.category.name|urlencode }}"
+            href="{% url 'bakery-gallery' item.id %}"
             class="bakery-card"
         >
 
@@ -110,6 +119,7 @@ CAVELLE | Artisan Cakes
                     <img
                         src="{{ item.image.url }}"
                         alt="{{ item.name }}"
+                        loading="lazy"
                     >
 
                 {% endif %}
@@ -120,16 +130,20 @@ CAVELLE | Artisan Cakes
             <div class="bakery-card-content">
 
                 <span class="bakery-number">
+
                     {% if forloop.counter < 10 %}
                         0{{ forloop.counter }}
                     {% else %}
                         {{ forloop.counter }}
                     {% endif %}
+
                 </span>
+
 
                 <h3>
                     {{ item.name }}
                 </h3>
+
 
                 <span class="bakery-arrow">
                     →
@@ -145,6 +159,117 @@ CAVELLE | Artisan Cakes
 
             <p>
                 Beautiful treats are coming soon.
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     FEATURED CAKES
+========================================= -->
+
+<section class="featured-section">
+
+    <div class="featured-heading">
+
+        <div class="featured-heading-text">
+
+            <p class="section-label">
+                OUR SIGNATURE CAKES
+            </p>
+
+            <h2>
+                A few favourites,<br>
+                made to be remembered.
+            </h2>
+
+        </div>
+
+
+        <div class="featured-heading-description">
+
+            <p>
+                Discover some of our most delightful cake creations,
+                thoughtfully made for every kind of celebration.
+            </p>
+
+            <a
+                href="/products/"
+                class="text-link"
+            >
+                View all cakes →
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="featured-grid">
+
+        {% for cake in featured_cakes %}
+
+        <a
+            href="/products/{{ cake.id }}/"
+            class="featured-card"
+        >
+
+            <div class="featured-card-image">
+
+                {% if cake.image %}
+
+                    <img
+                        src="{{ cake.image.url }}"
+                        alt="{{ cake.name }}"
+                        loading="lazy"
+                    >
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="featured-card-content">
+
+                <div>
+
+                    <p class="featured-category">
+                        {{ cake.category.name }}
+                    </p>
+
+                    <h3>
+                        {{ cake.name }}
+                    </h3>
+
+                    <p class="featured-flavour">
+                        {{ cake.flavour }}
+                    </p>
+
+                </div>
+
+
+                <div class="featured-price">
+
+                    ₹{{ cake.price }}
+
+                </div>
+
+            </div>
+
+        </a>
+
+        {% empty %}
+
+        <div class="featured-empty">
+
+            <p>
+                Our signature cakes are coming soon.
             </p>
 
         </div>

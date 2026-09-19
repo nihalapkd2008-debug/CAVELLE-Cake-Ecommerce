@@ -1,0 +1,477 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Wishlist | CAVELLE
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="section-label">
+        YOUR CAVELLE
+    </p>
+
+    <h1>
+        My Wishlist
+    </h1>
+
+    <p>
+        Your favourite cakes, saved for later.
+    </p>
+
+</section>
+
+
+<section class="products-section">
+
+    <div id="wishlistContainer">
+
+        <div class="empty-state">
+
+            <h2>
+                Loading your wishlist...
+            </h2>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =========================================
+   LOAD WISHLIST
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadWishlist
+);
+
+
+async function loadWishlist() {
+
+    const container =
+        document.getElementById(
+            "wishlistContainer"
+        );
+
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    /* =====================================
+       LOGIN CHECK
+    ===================================== */
+
+    if (!token) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <h2>
+                    Please login
+                </h2>
+
+                <p>
+                    Login to view your wishlist.
+                </p>
+
+                <a
+                    href="/login/"
+                    class="primary-btn"
+                >
+                    Login
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/products/cakes/wishlist/",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        /* =================================
+           TOKEN EXPIRED
+        ================================= */
+
+        if (response.status === 401) {
+
+            logoutUser();
+
+            return;
+        }
+
+
+        const cakes =
+            await response.json();
+
+
+        /* =================================
+           ERROR
+        ================================= */
+
+        if (!response.ok) {
+
+            container.innerHTML = `
+
+                <div class="empty-state">
+
+                    <h2>
+                        Unable to load wishlist
+                    </h2>
+
+                    <p>
+                        Please try again.
+                    </p>
+
+                    <button
+                        type="button"
+                        class="primary-btn"
+                        onclick="loadWishlist()"
+                    >
+                        Try Again
+                    </button>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        /* =================================
+           EMPTY WISHLIST
+        ================================= */
+
+        if (!cakes.length) {
+
+            container.innerHTML = `
+
+                <div class="empty-state">
+
+                    <h2>
+                        Your wishlist is empty
+                    </h2>
+
+                    <p>
+                        Save your favourite CAVELLE cakes here.
+                    </p>
+
+                    <a
+                        href="/products/"
+                        class="primary-btn"
+                    >
+                        Explore Cakes
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        /* =================================
+           WISHLIST GRID
+        ================================= */
+
+        let wishlistHTML = `
+
+            <div class="product-grid">
+
+        `;
+
+
+        cakes.forEach(
+            function (cake) {
+
+                let imageHTML = "";
+
+
+                if (cake.image) {
+
+                    imageHTML = `
+
+                        <img
+                            src="${cake.image}"
+                            alt="${cake.name}"
+                        >
+
+                    `;
+
+                } else {
+
+                    imageHTML = `
+
+                        <div class="image-placeholder">
+                            CAVELLE
+                        </div>
+
+                    `;
+
+                }
+
+
+                wishlistHTML += `
+
+                    <article
+                        class="product-card"
+                        data-cake-id="${cake.id}"
+                    >
+
+                        <a
+                            href="/products/${cake.id}/"
+                        >
+
+                            <div class="product-image">
+
+                                ${imageHTML}
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                <p class="product-category">
+                                    ${cake.category_name || "CAVELLE COLLECTION"}
+                                </p>
+
+
+                                <h3>
+                                    ${cake.name}
+                                </h3>
+
+
+                                <p class="product-flavour">
+                                    ${cake.flavour || ""}
+                                </p>
+
+
+                                <div class="product-bottom">
+
+                                    <span class="product-price">
+                                        ₹${parseFloat(
+                                            cake.price
+                                        ).toFixed(2)}
+                                    </span>
+
+
+                                    <span class="stock-status">
+
+                                        ${
+                                            cake.is_available &&
+                                            cake.stock > 0
+                                            ? "Available"
+                                            : "Out of stock"
+                                        }
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+
+                        <button
+                            type="button"
+                            class="secondary-btn wishlist-remove-btn"
+                            onclick="removeFromWishlist(${cake.id})"
+                        >
+                            ♥ Remove from Wishlist
+                        </button>
+
+                    </article>
+
+                `;
+
+            }
+        );
+
+
+        wishlistHTML += `
+
+            </div>
+
+        `;
+
+
+        container.innerHTML =
+            wishlistHTML;
+
+
+    } catch (error) {
+
+        console.error(
+            "Wishlist error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <h2>
+                    Something went wrong
+                </h2>
+
+                <p>
+                    Please try again.
+                </p>
+
+                <button
+                    type="button"
+                    class="primary-btn"
+                    onclick="loadWishlist()"
+                >
+                    Try Again
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   REMOVE FROM WISHLIST
+========================================= */
+
+async function removeFromWishlist(cakeId) {
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            "/login/";
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/products/cakes/${cakeId}/wishlist/`,
+                {
+                    method: "DELETE",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        /* =================================
+           TOKEN EXPIRED
+        ================================= */
+
+        if (response.status === 401) {
+
+            logoutUser();
+
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /* =================================
+           SUCCESS
+        ================================= */
+
+        if (response.ok) {
+
+            loadWishlist();
+
+            return;
+        }
+
+
+        alert(
+            data.detail ||
+            "Unable to remove from wishlist."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Remove wishlist error:",
+            error
+        );
+
+
+        alert(
+            "Something went wrong. Please try again."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logoutUser() {
+
+    localStorage.removeItem(
+        "access_token"
+    );
+
+    localStorage.removeItem(
+        "refresh_token"
+    );
+
+    window.location.href =
+        "/login/";
+
+}
+
+</script>
+
+{% endblock %}

@@ -1,26 +1,38 @@
 from django.db import models
 from django.conf import settings
 
-class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
 
-    description = models.TextField(blank=True)
+class Category(models.Model):
+    name = models.CharField(
+        max_length=100,
+        unique=True
+    )
+
+    description = models.TextField(
+        blank=True
+    )
 
     image = models.ImageField(
         upload_to="categories/",
         blank=True
     )
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
 
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
 
     def __str__(self):
         return self.name
 
 
 class Cake(models.Model):
-    name = models.CharField(max_length=150)
+    name = models.CharField(
+        max_length=150
+    )
 
     description = models.TextField()
 
@@ -36,7 +48,9 @@ class Cake(models.Model):
         related_name="wishlist_cakes"
     )
 
-    flavour = models.CharField(max_length=100)
+    flavour = models.CharField(
+        max_length=100
+    )
 
     price = models.DecimalField(
         max_digits=10,
@@ -73,12 +87,49 @@ class Cake(models.Model):
         auto_now=True
     )
 
+    def __str__(self):
+        return self.name
+
+
 class BakeryItem(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
-    image = models.ImageField(upload_to="cakes/")
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(
+        max_length=100
+    )
+
+    description = models.TextField(
+        blank=True
+    )
+
+    image = models.ImageField(
+        upload_to="cakes/"
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
 
     def __str__(self):
         return self.name
+
+
+class BakeryGalleryImage(models.Model):
+    bakery_item = models.ForeignKey(
+        BakeryItem,
+        on_delete=models.CASCADE,
+        related_name="gallery_images"
+    )
+
+    image = models.ImageField(
+        upload_to="cakes/"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return f"{self.bakery_item.name} - Gallery Image"

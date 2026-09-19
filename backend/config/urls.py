@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -33,15 +34,17 @@ from .views import (
     cart_page,
     checkout_page,
     orders_page,
+    wishlist_page,
     staff_orders_page,
+    bakery_gallery,
 )
 
 
 urlpatterns = [
 
-    # ==============================
+    # =========================================
     # ADMIN
-    # ==============================
+    # =========================================
 
     path(
         "admin/",
@@ -49,9 +52,9 @@ urlpatterns = [
     ),
 
 
-    # ==============================
-    # WEBSITE PAGES
-    # ==============================
+    # =========================================
+    # FRONTEND PAGES
+    # =========================================
 
     path(
         "",
@@ -101,9 +104,11 @@ urlpatterns = [
         name="orders"
     ),
 
-    # ==============================
-    # STAFF ORDER MANAGEMENT
-    # ==============================
+    path(
+        "wishlist/",
+        wishlist_page,
+        name="wishlist"
+    ),
 
     path(
         "staff/orders/",
@@ -112,9 +117,9 @@ urlpatterns = [
     ),
 
 
-    # ==============================
+    # =========================================
     # JWT AUTHENTICATION
-    # ==============================
+    # =========================================
 
     path(
         "api/token/",
@@ -129,9 +134,9 @@ urlpatterns = [
     ),
 
 
-    # ==============================
+    # =========================================
     # API ROUTES
-    # ==============================
+    # =========================================
 
     path(
         "api/users/",
@@ -157,13 +162,23 @@ urlpatterns = [
         "api/reviews/",
         include("reviews.urls")
     ),
+
+
+    # =========================================
+    # BAKERY GALLERY
+    # =========================================
+
+    path(
+        "bakery/<int:item_id>/",
+        bakery_gallery,
+        name="bakery-gallery"
+    ),
 ]
 
 
-# ==============================
+# =========================================
 # MEDIA FILES
-# Development only
-# ==============================
+# =========================================
 
 urlpatterns += static(
     settings.MEDIA_URL,

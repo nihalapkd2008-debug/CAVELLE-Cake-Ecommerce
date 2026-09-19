@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ item.name }} | CAVELLE
+{% endblock %}
+
+{% block content %}
+
+<section class="bakery-gallery-page">
+
+    <!-- =========================================
+         PAGE HEADER
+    ========================================== -->
+
+    <div class="bakery-gallery-header">
+
+        <p class="gallery-eyebrow">
+            CAVELLE COLLECTION
+        </p>
+
+        <h1>
+            {{ item.name }}
+        </h1>
+
+        {% if item.description %}
+
+            <p class="gallery-description">
+                {{ item.description }}
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =========================================
+         GALLERY
+    ========================================== -->
+
+    <div class="bakery-gallery-grid">
+
+        {% for gallery_image in gallery_images %}
+
+            <div class="bakery-gallery-card">
+
+                <img
+                    src="{{ gallery_image.image.url }}"
+                    alt="{{ item.name }}"
+                >
+
+            </div>
+
+        {% empty %}
+
+            <div class="gallery-empty">
+
+                <p>
+                    No images available yet.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- =========================================
+         BACK BUTTON
+    ========================================== -->
+
+    <div class="gallery-back">
+
+        <a
+            href="{% url 'home' %}"
+            class="secondary-btn"
+        >
+            ← Back to Home
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}
