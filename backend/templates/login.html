@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 Login | CAVELLE
@@ -6,88 +7,833 @@ Login | CAVELLE
 
 {% block content %}
 
-<section class="auth-section">
+<style>
 
-    <div class="auth-container">
+/* =========================================
+   CAVELLE LOGIN PAGE
+========================================= */
 
-        <p class="section-label">
-            WELCOME BACK
-        </p>
+.cavelle-login-section {
+    width: 100%;
+    min-height: calc(100vh - 90px);
 
-        <h1>
-            Login to CAVELLE
-        </h1>
+    padding: 45px 5% 65px;
 
-        <p class="auth-description">
-            Sign in to manage your orders and discover your favourites.
-        </p>
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 
-        <form id="loginForm" class="auth-form">
+    position: relative;
+    z-index: 1;
 
-            {% csrf_token %}
+    background-image:
+        url("{% static 'images/login-cake.png' %}");
 
-            <div class="form-group">
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
 
-                <label for="username">
-                    Username
-                </label>
 
-                <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="Enter your username"
-                    required
+/* =========================================
+   BACKGROUND OVERLAY
+========================================= */
+
+.cavelle-login-section::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(245, 237, 229, 0.08),
+            rgba(245, 237, 229, 0.02)
+        );
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* =========================================
+   WRAPPER
+========================================= */
+
+.cavelle-login-wrapper {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: flex-end;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================
+   TRANSPARENT GLASS LOGIN CARD
+========================================= */
+
+.cavelle-login-card {
+    width: min(430px, 100%);
+    min-height: 565px;
+
+    padding: 52px 45px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(255, 255, 255, 0.19);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.42);
+
+    box-shadow:
+        0 30px 75px
+        rgba(43, 29, 24, 0.16);
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* glass highlight */
+
+.cavelle-login-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background:
+        rgba(255, 255, 255, 0.72);
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   FORM BOX
+========================================= */
+
+.cavelle-login-form-box {
+    width: 100%;
+    max-width: 350px;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================
+   FORM HEADER
+========================================= */
+
+.cavelle-login-form-header {
+    margin-bottom: 32px;
+}
+
+.cavelle-login-form-header .section-label {
+    margin-bottom: 13px;
+
+    color: #8C5F4A;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 2.5px;
+
+    text-transform: uppercase;
+}
+
+.cavelle-login-form-header h1 {
+    margin: 0;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(38px, 5vw, 50px);
+
+    line-height: 1.05;
+
+    font-weight: 400;
+
+    letter-spacing: -1.3px;
+
+    color: #2B1D18;
+}
+
+.cavelle-login-form-header p:not(.section-label) {
+    margin-top: 14px;
+
+    color: #6F5548;
+
+    font-size: 13px;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.cavelle-login-form {
+    width: 100%;
+}
+
+.cavelle-login-form-group {
+    margin-bottom: 19px;
+}
+
+
+/* =========================================
+   LABEL
+========================================= */
+
+.cavelle-login-form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #2B1D18;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.4px;
+}
+
+
+/* =========================================
+   INPUT WRAP
+========================================= */
+
+.cavelle-input-wrap {
+    position: relative;
+
+    width: 100%;
+}
+
+
+/* =========================================
+   INPUT
+========================================= */
+
+.cavelle-input {
+    width: 100%;
+
+    height: 54px;
+
+    padding:
+        0 17px;
+
+    border:
+        1px solid
+        rgba(43, 29, 24, 0.16);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255, 255, 255, 0.64);
+
+    color: #2B1D18;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.cavelle-input:hover {
+    background:
+        rgba(255, 255, 255, 0.76);
+}
+
+.cavelle-input:focus {
+    border-color:
+        #8C5F4A;
+
+    background:
+        rgba(255, 255, 255, 0.90);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(140, 95, 74, 0.08);
+}
+
+.cavelle-input::placeholder {
+    color: #9B8071;
+}
+
+
+/* =========================================
+   PASSWORD
+========================================= */
+
+.cavelle-password-field {
+    padding-right: 55px;
+}
+
+.cavelle-password-toggle {
+    position: absolute;
+
+    top: 50%;
+    right: 12px;
+
+    transform:
+        translateY(-50%);
+
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    background: transparent;
+
+    color: #8C5F4A;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+
+    font-size: 15px;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+.cavelle-password-toggle:hover {
+    background:
+        rgba(140, 95, 74, 0.08);
+
+    color:
+        #6E4636;
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+#loginMessage {
+    margin:
+        9px 0 15px;
+
+    min-height: 20px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
+.cavelle-login-button {
+    width: 100%;
+
+    min-height: 54px;
+
+    padding:
+        0 20px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background:
+        #2B1D18;
+
+    color:
+        #FFFFFF;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.4px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+}
+
+.cavelle-login-button:hover {
+    background:
+        #3A2720;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 14px 28px
+        rgba(43, 29, 24, 0.20);
+}
+
+.cavelle-login-button:active {
+    transform:
+        translateY(0);
+}
+
+.cavelle-login-button:disabled {
+    opacity: 0.65;
+
+    cursor: wait;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================
+   REGISTER
+========================================= */
+
+.cavelle-login-register {
+    margin-top: 24px;
+
+    text-align: center;
+
+    color: #6F5548;
+
+    font-size: 13px;
+}
+
+.cavelle-login-register a {
+    color:
+        #8C5F4A;
+
+    font-weight:
+        600;
+
+    text-decoration:
+        none;
+
+    border-bottom:
+        1px solid
+        rgba(140, 95, 74, 0.35);
+
+    padding-bottom:
+        2px;
+
+    transition:
+        opacity 0.25s ease;
+}
+
+.cavelle-login-register a:hover {
+    opacity:
+        0.65;
+}
+
+
+/* =========================================
+   BOTTOM NOTE
+========================================= */
+
+.cavelle-login-note {
+    margin-top: 24px;
+
+    text-align: center;
+
+    color: #9B8071;
+
+    font-size: 9px;
+
+    letter-spacing: 1.2px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================
+   LARGE SCREEN
+========================================= */
+
+@media (min-width: 1400px) {
+
+    .cavelle-login-section {
+        padding:
+            55px 6% 75px;
+    }
+
+    .cavelle-login-card {
+        width: 445px;
+
+        min-height: 580px;
+
+        padding:
+            58px 48px;
+    }
+
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 950px) {
+
+    .cavelle-login-section {
+        min-height:
+            calc(100vh - 80px);
+
+        padding:
+            45px 4%;
+    }
+
+    .cavelle-login-wrapper {
+        justify-content:
+            center;
+    }
+
+    .cavelle-login-card {
+        width:
+            min(430px, 100%);
+
+        min-height:
+            555px;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .cavelle-login-section {
+        min-height:
+            calc(100vh - 75px);
+
+        padding:
+            30px 15px 45px;
+
+        background-position:
+            center center;
+    }
+
+    .cavelle-login-card {
+        width:
+            100%;
+
+        min-height:
+            540px;
+
+        padding:
+            42px 24px;
+
+        border-radius:
+            24px;
+    }
+
+    .cavelle-login-form-box {
+        max-width:
+            100%;
+    }
+
+    .cavelle-login-form-header h1 {
+        font-size:
+            39px;
+    }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 420px) {
+
+    .cavelle-login-section {
+        padding:
+            22px 12px 38px;
+    }
+
+    .cavelle-login-card {
+        min-height:
+            520px;
+
+        padding:
+            36px 20px;
+
+        border-radius:
+            22px;
+    }
+
+    .cavelle-login-form-header {
+        margin-bottom:
+            27px;
+    }
+
+    .cavelle-login-form-header h1 {
+        font-size:
+            35px;
+    }
+
+    .cavelle-input {
+        height:
+            52px;
+    }
+
+    .cavelle-login-button {
+        min-height:
+            52px;
+    }
+
+}
+
+</style>
+
+
+<section class="cavelle-login-section">
+
+    <div class="cavelle-login-wrapper">
+
+        <!-- =====================================
+             TRANSPARENT GLASS LOGIN CARD
+        ====================================== -->
+
+        <div class="cavelle-login-card">
+
+            <div class="cavelle-login-form-box">
+
+
+                <!-- =====================================
+                     HEADER
+                ====================================== -->
+
+                <div class="cavelle-login-form-header">
+
+                    <p class="section-label">
+                        WELCOME BACK
+                    </p>
+
+                    <h1>
+                        Welcome back
+                    </h1>
+
+                    <p>
+                        Sign in to your CAVELLE account
+                        and continue your sweet journey.
+                    </p>
+
+                </div>
+
+
+                <!-- =====================================
+                     LOGIN FORM
+                ====================================== -->
+
+                <form
+                    id="loginForm"
+                    class="cavelle-login-form"
                 >
+
+                    {% csrf_token %}
+
+
+                    <!-- USERNAME -->
+
+                    <div class="cavelle-login-form-group">
+
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <div class="cavelle-input-wrap">
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                class="cavelle-input"
+                                placeholder="Enter your username"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="cavelle-login-form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="cavelle-input-wrap">
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="cavelle-input cavelle-password-field"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="cavelle-password-toggle"
+                                id="passwordToggle"
+                                aria-label="Show password"
+                            >
+                                ◉
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <p
+                        id="loginMessage"
+                        class="form-message"
+                        aria-live="polite"
+                    ></p>
+
+
+                    <!-- LOGIN BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="cavelle-login-button"
+                        id="loginSubmitBtn"
+                    >
+                        Login
+                    </button>
+
+                </form>
+
+
+                <!-- =====================================
+                     REGISTER
+                ====================================== -->
+
+                <p class="cavelle-login-register">
+
+                    Don't have an account?
+
+                    <a href="/register/">
+                        Create one
+                    </a>
+
+                </p>
+
+
+                <!-- =====================================
+                     NOTE
+                ====================================== -->
+
+                <p class="cavelle-login-note">
+                    Crafted for your sweetest moments
+                </p>
 
             </div>
 
-
-            <div class="form-group">
-
-                <label for="password">
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Enter your password"
-                    required
-                >
-
-            </div>
-
-
-            <p
-                id="loginMessage"
-                class="form-message"
-            ></p>
-
-
-            <button
-                type="submit"
-                class="primary-btn full-btn"
-            >
-                Login
-            </button>
-
-        </form>
-
-
-        <p class="auth-footer">
-
-            Don't have an account?
-
-            <a href="/register/">
-                Create one
-            </a>
-
-        </p>
+        </div>
 
     </div>
 
 </section>
+
+
+<script>
+
+/* =========================================
+   PASSWORD VISIBILITY
+========================================= */
+
+const passwordInput =
+    document.getElementById("password");
+
+const passwordToggle =
+    document.getElementById("passwordToggle");
+
+if (
+    passwordInput &&
+    passwordToggle
+) {
+
+    passwordToggle.addEventListener(
+        "click",
+        function () {
+
+            const isPassword =
+                passwordInput.type === "password";
+
+            passwordInput.type =
+                isPassword
+                    ? "text"
+                    : "password";
+
+            passwordToggle.textContent =
+                isPassword
+                    ? "○"
+                    : "◉";
+
+            passwordToggle.setAttribute(
+                "aria-label",
+                isPassword
+                    ? "Hide password"
+                    : "Show password"
+            );
+
+        }
+    );
+
+}
+
+</script>
 
 {% endblock %}

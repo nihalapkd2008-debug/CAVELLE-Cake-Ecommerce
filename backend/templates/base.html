@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
@@ -20,12 +21,328 @@
         href="{% static 'css/style.css' %}"
     >
 
+
+    <style>
+
+        /* =========================================
+           CAVELLE ACCOUNT MENU
+        ========================================= */
+
+        .cavelle-account {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+
+        /* =========================================
+           USER ICON BUTTON
+        ========================================= */
+
+        .cavelle-account-button {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid
+                rgba(43, 29, 24, 0.12);
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 255, 255, 0.45);
+
+            color: #2B1D18;
+
+            cursor: pointer;
+
+            transition:
+                background 0.25s ease,
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .cavelle-account-button:hover {
+            background:
+                rgba(255, 255, 255, 0.75);
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 8px 18px
+                rgba(43, 29, 24, 0.10);
+        }
+
+
+        .cavelle-account-button svg {
+            width: 21px;
+            height: 21px;
+
+            stroke: currentColor;
+
+            stroke-width: 1.8;
+
+            fill: none;
+        }
+
+
+        /* =========================================
+           ACCOUNT DROPDOWN
+        ========================================= */
+
+        .cavelle-account-dropdown {
+            position: absolute;
+
+            top: calc(100% + 12px);
+            right: 0;
+
+            width: 235px;
+
+            padding: 10px;
+
+            background:
+                rgba(255, 255, 255, 0.94);
+
+            border:
+                1px solid
+                rgba(43, 29, 24, 0.10);
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 20px 45px
+                rgba(43, 29, 24, 0.14);
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+            transform:
+                translateY(-8px);
+
+            transition:
+                opacity 0.2s ease,
+                visibility 0.2s ease,
+                transform 0.2s ease;
+
+            z-index: 1000;
+        }
+
+
+        .cavelle-account-dropdown.open {
+            opacity: 1;
+
+            visibility: visible;
+
+            pointer-events: auto;
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* =========================================
+           ACCOUNT HEADER
+        ========================================= */
+
+        .cavelle-account-header {
+            padding:
+                12px 12px 14px;
+
+            margin-bottom: 5px;
+
+            border-bottom:
+                1px solid
+                rgba(43, 29, 24, 0.08);
+        }
+
+
+        .cavelle-account-name {
+            color: #2B1D18;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        .cavelle-account-role {
+            margin-top: 3px;
+
+            color: #9B8071;
+
+            font-size: 10px;
+
+            letter-spacing: 0.7px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================
+           ACCOUNT LINKS
+        ========================================= */
+
+        .cavelle-account-link {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                11px 12px;
+
+            border-radius: 11px;
+
+            color: #4B382F;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+
+        .cavelle-account-link:hover {
+            background:
+                rgba(140, 95, 74, 0.08);
+
+            color: #2B1D18;
+        }
+
+
+        .cavelle-account-link-icon {
+            width: 18px;
+            height: 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #8C5F4A;
+
+            flex-shrink: 0;
+        }
+
+
+        .cavelle-account-link-icon svg {
+            width: 17px;
+            height: 17px;
+
+            stroke: currentColor;
+
+            stroke-width: 1.7;
+
+            fill: none;
+        }
+
+
+        /* =========================================
+           LOGOUT BUTTON
+        ========================================= */
+
+        .cavelle-logout-button {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                11px 12px;
+
+            margin-top: 4px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background:
+                transparent;
+
+            color: #8C5F4A;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            text-align: left;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+
+        .cavelle-logout-button:hover {
+            background:
+                rgba(140, 95, 74, 0.08);
+
+            color: #6E4636;
+        }
+
+
+        /* =========================================
+           AUTH MENU STATES
+        ========================================= */
+
+        .cavelle-account-logged-out,
+        .cavelle-account-logged-in {
+            display: none;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            .cavelle-account-button {
+                width: 40px;
+                height: 40px;
+            }
+
+            .cavelle-account-dropdown {
+                right: -5px;
+
+                width: 220px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
 
-    <!-- BACKGROUND WATERMARK -->
+    <!-- =========================================
+         BACKGROUND WATERMARK
+    ========================================== -->
 
     <div
         class="site-watermark"
@@ -40,7 +357,9 @@
     </div>
 
 
-    <!-- NAVBAR -->
+    <!-- =========================================
+         NAVBAR
+    ========================================== -->
 
     <header class="navbar">
 
@@ -62,13 +381,12 @@
             </a>
 
 
-            <!-- NAVIGATION -->
+            <!-- =====================================
+                 NAVIGATION
+            ====================================== -->
 
             <nav class="nav-links">
 
-                <a href="/">
-                    Home
-                </a>
 
                 <a href="/products/">
                     Cakes
@@ -95,9 +413,14 @@
                 </a>
 
 
+                <!-- CART -->
+
                 <a href="/cart/">
                     Cart
                 </a>
+
+
+                <!-- ORDERS -->
 
                 <a href="/orders/">
                     Orders
@@ -106,16 +429,324 @@
             </nav>
 
 
-            <!-- NAV ACTION -->
+            <!-- =====================================
+                 ACCOUNT AREA
+            ====================================== -->
 
             <div class="nav-actions">
 
-                <a
-                    href="/login/"
-                    class="login-btn"
-                >
-                    Login
-                </a>
+                <div class="cavelle-account">
+
+
+                    <!-- USER ICON -->
+
+                    <button
+                        type="button"
+                        class="cavelle-account-button"
+                        id="accountButton"
+                        aria-label="Account menu"
+                        aria-expanded="false"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <path
+                                d="M20 21a8 8 0 0 0-16 0"
+                            />
+
+                            <circle
+                                cx="12"
+                                cy="7"
+                                r="4"
+                            />
+
+                        </svg>
+
+                    </button>
+
+
+                    <!-- =================================
+                         ACCOUNT DROPDOWN
+                    ================================== -->
+
+                    <div
+                        class="cavelle-account-dropdown"
+                        id="accountDropdown"
+                    >
+
+
+                        <!-- =================================
+                             LOGGED OUT MENU
+                        ================================== -->
+
+                        <div
+                            class="cavelle-account-logged-out"
+                            id="loggedOutMenu"
+                        >
+
+                            <div class="cavelle-account-header">
+
+                                <div class="cavelle-account-name">
+                                    Welcome to CAVELLE
+                                </div>
+
+                                <div class="cavelle-account-role">
+                                    Your sweet journey starts here
+                                </div>
+
+                            </div>
+
+
+                            <!-- LOGIN -->
+
+                            <a
+                                href="/login/"
+                                class="cavelle-account-link"
+                            >
+
+                                <span
+                                    class="cavelle-account-link-icon"
+                                >
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                    >
+
+                                        <path
+                                            d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"
+                                        />
+
+                                        <path
+                                            d="M10 17l5-5-5-5"
+                                        />
+
+                                        <path
+                                            d="M15 12H3"
+                                        />
+
+                                    </svg>
+
+                                </span>
+
+                                Login
+
+                            </a>
+
+
+                            <!-- REGISTER -->
+
+                            <a
+                                href="/register/"
+                                class="cavelle-account-link"
+                            >
+
+                                <span
+                                    class="cavelle-account-link-icon"
+                                >
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                    >
+
+                                        <circle
+                                            cx="9"
+                                            cy="8"
+                                            r="3.5"
+                                        />
+
+                                        <path
+                                            d="M2.5 21a6.5 6.5 0 0 1 13 0"
+                                        />
+
+                                        <path
+                                            d="M19 8v6"
+                                        />
+
+                                        <path
+                                            d="M16 11h6"
+                                        />
+
+                                    </svg>
+
+                                </span>
+
+                                Register
+
+                            </a>
+
+                        </div>
+
+
+                        <!-- =================================
+                             LOGGED IN MENU
+                        ================================== -->
+
+                        <div
+                            class="cavelle-account-logged-in"
+                            id="loggedInMenu"
+                        >
+
+                            <div class="cavelle-account-header">
+
+                                <div
+                                    class="cavelle-account-name"
+                                    id="accountName"
+                                >
+                                    My Account
+                                </div>
+
+                                <div
+                                    class="cavelle-account-role"
+                                    id="accountRole"
+                                >
+                                    Customer
+                                </div>
+
+                            </div>
+
+
+                            <!-- PROFILE -->
+
+                            <a
+                                href="/profile/"
+                                class="cavelle-account-link"
+                            >
+
+                                <span
+                                    class="cavelle-account-link-icon"
+                                >
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                    >
+
+                                        <circle
+                                            cx="12"
+                                            cy="8"
+                                            r="4"
+                                        />
+
+                                        <path
+                                            d="M4 21a8 8 0 0 1 16 0"
+                                        />
+
+                                    </svg>
+
+                                </span>
+
+                                Profile
+
+                            </a>
+
+
+                            <!-- ORDERS -->
+
+                            <a
+                                href="/orders/"
+                                class="cavelle-account-link"
+                            >
+
+                                <span
+                                    class="cavelle-account-link-icon"
+                                >
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                    >
+
+                                        <path
+                                            d="M6 3h12l2 4v14H4V7l2-4z"
+                                        />
+
+                                        <path
+                                            d="M4 7h16"
+                                        />
+
+                                        <path
+                                            d="M9 11h6"
+                                        />
+
+                                    </svg>
+
+                                </span>
+
+                                Orders
+
+                            </a>
+
+
+                            <!-- WISHLIST -->
+
+                            <a
+                                href="/wishlist/"
+                                class="cavelle-account-link"
+                            >
+
+                                <span
+                                    class="cavelle-account-link-icon"
+                                >
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                    >
+
+                                        <path
+                                            d="M20.8 8.7c0 5.4-8.8 10.5-8.8 10.5S3.2 14.1 3.2 8.7A4.7 4.7 0 0 1 12 6.1a4.7 4.7 0 0 1 8.8 2.6z"
+                                        />
+
+                                    </svg>
+
+                                </span>
+
+                                Wishlist
+
+                            </a>
+
+
+                            <!-- LOGOUT -->
+
+                            <button
+                                type="button"
+                                class="cavelle-logout-button"
+                                id="logoutButton"
+                            >
+
+                                <span
+                                    class="cavelle-account-link-icon"
+                                >
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                    >
+
+                                        <path
+                                            d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5"
+                                        />
+
+                                        <path
+                                            d="M15 17l5-5-5-5"
+                                        />
+
+                                        <path
+                                            d="M20 12H9"
+                                        />
+
+                                    </svg>
+
+                                </span>
+
+                                Logout
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -124,7 +755,9 @@
     </header>
 
 
-    <!-- MAIN CONTENT -->
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================== -->
 
     <main>
 
@@ -134,7 +767,9 @@
     </main>
 
 
-    <!-- FOOTER -->
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
 
     <footer class="footer">
 
@@ -204,6 +839,10 @@
                     Register
                 </a>
 
+                <a href="/profile/">
+                    Profile
+                </a>
+
             </div>
 
         </div>
@@ -222,120 +861,547 @@
     </footer>
 
 
-    <!-- JAVASCRIPT -->
+    <!-- =========================================
+         MAIN JAVASCRIPT
+    ========================================== -->
 
     <script src="{% static 'js/main.js' %}"></script>
 
 
-    <!-- WISHLIST NAVBAR COUNT -->
+    <!-- =========================================
+         ACCOUNT + WISHLIST JAVASCRIPT
+    ========================================== -->
 
     <script>
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        loadWishlistCount
-    );
+        /* =========================================
+           PAGE INITIALIZATION
+        ========================================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                initializeAccountMenu();
+
+                loadAccountState();
+
+                loadWishlistCount();
+
+            }
+        );
 
 
-    async function loadWishlistCount() {
+        /* =========================================
+           ACCOUNT MENU
+        ========================================== */
 
-        const token =
-            localStorage.getItem(
-                "access_token"
-            );
+        function initializeAccountMenu() {
 
+            const accountButton =
+                document.getElementById(
+                    "accountButton"
+                );
 
-        const countElement =
-            document.getElementById(
-                "wishlistCount"
-            );
+            const accountDropdown =
+                document.getElementById(
+                    "accountDropdown"
+                );
 
-
-        if (
-            !token ||
-            !countElement
-        ) {
-
-            return;
-
-        }
-
-
-        try {
-
-            const response =
-                await fetch(
-                    "/api/products/cakes/wishlist/",
-                    {
-                        method: "GET",
-
-                        headers: {
-                            "Authorization":
-                                "Bearer " + token
-                        }
-                    }
+            const logoutButton =
+                document.getElementById(
+                    "logoutButton"
                 );
 
 
             if (
-                response.status === 401
+                !accountButton ||
+                !accountDropdown
             ) {
 
-                localStorage.removeItem(
+                return;
+
+            }
+
+
+            /* OPEN / CLOSE */
+
+            accountButton.addEventListener(
+                "click",
+                function (event) {
+
+                    event.stopPropagation();
+
+                    const isOpen =
+                        accountDropdown.classList.contains(
+                            "open"
+                        );
+
+
+                    if (isOpen) {
+
+                        closeAccountMenu();
+
+                    } else {
+
+                        accountDropdown.classList.add(
+                            "open"
+                        );
+
+                        accountButton.setAttribute(
+                            "aria-expanded",
+                            "true"
+                        );
+
+                    }
+
+                }
+            );
+
+
+            /* CLICK OUTSIDE */
+
+            document.addEventListener(
+                "click",
+                function (event) {
+
+                    if (
+                        !accountDropdown.contains(
+                            event.target
+                        ) &&
+                        !accountButton.contains(
+                            event.target
+                        )
+                    ) {
+
+                        closeAccountMenu();
+
+                    }
+
+                }
+            );
+
+
+            /* ESCAPE */
+
+            document.addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (
+                        event.key === "Escape"
+                    ) {
+
+                        closeAccountMenu();
+
+                    }
+
+                }
+            );
+
+
+            /* LOGOUT */
+
+            if (logoutButton) {
+
+                logoutButton.addEventListener(
+                    "click",
+                    handleLogout
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           CLOSE ACCOUNT MENU
+        ========================================== */
+
+        function closeAccountMenu() {
+
+            const accountButton =
+                document.getElementById(
+                    "accountButton"
+                );
+
+            const accountDropdown =
+                document.getElementById(
+                    "accountDropdown"
+                );
+
+
+            if (accountDropdown) {
+
+                accountDropdown.classList.remove(
+                    "open"
+                );
+
+            }
+
+
+            if (accountButton) {
+
+                accountButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           CHECK LOGIN STATE
+        ========================================== */
+
+        async function loadAccountState() {
+
+            const loggedOutMenu =
+                document.getElementById(
+                    "loggedOutMenu"
+                );
+
+            const loggedInMenu =
+                document.getElementById(
+                    "loggedInMenu"
+                );
+
+            const accountName =
+                document.getElementById(
+                    "accountName"
+                );
+
+            const accountRole =
+                document.getElementById(
+                    "accountRole"
+                );
+
+
+            if (
+                !loggedOutMenu ||
+                !loggedInMenu
+            ) {
+
+                return;
+
+            }
+
+
+            const token =
+                localStorage.getItem(
                     "access_token"
                 );
 
-                localStorage.removeItem(
-                    "refresh_token"
-                );
 
-                return;
+            /* =====================================
+               NOT LOGGED IN
+            ====================================== */
 
-            }
+            if (!token) {
 
+                loggedOutMenu.style.display =
+                    "block";
 
-            if (!response.ok) {
-
-                return;
-
-            }
-
-
-            const cakes =
-                await response.json();
-
-
-            const count =
-                cakes.length;
-
-
-            if (count > 0) {
-
-                countElement.textContent =
-                    count;
-
-                countElement.style.display =
-                    "inline-flex";
-
-            } else {
-
-                countElement.style.display =
+                loggedInMenu.style.display =
                     "none";
 
+                return;
+
             }
 
-        } catch (error) {
 
-            console.error(
-                "Wishlist count error:",
-                error
+            /* =====================================
+               TOKEN EXISTS
+
+               IMPORTANT:
+               Show logged-in menu immediately.
+            ====================================== */
+
+            loggedOutMenu.style.display =
+                "none";
+
+            loggedInMenu.style.display =
+                "block";
+
+
+            if (accountName) {
+
+                accountName.textContent =
+                    "My Account";
+
+            }
+
+
+            if (accountRole) {
+
+                accountRole.textContent =
+                    "Customer";
+
+            }
+
+
+            /* =====================================
+               LOAD USER PROFILE
+            ====================================== */
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/users/profile/",
+                        {
+                            method: "GET",
+
+                            headers: {
+                                "Authorization":
+                                    "Bearer " + token
+                            }
+                        }
+                    );
+
+
+                /* =================================
+                   TOKEN EXPIRED
+                ================================== */
+
+                if (
+                    response.status === 401
+                ) {
+
+                    clearAuth();
+
+                    loggedOutMenu.style.display =
+                        "block";
+
+                    loggedInMenu.style.display =
+                        "none";
+
+                    return;
+
+                }
+
+
+                /* =================================
+                   PROFILE LOADED
+                ================================== */
+
+                if (response.ok) {
+
+                    const user =
+                        await response.json();
+
+
+                    let displayName =
+                        (
+                            (user.first_name || "") +
+                            " " +
+                            (user.last_name || "")
+                        ).trim();
+
+
+                    if (!displayName) {
+
+                        displayName =
+                            user.username ||
+                            "My Account";
+
+                    }
+
+
+                    if (accountName) {
+
+                        accountName.textContent =
+                            displayName;
+
+                    }
+
+
+                    if (accountRole) {
+
+                        accountRole.textContent =
+                            user.role ||
+                            "Customer";
+
+                    }
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Profile loading error:",
+                    error
+                );
+
+
+                /*
+                    Even if profile API fails,
+                    keep logged-in menu visible
+                    because valid token exists.
+                */
+
+                loggedOutMenu.style.display =
+                    "none";
+
+                loggedInMenu.style.display =
+                    "block";
+
+            }
+
+        }
+
+
+        /* =========================================
+           LOGOUT
+        ========================================== */
+
+        function handleLogout() {
+
+            clearAuth();
+
+            closeAccountMenu();
+
+            /*
+                Go to home after logout.
+            */
+
+            window.location.href = "/";
+
+        }
+
+
+        /* =========================================
+           CLEAR AUTH TOKENS
+        ========================================== */
+
+        function clearAuth() {
+
+            localStorage.removeItem(
+                "access_token"
+            );
+
+            localStorage.removeItem(
+                "refresh_token"
             );
 
         }
 
-    }
+
+        /* =========================================
+           WISHLIST COUNT
+        ========================================== */
+
+        async function loadWishlistCount() {
+
+            const token =
+                localStorage.getItem(
+                    "access_token"
+                );
+
+            const countElement =
+                document.getElementById(
+                    "wishlistCount"
+                );
+
+
+            if (
+                !token ||
+                !countElement
+            ) {
+
+                if (countElement) {
+
+                    countElement.style.display =
+                        "none";
+
+                }
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/products/cakes/wishlist/",
+                        {
+                            method: "GET",
+
+                            headers: {
+                                "Authorization":
+                                    "Bearer " + token
+                            }
+                        }
+                    );
+
+
+                /* =================================
+                   EXPIRED TOKEN
+                ================================== */
+
+                if (
+                    response.status === 401
+                ) {
+
+                    clearAuth();
+
+                    countElement.style.display =
+                        "none";
+
+                    return;
+
+                }
+
+
+                if (!response.ok) {
+
+                    return;
+
+                }
+
+
+                const cakes =
+                    await response.json();
+
+
+                const count =
+                    Array.isArray(cakes)
+                        ? cakes.length
+                        : 0;
+
+
+                if (count > 0) {
+
+                    countElement.textContent =
+                        count;
+
+                    countElement.style.display =
+                        "inline-flex";
+
+                } else {
+
+                    countElement.style.display =
+                        "none";
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Wishlist count error:",
+                    error
+                );
+
+            }
+
+        }
 
     </script>
 
 </body>
+
 </html>
