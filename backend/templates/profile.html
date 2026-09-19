@@ -1,0 +1,1058 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Account | CAVELLE
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="section-label">
+        YOUR CAVELLE
+    </p>
+
+    <h1>
+        My Account
+    </h1>
+
+    <p>
+        Manage your profile, saved cakes and orders.
+    </p>
+
+</section>
+
+
+<section class="profile-section">
+
+    <!-- =========================================
+         PROFILE HEADER
+    ========================================== -->
+
+    <div class="profile-card">
+
+        <div class="profile-avatar">
+            <span id="profileInitial">
+                C
+            </span>
+        </div>
+
+
+        <div class="profile-heading">
+
+            <p class="section-label">
+                CUSTOMER ACCOUNT
+            </p>
+
+            <h2 id="profileName">
+                Loading...
+            </h2>
+
+            <p id="profileEmail">
+                Loading...
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         PERSONAL INFORMATION
+    ========================================== -->
+
+    <div class="profile-content-grid">
+
+        <div class="profile-info-card">
+
+            <div class="profile-card-header">
+
+                <div>
+
+                    <p class="section-label">
+                        ACCOUNT DETAILS
+                    </p>
+
+                    <h2>
+                        Personal Information
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- VIEW PROFILE -->
+
+            <div id="profileDetails">
+
+                <div class="profile-detail-row">
+
+                    <span>
+                        Username
+                    </span>
+
+                    <strong id="usernameValue">
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-detail-row">
+
+                    <span>
+                        First Name
+                    </span>
+
+                    <strong id="firstNameValue">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-detail-row">
+
+                    <span>
+                        Last Name
+                    </span>
+
+                    <strong id="lastNameValue">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-detail-row">
+
+                    <span>
+                        Email
+                    </span>
+
+                    <strong id="emailValue">
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-detail-row">
+
+                    <span>
+                        Phone
+                    </span>
+
+                    <strong id="phoneValue">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-detail-row">
+
+                    <span>
+                        Account Type
+                    </span>
+
+                    <strong id="roleValue">
+                        Customer
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 EDIT PROFILE
+            ================================== -->
+
+            <form
+                id="profileForm"
+                class="auth-form"
+                style="display: none;"
+            >
+
+                <div class="form-group">
+
+                    <label for="editFirstName">
+                        First Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editFirstName"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="editLastName">
+                        Last Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editLastName"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="editEmail">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="editEmail"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="editPhone">
+                        Phone
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editPhone"
+                        maxlength="15"
+                    >
+
+                </div>
+
+
+                <div class="profile-form-actions">
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                        id="saveProfileBtn"
+                    >
+                        Save Changes
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        id="cancelEditBtn"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+
+                <p
+                    id="profileMessage"
+                    class="form-message"
+                ></p>
+
+            </form>
+
+
+            <button
+                type="button"
+                class="secondary-btn profile-edit-btn"
+                id="editProfileBtn"
+            >
+                Edit Profile
+            </button>
+
+        </div>
+
+
+        <!-- =========================================
+             ACCOUNT ACTIONS
+        ========================================== -->
+
+        <div class="profile-actions-card">
+
+            <p class="section-label">
+                YOUR CAVELLE
+            </p>
+
+            <h2>
+                My Activity
+            </h2>
+
+
+            <a
+                href="/wishlist/"
+                class="profile-action-link"
+            >
+
+                <div>
+
+                    <span class="profile-action-icon">
+                        ♡
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Wishlist
+                        </strong>
+
+                        <span>
+                            View your saved cakes
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+            <a
+                href="/cart/"
+                class="profile-action-link"
+            >
+
+                <div>
+
+                    <span class="profile-action-icon">
+                        🛒
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Cart
+                        </strong>
+
+                        <span>
+                            View your current selection
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+            <a
+                href="/orders/"
+                class="profile-action-link"
+            >
+
+                <div>
+
+                    <span class="profile-action-icon">
+                        📦
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Orders
+                        </strong>
+
+                        <span>
+                            Track your purchases
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+            <a
+                href="/products/"
+                class="profile-action-link"
+            >
+
+                <div>
+
+                    <span class="profile-action-icon">
+                        ✦
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Explore Cakes
+                        </strong>
+
+                        <span>
+                            Discover the CAVELLE collection
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         ACCOUNT NOTICE
+    ========================================== -->
+
+    <div class="profile-account-footer">
+
+        <div>
+
+            <p class="section-label">
+                ACCOUNT
+            </p>
+
+            <h3>
+                Manage your CAVELLE account
+            </h3>
+
+            <p>
+                Keep your details updated for a smoother
+                checkout and ordering experience.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="secondary-btn profile-logout-btn"
+            id="logoutBtn"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =========================================
+   PROFILE PAGE
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadProfile
+);
+
+
+/* =========================================
+   LOAD PROFILE
+========================================= */
+
+async function loadProfile() {
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            "/login/";
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/users/profile/",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if (response.status === 401) {
+
+            logoutUser();
+
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            showProfileError(
+                "Unable to load your profile."
+            );
+
+            return;
+        }
+
+
+        displayProfile(
+            data
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Profile loading error:",
+            error
+        );
+
+
+        showProfileError(
+            "Something went wrong. Please try again."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   DISPLAY PROFILE
+========================================= */
+
+function displayProfile(
+    data
+) {
+
+    const fullName =
+        [
+            data.first_name,
+            data.last_name
+        ]
+        .filter(Boolean)
+        .join(" ");
+
+
+    const displayName =
+        fullName ||
+        data.username ||
+        "CAVELLE Customer";
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        displayName;
+
+
+    document.getElementById(
+        "profileEmail"
+    ).textContent =
+        data.email ||
+        "No email added";
+
+
+    document.getElementById(
+        "usernameValue"
+    ).textContent =
+        data.username ||
+        "—";
+
+
+    document.getElementById(
+        "firstNameValue"
+    ).textContent =
+        data.first_name ||
+        "—";
+
+
+    document.getElementById(
+        "lastNameValue"
+    ).textContent =
+        data.last_name ||
+        "—";
+
+
+    document.getElementById(
+        "emailValue"
+    ).textContent =
+        data.email ||
+        "—";
+
+
+    document.getElementById(
+        "phoneValue"
+    ).textContent =
+        data.phone ||
+        "—";
+
+
+    document.getElementById(
+        "roleValue"
+    ).textContent =
+        formatRole(
+            data.role
+        );
+
+
+    /* ================================
+       AVATAR INITIAL
+    ================================= */
+
+    const initial =
+        (
+            data.first_name ||
+            data.username ||
+            "C"
+        )
+        .charAt(0)
+        .toUpperCase();
+
+
+    document.getElementById(
+        "profileInitial"
+    ).textContent =
+        initial;
+
+
+    /* ================================
+       EDIT FORM VALUES
+    ================================= */
+
+    document.getElementById(
+        "editFirstName"
+    ).value =
+        data.first_name || "";
+
+
+    document.getElementById(
+        "editLastName"
+    ).value =
+        data.last_name || "";
+
+
+    document.getElementById(
+        "editEmail"
+    ).value =
+        data.email || "";
+
+
+    document.getElementById(
+        "editPhone"
+    ).value =
+        data.phone || "";
+
+}
+
+
+/* =========================================
+   EDIT PROFILE
+========================================= */
+
+document.getElementById(
+    "editProfileBtn"
+).addEventListener(
+    "click",
+    function () {
+
+        document.getElementById(
+            "profileDetails"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "profileForm"
+        ).style.display =
+            "block";
+
+
+        document.getElementById(
+            "editProfileBtn"
+        ).style.display =
+            "none";
+
+    }
+);
+
+
+/* =========================================
+   CANCEL EDIT
+========================================= */
+
+document.getElementById(
+    "cancelEditBtn"
+).addEventListener(
+    "click",
+    function () {
+
+        document.getElementById(
+            "profileForm"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "profileDetails"
+        ).style.display =
+            "block";
+
+
+        document.getElementById(
+            "editProfileBtn"
+        ).style.display =
+            "inline-flex";
+
+
+        document.getElementById(
+            "profileMessage"
+        ).textContent = "";
+
+    }
+);
+
+
+/* =========================================
+   SAVE PROFILE
+========================================= */
+
+document.getElementById(
+    "profileForm"
+).addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+
+        const token =
+            localStorage.getItem(
+                "access_token"
+            );
+
+
+        const message =
+            document.getElementById(
+                "profileMessage"
+            );
+
+
+        const saveButton =
+            document.getElementById(
+                "saveProfileBtn"
+            );
+
+
+        const profileData = {
+
+            first_name:
+                document.getElementById(
+                    "editFirstName"
+                ).value.trim(),
+
+            last_name:
+                document.getElementById(
+                    "editLastName"
+                ).value.trim(),
+
+            email:
+                document.getElementById(
+                    "editEmail"
+                ).value.trim(),
+
+            phone:
+                document.getElementById(
+                    "editPhone"
+                ).value.trim()
+
+        };
+
+
+        saveButton.disabled =
+            true;
+
+
+        saveButton.textContent =
+            "Saving...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/users/profile/",
+                    {
+                        method: "PATCH",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " + token
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                profileData
+                            )
+
+                    }
+                );
+
+
+            if (response.status === 401) {
+
+                logoutUser();
+
+                return;
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (response.ok) {
+
+                displayProfile(
+                    data
+                );
+
+
+                message.textContent =
+                    "Profile updated successfully.";
+
+                message.className =
+                    "form-message success";
+
+
+                document.getElementById(
+                    "profileForm"
+                ).style.display =
+                    "none";
+
+
+                document.getElementById(
+                    "profileDetails"
+                ).style.display =
+                    "block";
+
+
+                document.getElementById(
+                    "editProfileBtn"
+                ).style.display =
+                    "inline-flex";
+
+
+            } else {
+
+                message.textContent =
+                    getProfileError(
+                        data
+                    );
+
+                message.className =
+                    "form-message error";
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Profile update error:",
+                error
+            );
+
+
+            message.textContent =
+                "Unable to update your profile.";
+
+            message.className =
+                "form-message error";
+
+
+        } finally {
+
+            saveButton.disabled =
+                false;
+
+            saveButton.textContent =
+                "Save Changes";
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+document.getElementById(
+    "logoutBtn"
+).addEventListener(
+    "click",
+    function () {
+
+        logoutUser();
+
+    }
+);
+
+
+/* =========================================
+   LOGOUT HELPER
+========================================= */
+
+function logoutUser() {
+
+    localStorage.removeItem(
+        "access_token"
+    );
+
+    localStorage.removeItem(
+        "refresh_token"
+    );
+
+    window.location.href =
+        "/login/";
+
+}
+
+
+/* =========================================
+   ROLE FORMAT
+========================================= */
+
+function formatRole(
+    role
+) {
+
+    if (!role) {
+
+        return "Customer";
+
+    }
+
+
+    return role
+        .charAt(0)
+        .toUpperCase()
+        +
+        role.slice(1);
+
+}
+
+
+/* =========================================
+   PROFILE ERROR
+========================================= */
+
+function showProfileError(
+    message
+) {
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        "Unable to load";
+
+
+    document.getElementById(
+        "profileEmail"
+    ).textContent =
+        message;
+
+}
+
+
+/* =========================================
+   PROFILE FORM ERROR
+========================================= */
+
+function getProfileError(
+    data
+) {
+
+    if (data.email) {
+
+        return data.email[0];
+
+    }
+
+
+    if (data.phone) {
+
+        return data.phone[0];
+
+    }
+
+
+    if (data.first_name) {
+
+        return data.first_name[0];
+
+    }
+
+
+    if (data.last_name) {
+
+        return data.last_name[0];
+
+    }
+
+
+    if (data.detail) {
+
+        return data.detail;
+
+    }
+
+
+    return "Unable to update your profile.";
+
+}
+
+</script>
+
+{% endblock %}

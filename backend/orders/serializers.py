@@ -40,6 +40,7 @@ class CartItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CartItem
+
         fields = [
             "id",
             "cart",
@@ -54,6 +55,7 @@ class CartItemSerializer(serializers.ModelSerializer):
     def validate_quantity(self, value):
 
         if value <= 0:
+
             raise serializers.ValidationError(
                 "Quantity must be greater than 0."
             )
@@ -76,7 +78,6 @@ class CartSerializer(serializers.ModelSerializer):
     )
 
     items = CartItemSerializer(
-        source="items",
         many=True,
         read_only=True
     )
@@ -114,6 +115,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItem
+
         fields = [
             "id",
             "order",
@@ -126,6 +128,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
     def validate_quantity(self, value):
 
         if value <= 0:
+
             raise serializers.ValidationError(
                 "Quantity must be greater than 0."
             )
@@ -144,7 +147,6 @@ class OrderSerializer(serializers.ModelSerializer):
     )
 
     items = OrderItemSerializer(
-        source="items",
         many=True,
         read_only=True
     )

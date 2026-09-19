@@ -4,6 +4,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import AllowAny
 
 from .models import Review
 from .serializers import ReviewSerializer
@@ -19,7 +20,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     permission_classes = [IsCustomer]
 
-
     # =========================================
     # CUSTOMER'S OWN REVIEWS
     # =========================================
@@ -33,7 +33,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
             "user"
         )
 
-
     # =========================================
     # CREATE REVIEW
     # =========================================
@@ -42,11 +41,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
         cake = serializer.validated_data["cake"]
 
-
-        # -------------------------------------
-        # CHECK PURCHASE
-        # -------------------------------------
-
         purchased = OrderItem.objects.filter(
             order__user=self.request.user,
             cake=cake
@@ -54,17 +48,11 @@ class ReviewViewSet(viewsets.ModelViewSet):
             order__status=Order.Status.CANCELLED
         ).exists()
 
-
         if not purchased:
 
             raise ValidationError(
                 "You can review a cake only after purchasing it."
             )
-
-
-        # -------------------------------------
-        # PREVENT DUPLICATE REVIEW
-        # -------------------------------------
 
         if Review.objects.filter(
             user=self.request.user,
@@ -75,11 +63,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
                 "You have already reviewed this cake."
             )
 
-
         serializer.save(
             user=self.request.user
         )
-
 
     # =========================================
     # GET REVIEWS FOR A CAKE
@@ -88,7 +74,8 @@ class ReviewViewSet(viewsets.ModelViewSet):
     @action(
         detail=False,
         methods=["get"],
-        url_path=r"cake/(?P<cake_id>\d+)"
+        url_path=r"cake/(?P<cake_id>\d+)",
+        permission_classes=[AllowAny]
     )
     def cake_reviews(self, request, cake_id):
 
@@ -96,7 +83,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
             Cake,
             id=cake_id
         )
-
 
         reviews = Review.objects.filter(
             cake=cake
@@ -106,12 +92,10 @@ class ReviewViewSet(viewsets.ModelViewSet):
             "-created_at"
         )
 
-
         serializer = ReviewSerializer(
             reviews,
             many=True
         )
-
 
         return Response(
             serializer.data,

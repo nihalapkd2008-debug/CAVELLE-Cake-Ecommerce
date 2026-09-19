@@ -7,11 +7,15 @@
 {% block content %}
 
 
+<!-- =========================================
+     PRODUCT DETAIL
+========================================= -->
+
 <section class="product-detail">
 
     <!-- =========================================
          PRODUCT IMAGE
-    ========================================= -->
+    ========================================== -->
 
     <div class="detail-image">
 
@@ -35,7 +39,7 @@
 
     <!-- =========================================
          PRODUCT INFORMATION
-    ========================================= -->
+    ========================================== -->
 
     <div class="detail-content">
 
@@ -197,6 +201,10 @@
 
 <section class="reviews-section">
 
+    <!-- =====================================
+         REVIEWS HEADER
+    ====================================== -->
+
     <div class="reviews-header">
 
         <p class="section-label">
@@ -256,6 +264,8 @@
             class="auth-form"
         >
 
+            <!-- RATING -->
+
             <div class="form-group">
 
                 <label for="reviewRating">
@@ -296,6 +306,8 @@
             </div>
 
 
+            <!-- COMMENT -->
+
             <div class="form-group">
 
                 <label for="reviewComment">
@@ -310,6 +322,8 @@
 
             </div>
 
+
+            <!-- SUBMIT -->
 
             <button
                 type="submit"
@@ -335,189 +349,11 @@
 <script>
 
 /* =========================================
-   GLOBAL PRODUCT DATA
+   CURRENT CAKE
 ========================================= */
 
 const currentCakeId =
     "{{ cake.id }}";
-
-
-/* =========================================
-   ADD TO CART
-========================================= */
-
-const addToCartForm =
-    document.getElementById(
-        "addToCartForm"
-    );
-
-
-if (addToCartForm) {
-
-    addToCartForm.addEventListener(
-        "submit",
-        async function (event) {
-
-            event.preventDefault();
-
-
-            const token =
-                localStorage.getItem(
-                    "access_token"
-                );
-
-
-            const message =
-                document.getElementById(
-                    "cartMessage"
-                );
-
-
-            const cakeId =
-                addToCartForm.dataset.cakeId;
-
-
-            const quantity =
-                parseInt(
-                    document.getElementById(
-                        "quantity"
-                    ).value
-                );
-
-
-            /* ================================
-               LOGIN CHECK
-            ================================= */
-
-            if (!token) {
-
-                message.textContent =
-                    "Please login to add items to your cart.";
-
-                message.className =
-                    "form-message error";
-
-
-                setTimeout(
-                    function () {
-
-                        window.location.href =
-                            "/login/";
-
-                    },
-                    1000
-                );
-
-                return;
-            }
-
-
-            /* ================================
-               QUANTITY CHECK
-            ================================= */
-
-            if (
-                !quantity ||
-                quantity < 1
-            ) {
-
-                message.textContent =
-                    "Please enter a valid quantity.";
-
-                message.className =
-                    "form-message error";
-
-                return;
-            }
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        "/api/orders/cart-items/",
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json",
-
-                                "Authorization":
-                                    "Bearer " + token
-                            },
-
-                            body: JSON.stringify({
-                                cake: cakeId,
-                                quantity: quantity
-                            })
-                        }
-                    );
-
-
-                const data =
-                    await response.json();
-
-
-                /* ================================
-                   TOKEN EXPIRED
-                ================================= */
-
-                if (
-                    response.status === 401
-                ) {
-
-                    logoutUser();
-
-                    return;
-                }
-
-
-                /* ================================
-                   SUCCESS
-                ================================= */
-
-                if (response.ok) {
-
-                    message.textContent =
-                        "Cake added to cart successfully!";
-
-                    message.className =
-                        "form-message success";
-
-                } else {
-
-                    message.textContent =
-                        getCartErrorMessage(
-                            data
-                        );
-
-                    message.className =
-                        "form-message error";
-
-                }
-
-
-            } catch (error) {
-
-                console.error(
-                    "Cart error:",
-                    error
-                );
-
-
-                message.textContent =
-                    "Something went wrong. Please try again.";
-
-                message.className =
-                    "form-message error";
-
-            }
-
-        }
-    );
-
-}
 
 
 /* =========================================
@@ -558,6 +394,10 @@ async function loadReviews() {
         const reviews =
             await response.json();
 
+
+        /* =================================
+           RESPONSE ERROR
+        ================================= */
 
         if (!response.ok) {
 
@@ -678,8 +518,12 @@ async function loadReviews() {
 
 
                 const stars =
-                    "★".repeat(rating) +
-                    "☆".repeat(5 - rating);
+                    "★".repeat(
+                        rating
+                    ) +
+                    "☆".repeat(
+                        5 - rating
+                    );
 
 
                 const username =
@@ -1021,35 +865,12 @@ function formatReviewDate(
 
 
 /* =========================================
-   CART ERROR
-========================================= */
-
-function getCartErrorMessage(data) {
-
-    if (data.quantity) {
-
-        return data.quantity[0];
-
-    }
-
-
-    if (data.detail) {
-
-        return data.detail;
-
-    }
-
-
-    return "Something went wrong. Please try again.";
-
-}
-
-
-/* =========================================
    REVIEW ERROR
 ========================================= */
 
-function getReviewErrorMessage(data) {
+function getReviewErrorMessage(
+    data
+) {
 
     if (data.cake) {
 

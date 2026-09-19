@@ -186,6 +186,18 @@ def wishlist_page(request):
 
 
 # =========================================
+# PROFILE PAGE
+# =========================================
+
+def profile_page(request):
+
+    return render(
+        request,
+        "profile.html"
+    )
+
+
+# =========================================
 # STAFF ORDERS
 # =========================================
 
