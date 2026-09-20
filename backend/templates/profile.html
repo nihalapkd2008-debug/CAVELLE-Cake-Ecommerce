@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 My Account | CAVELLE
@@ -6,35 +7,1045 @@ My Account | CAVELLE
 
 {% block content %}
 
-<section class="page-header">
+<style>
 
-    <p class="section-label">
-        YOUR CAVELLE
-    </p>
+/* =========================================
+   CAVELLE PROFILE PAGE
+========================================= */
 
-    <h1>
-        My Account
-    </h1>
+.profile-page {
+    width: 100%;
+    max-width: 1180px;
 
-    <p>
-        Manage your profile, saved cakes and orders.
-    </p>
+    margin: 0 auto;
 
-</section>
+    padding:
+        75px 5% 100px;
+
+    position: relative;
+    z-index: 1;
+}
 
 
-<section class="profile-section">
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.profile-page-header {
+    margin-bottom: 42px;
+}
+
+.profile-page-header h1 {
+    margin: 0;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    color: #2B1D18;
+
+    font-size:
+        clamp(42px, 5vw, 64px);
+
+    font-weight: 400;
+
+    line-height: 1.05;
+
+    letter-spacing: -1.8px;
+}
+
+.profile-page-header p {
+    margin-top: 15px;
+
+    max-width: 620px;
+
+    color: #6F5548;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   PROFILE HERO
+========================================= */
+
+.profile-hero-card {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 24px;
+
+    padding:
+        30px 32px;
+
+    margin-bottom: 25px;
+
+    border:
+        1px solid
+        rgba(43, 29, 24, 0.09);
+
+    border-radius: 24px;
+
+    background:
+        rgba(255, 255, 255, 0.56);
+
+    box-shadow:
+        0 18px 45px
+        rgba(43, 29, 24, 0.08);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    overflow: hidden;
+}
+
+.profile-hero-card::after {
+    content: "";
+
+    position: absolute;
+
+    right: -90px;
+    top: -90px;
+
+    width: 220px;
+    height: 220px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(184, 155, 135, 0.13);
+
+    filter:
+        blur(12px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   PROFILE IMAGE
+========================================= */
+
+.profile-avatar {
+    width: 88px;
+    height: 88px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background:
+        #E8D9CC;
+
+    border:
+        2px solid
+        rgba(140, 95, 74, 0.18);
+
+    box-shadow:
+        0 12px 26px
+        rgba(43, 29, 24, 0.10);
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+/* =========================================
+   PROFILE HEADING
+========================================= */
+
+.profile-heading {
+    position: relative;
+    z-index: 2;
+}
+
+.profile-heading .section-label {
+    margin-bottom: 7px;
+
+    color: #8C5F4A;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+.profile-heading h2 {
+    margin: 0;
+
+    color: #2B1D18;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(25px, 3vw, 34px);
+
+    font-weight: 400;
+
+    line-height: 1.15;
+}
+
+.profile-heading p {
+    margin-top: 7px;
+
+    color: #765F53;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   MAIN GRID
+========================================= */
+
+.profile-content-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.35fr)
+        minmax(300px, 0.85fr);
+
+    gap: 25px;
+
+    align-items: start;
+}
+
+
+/* =========================================
+   COMMON CARD
+========================================= */
+
+.profile-info-card,
+.profile-actions-card,
+.profile-account-footer {
+    border:
+        1px solid
+        rgba(43, 29, 24, 0.09);
+
+    background:
+        rgba(255, 255, 255, 0.56);
+
+    box-shadow:
+        0 18px 45px
+        rgba(43, 29, 24, 0.07);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+}
+
+
+/* =========================================
+   PERSONAL INFO CARD
+========================================= */
+
+.profile-info-card {
+    padding: 34px;
+
+    border-radius: 24px;
+}
+
+.profile-card-header {
+    margin-bottom: 25px;
+}
+
+.profile-card-header .section-label {
+    margin-bottom: 8px;
+
+    color: #8C5F4A;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+.profile-card-header h2 {
+    margin: 0;
+
+    color: #2B1D18;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 30px;
+
+    font-weight: 400;
+
+    line-height: 1.15;
+}
+
+
+/* =========================================
+   DETAIL LIST
+========================================= */
+
+#profileDetails {
+    border-top:
+        1px solid
+        rgba(43, 29, 24, 0.08);
+}
+
+.profile-detail-row {
+    display: grid;
+
+    grid-template-columns:
+        145px minmax(0, 1fr);
+
+    gap: 20px;
+
+    padding: 17px 0;
+
+    border-bottom:
+        1px solid
+        rgba(43, 29, 24, 0.07);
+}
+
+.profile-detail-row span {
+    color: #8F786A;
+
+    font-size: 12px;
+
+    font-weight: 500;
+}
+
+.profile-detail-row strong {
+    color: #2B1D18;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    word-break: break-word;
+}
+
+
+/* =========================================
+   EDIT BUTTON
+========================================= */
+
+.profile-edit-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 24px;
+
+    min-height: 44px;
+
+    padding:
+        0 20px;
+
+    border:
+        1px solid
+        rgba(43, 29, 24, 0.20);
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.50);
+
+    color: #2B1D18;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.profile-edit-btn:hover {
+    background:
+        #FFFFFF;
+
+    border-color:
+        #8C5F4A;
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================
+   EDIT FORM
+========================================= */
+
+#profileForm {
+    width: 100%;
+}
+
+.profile-form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+
+    padding-top: 4px;
+}
+
+.profile-form-group {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.profile-form-group label {
+    margin-bottom: 8px;
+
+    color: #2B1D18;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.35px;
+}
+
+.profile-form-group input {
+    width: 100%;
+
+    min-height: 50px;
+
+    padding:
+        0 15px;
+
+    border:
+        1px solid
+        rgba(43, 29, 24, 0.15);
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.70);
+
+    color: #2B1D18;
+
+    outline: none;
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.profile-form-group input:focus {
+    border-color:
+        #8C5F4A;
+
+    background:
+        #FFFFFF;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(140, 95, 74, 0.07);
+}
+
+
+/* =========================================
+   FORM BUTTONS
+========================================= */
+
+.profile-form-actions {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+.profile-primary-btn,
+.profile-secondary-btn {
+    min-height: 46px;
+
+    padding:
+        0 19px;
+
+    border-radius: 12px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.profile-primary-btn {
+    border:
+        1px solid
+        #2B1D18;
+
+    background:
+        #2B1D18;
+
+    color:
+        #FFFFFF;
+}
+
+.profile-primary-btn:hover {
+    background:
+        #3A2720;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 10px 20px
+        rgba(43, 29, 24, 0.14);
+}
+
+.profile-secondary-btn {
+    border:
+        1px solid
+        rgba(43, 29, 24, 0.18);
+
+    background:
+        rgba(255, 255, 255, 0.50);
+
+    color:
+        #2B1D18;
+}
+
+.profile-secondary-btn:hover {
+    background:
+        #FFFFFF;
+
+    transform:
+        translateY(-1px);
+}
+
+.profile-primary-btn:disabled {
+    opacity: 0.65;
+
+    cursor: wait;
+
+    transform: none;
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+#profileMessage {
+    margin-top: 14px;
+
+    min-height: 20px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+#profileMessage.success {
+    color: #527152;
+}
+
+#profileMessage.error {
+    color: #9A4B43;
+}
+
+
+/* =========================================
+   MY ACTIVITY CARD
+========================================= */
+
+.profile-actions-card {
+    padding: 31px 24px;
+
+    border-radius: 24px;
+}
+
+.profile-actions-card > h2 {
+    margin:
+        0 0 20px;
+
+    color: #2B1D18;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 29px;
+
+    font-weight: 400;
+}
+
+
+/* =========================================
+   ACTIVITY LINKS
+========================================= */
+
+.profile-action-link {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding:
+        16px 14px;
+
+    border-radius: 14px;
+
+    text-decoration: none;
+
+    color: inherit;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+.profile-action-link:hover {
+    background:
+        rgba(140, 95, 74, 0.07);
+
+    transform:
+        translateX(3px);
+}
+
+.profile-action-link > div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    min-width: 0;
+}
+
+.profile-action-icon {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(140, 95, 74, 0.09);
+
+    color:
+        #8C5F4A;
+
+    font-size: 17px;
+}
+
+.profile-action-link strong {
+    display: block;
+
+    color:
+        #2B1D18;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.profile-action-link-text {
+    display: block;
+
+    margin-top: 3px;
+
+    color:
+        #8F786A;
+
+    font-size: 11px;
+
+    line-height: 1.4;
+}
+
+.profile-action-arrow {
+    color:
+        #8C5F4A;
+
+    font-size: 18px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================
+   ACCOUNT FOOTER
+========================================= */
+
+.profile-account-footer {
+    margin-top: 25px;
+
+    padding:
+        26px 28px;
+
+    border-radius: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.profile-account-footer .section-label {
+    margin-bottom: 7px;
+
+    color: #8C5F4A;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+.profile-account-footer h3 {
+    margin: 0;
+
+    color:
+        #2B1D18;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 21px;
+
+    font-weight: 400;
+}
+
+.profile-account-footer p:not(.section-label) {
+    margin-top: 6px;
+
+    max-width: 620px;
+
+    color:
+        #796155;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+.profile-logout-btn {
+    flex-shrink: 0;
+
+    min-height: 44px;
+
+    padding:
+        0 18px;
+
+    border:
+        1px solid
+        rgba(140, 95, 74, 0.30);
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.45);
+
+    color:
+        #8C5F4A;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+.profile-logout-btn:hover {
+    background:
+        rgba(140, 95, 74, 0.08);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+    .profile-page {
+        padding:
+            60px 4% 80px;
+    }
+
+    .profile-content-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .profile-page {
+        padding:
+            42px 15px 60px;
+    }
+
+    .profile-page-header {
+        margin-bottom:
+            30px;
+    }
+
+    .profile-page-header h1 {
+        font-size:
+            43px;
+    }
+
+    .profile-page-header p {
+        font-size:
+            13px;
+    }
+
+    .profile-hero-card {
+        padding:
+            22px 20px;
+
+        gap:
+            16px;
+
+        border-radius:
+            20px;
+    }
+
+    .profile-avatar {
+        width:
+            72px;
+
+        height:
+            72px;
+    }
+
+    .profile-heading h2 {
+        font-size:
+            24px;
+    }
+
+    .profile-info-card {
+        padding:
+            24px 20px;
+
+        border-radius:
+            20px;
+    }
+
+    .profile-card-header h2 {
+        font-size:
+            26px;
+    }
+
+    .profile-detail-row {
+        grid-template-columns:
+            1fr;
+
+        gap:
+            6px;
+
+        padding:
+            14px 0;
+    }
+
+    .profile-form-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .profile-actions-card {
+        padding:
+            25px 18px;
+
+        border-radius:
+            20px;
+    }
+
+    .profile-account-footer {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+        padding:
+            24px 20px;
+
+        border-radius:
+            20px;
+    }
+
+    .profile-logout-btn {
+        width:
+            100%;
+    }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 420px) {
+
+    .profile-page {
+        padding:
+            35px 12px 50px;
+    }
+
+    .profile-page-header h1 {
+        font-size:
+            38px;
+    }
+
+    .profile-hero-card {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+    }
+
+    .profile-avatar {
+        width:
+            64px;
+
+        height:
+            64px;
+    }
+
+    .profile-heading h2 {
+        font-size:
+            22px;
+    }
+
+    .profile-info-card {
+        padding:
+            22px 17px;
+    }
+
+    .profile-actions-card {
+        padding:
+            22px 15px;
+    }
+
+}
+
+</style>
+
+
+<section class="profile-page">
+
+
+    <!-- =========================================
+         PAGE HEADER
+    ========================================== -->
+
+    <div class="profile-page-header">
+
+        <h1>
+            My Account
+        </h1>
+
+        <p>
+            Manage your profile, saved cakes and orders.
+        </p>
+
+    </div>
+
 
     <!-- =========================================
          PROFILE HEADER
     ========================================== -->
 
-    <div class="profile-card">
+    <div class="profile-hero-card">
+
+
+        <!-- PROFILE IMAGE -->
 
         <div class="profile-avatar">
-            <span id="profileInitial">
-                C
-            </span>
+
+            <img
+                id="profileImage"
+                src="{% static 'images/profile-icon.png' %}"
+                alt="Profile"
+            >
+
         </div>
 
 
@@ -58,33 +1069,38 @@ My Account | CAVELLE
 
 
     <!-- =========================================
-         PERSONAL INFORMATION
+         MAIN CONTENT
     ========================================== -->
 
     <div class="profile-content-grid">
 
+
+        <!-- =====================================
+             PERSONAL INFORMATION
+        ====================================== -->
+
         <div class="profile-info-card">
+
 
             <div class="profile-card-header">
 
-                <div>
+                <p class="section-label">
+                    ACCOUNT DETAILS
+                </p>
 
-                    <p class="section-label">
-                        ACCOUNT DETAILS
-                    </p>
-
-                    <h2>
-                        Personal Information
-                    </h2>
-
-                </div>
+                <h2>
+                    Personal Information
+                </h2>
 
             </div>
 
 
-            <!-- VIEW PROFILE -->
+            <!-- =================================
+                 VIEW PROFILE
+            ================================== -->
 
             <div id="profileDetails">
+
 
                 <div class="profile-detail-row">
 
@@ -167,68 +1183,76 @@ My Account | CAVELLE
 
 
             <!-- =================================
-                 EDIT PROFILE
+                 EDIT PROFILE FORM
             ================================== -->
 
             <form
                 id="profileForm"
-                class="auth-form"
                 style="display: none;"
             >
 
-                <div class="form-group">
-
-                    <label for="editFirstName">
-                        First Name
-                    </label>
-
-                    <input
-                        type="text"
-                        id="editFirstName"
-                    >
-
-                </div>
+                <div class="profile-form-grid">
 
 
-                <div class="form-group">
+                    <div class="profile-form-group">
 
-                    <label for="editLastName">
-                        Last Name
-                    </label>
+                        <label for="editFirstName">
+                            First Name
+                        </label>
 
-                    <input
-                        type="text"
-                        id="editLastName"
-                    >
+                        <input
+                            type="text"
+                            id="editFirstName"
+                            placeholder="Enter first name"
+                        >
 
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="editEmail">
-                        Email
-                    </label>
-
-                    <input
-                        type="email"
-                        id="editEmail"
-                    >
-
-                </div>
+                    </div>
 
 
-                <div class="form-group">
+                    <div class="profile-form-group">
 
-                    <label for="editPhone">
-                        Phone
-                    </label>
+                        <label for="editLastName">
+                            Last Name
+                        </label>
 
-                    <input
-                        type="text"
-                        id="editPhone"
-                        maxlength="15"
-                    >
+                        <input
+                            type="text"
+                            id="editLastName"
+                            placeholder="Enter last name"
+                        >
+
+                    </div>
+
+
+                    <div class="profile-form-group">
+
+                        <label for="editEmail">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="editEmail"
+                            placeholder="Enter email address"
+                        >
+
+                    </div>
+
+
+                    <div class="profile-form-group">
+
+                        <label for="editPhone">
+                            Phone
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editPhone"
+                            maxlength="15"
+                            placeholder="Enter phone number"
+                        >
+
+                    </div>
 
                 </div>
 
@@ -237,7 +1261,7 @@ My Account | CAVELLE
 
                     <button
                         type="submit"
-                        class="primary-btn"
+                        class="profile-primary-btn"
                         id="saveProfileBtn"
                     >
                         Save Changes
@@ -246,7 +1270,7 @@ My Account | CAVELLE
 
                     <button
                         type="button"
-                        class="secondary-btn"
+                        class="profile-secondary-btn"
                         id="cancelEditBtn"
                     >
                         Cancel
@@ -263,9 +1287,11 @@ My Account | CAVELLE
             </form>
 
 
+            <!-- EDIT PROFILE -->
+
             <button
                 type="button"
-                class="secondary-btn profile-edit-btn"
+                class="profile-edit-btn"
                 id="editProfileBtn"
             >
                 Edit Profile
@@ -275,19 +1301,17 @@ My Account | CAVELLE
 
 
         <!-- =========================================
-             ACCOUNT ACTIONS
+             MY ACTIVITY
         ========================================== -->
 
         <div class="profile-actions-card">
-
-            <p class="section-label">
-                YOUR CAVELLE
-            </p>
 
             <h2>
                 My Activity
             </h2>
 
+
+            <!-- WISHLIST -->
 
             <a
                 href="/wishlist/"
@@ -306,7 +1330,7 @@ My Account | CAVELLE
                             Wishlist
                         </strong>
 
-                        <span>
+                        <span class="profile-action-link-text">
                             View your saved cakes
                         </span>
 
@@ -314,12 +1338,14 @@ My Account | CAVELLE
 
                 </div>
 
-                <span>
+                <span class="profile-action-arrow">
                     →
                 </span>
 
             </a>
 
+
+            <!-- CART -->
 
             <a
                 href="/cart/"
@@ -338,7 +1364,7 @@ My Account | CAVELLE
                             Cart
                         </strong>
 
-                        <span>
+                        <span class="profile-action-link-text">
                             View your current selection
                         </span>
 
@@ -346,12 +1372,14 @@ My Account | CAVELLE
 
                 </div>
 
-                <span>
+                <span class="profile-action-arrow">
                     →
                 </span>
 
             </a>
 
+
+            <!-- ORDERS -->
 
             <a
                 href="/orders/"
@@ -370,7 +1398,7 @@ My Account | CAVELLE
                             Orders
                         </strong>
 
-                        <span>
+                        <span class="profile-action-link-text">
                             Track your purchases
                         </span>
 
@@ -378,12 +1406,14 @@ My Account | CAVELLE
 
                 </div>
 
-                <span>
+                <span class="profile-action-arrow">
                     →
                 </span>
 
             </a>
 
+
+            <!-- EXPLORE CAKES -->
 
             <a
                 href="/products/"
@@ -402,7 +1432,7 @@ My Account | CAVELLE
                             Explore Cakes
                         </strong>
 
-                        <span>
+                        <span class="profile-action-link-text">
                             Discover the CAVELLE collection
                         </span>
 
@@ -410,7 +1440,7 @@ My Account | CAVELLE
 
                 </div>
 
-                <span>
+                <span class="profile-action-arrow">
                     →
                 </span>
 
@@ -422,7 +1452,7 @@ My Account | CAVELLE
 
 
     <!-- =========================================
-         ACCOUNT NOTICE
+         ACCOUNT FOOTER
     ========================================== -->
 
     <div class="profile-account-footer">
@@ -447,7 +1477,7 @@ My Account | CAVELLE
 
         <button
             type="button"
-            class="secondary-btn profile-logout-btn"
+            class="profile-logout-btn"
             id="logoutBtn"
         >
             Logout
@@ -507,7 +1537,9 @@ async function loadProfile() {
             );
 
 
-        if (response.status === 401) {
+        if (
+            response.status === 401
+        ) {
 
             logoutUser();
 
@@ -630,29 +1662,7 @@ function displayProfile(
         );
 
 
-    /* ================================
-       AVATAR INITIAL
-    ================================= */
-
-    const initial =
-        (
-            data.first_name ||
-            data.username ||
-            "C"
-        )
-        .charAt(0)
-        .toUpperCase();
-
-
-    document.getElementById(
-        "profileInitial"
-    ).textContent =
-        initial;
-
-
-    /* ================================
-       EDIT FORM VALUES
-    ================================= */
+    /* EDIT FORM VALUES */
 
     document.getElementById(
         "editFirstName"
@@ -741,7 +1751,8 @@ document.getElementById(
 
         document.getElementById(
             "profileMessage"
-        ).textContent = "";
+        ).textContent =
+            "";
 
     }
 );
@@ -806,7 +1817,6 @@ document.getElementById(
         saveButton.disabled =
             true;
 
-
         saveButton.textContent =
             "Saving...";
 
@@ -838,7 +1848,9 @@ document.getElementById(
                 );
 
 
-            if (response.status === 401) {
+            if (
+                response.status === 401
+            ) {
 
                 logoutUser();
 

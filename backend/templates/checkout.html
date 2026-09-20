@@ -6,6 +6,11 @@ Checkout | CAVELLE
 
 {% block content %}
 
+
+<!-- =========================================
+     PAGE HEADER
+========================================= -->
+
 <section class="page-header">
 
     <p class="section-label">
@@ -18,6 +23,10 @@ Checkout | CAVELLE
 
 </section>
 
+
+<!-- =========================================
+     CHECKOUT
+========================================= -->
 
 <section class="checkout-section">
 
@@ -279,7 +288,115 @@ Checkout | CAVELLE
 </section>
 
 
+<!-- =========================================
+     ORDER SUCCESS OVERLAY
+========================================= -->
+
+<div
+    class="order-success-overlay"
+    id="orderSuccessOverlay"
+    aria-hidden="true"
+>
+
+
+    <!-- CONFETTI CONTAINER -->
+
+    <div
+        class="order-confetti-container"
+        id="orderConfetti"
+        aria-hidden="true"
+    ></div>
+
+
+    <!-- SUCCESS CARD -->
+
+    <div
+        class="order-success-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="orderSuccessTitle"
+    >
+
+
+        <!-- SUCCESS ICON -->
+
+        <div class="order-success-icon">
+
+            <svg
+                viewBox="0 0 52 52"
+                aria-hidden="true"
+            >
+
+                <circle
+                    cx="26"
+                    cy="26"
+                    r="24"
+                />
+
+                <path
+                    d="M15 27.5L22 34L37 18"
+                />
+
+            </svg>
+
+        </div>
+
+
+        <p class="order-success-label">
+            CAVELLE ORDER
+        </p>
+
+
+        <h2 id="orderSuccessTitle">
+            Order placed successfully!
+        </h2>
+
+
+        <p class="order-success-message">
+            Your sweet order has been placed successfully.
+        </p>
+
+
+        <p
+            class="order-success-number"
+            id="orderSuccessNumber"
+        >
+            Order #—
+        </p>
+
+
+        <div class="order-success-actions">
+
+            <button
+                type="button"
+                class="primary-btn"
+                id="viewOrdersBtn"
+            >
+                View My Orders
+            </button>
+
+
+            <button
+                type="button"
+                class="secondary-btn"
+                id="continueShoppingBtn"
+            >
+                Continue Shopping
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
 <script>
+
+/* =========================================
+   CHECKOUT INITIALIZATION
+========================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -289,8 +406,106 @@ document.addEventListener(
 
         loadAddresses();
 
+        initializeCheckoutUI();
+
     }
 );
+
+
+/* =========================================
+   INITIALIZE SUCCESS UI
+========================================= */
+
+function initializeCheckoutUI() {
+
+    const overlay =
+        document.getElementById(
+            "orderSuccessOverlay"
+        );
+
+
+    const viewOrdersBtn =
+        document.getElementById(
+            "viewOrdersBtn"
+        );
+
+
+    const continueShoppingBtn =
+        document.getElementById(
+            "continueShoppingBtn"
+        );
+
+
+    if (viewOrdersBtn) {
+
+        viewOrdersBtn.addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "/orders/";
+
+            }
+        );
+
+    }
+
+
+    if (continueShoppingBtn) {
+
+        continueShoppingBtn.addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "/products/";
+
+            }
+        );
+
+    }
+
+
+    if (overlay) {
+
+        overlay.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target === overlay
+                ) {
+
+                    closeSuccessPopup();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                overlay &&
+                overlay.classList.contains(
+                    "show"
+                )
+            ) {
+
+                closeSuccessPopup();
+
+            }
+
+        }
+    );
+
+}
 
 
 /* =========================================
@@ -311,10 +526,148 @@ async function loadCheckout() {
             "/login/";
 
         return;
+
     }
 
 
+    const params = new URLSearchParams(
+        window.location.search
+    );
+
+
+    const buyNowCakeId =
+        params.get("buy_now");
+
+
+    const buyNowQuantity =
+        parseInt(
+            params.get("quantity"),
+            10
+        );
+
+
     try {
+
+        /* =====================================
+           DIRECT ORDER / BUY NOW
+        ====================================== */
+
+        if (
+            buyNowCakeId &&
+            Number.isInteger(buyNowQuantity) &&
+            buyNowQuantity > 0
+        ) {
+
+            const response =
+                await fetch(
+                    `/api/products/cakes/${buyNowCakeId}/`,
+                    {
+                        method: "GET"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load selected cake."
+                );
+
+            }
+
+
+            const cake =
+                await response.json();
+
+
+            const stock =
+                parseInt(cake.stock, 10) || 0;
+
+
+            const available =
+                cake.is_available !== false &&
+                stock >= buyNowQuantity;
+
+
+            if (!available) {
+
+                document.getElementById(
+                    "checkoutItems"
+                ).innerHTML = `
+
+                    <p>
+                        This cake is currently unavailable
+                        for the selected quantity.
+                    </p>
+
+                    <a
+                        href="/products/"
+                        class="primary-btn"
+                    >
+                        Explore Cakes
+                    </a>
+
+                `;
+
+
+                document.getElementById(
+                    "placeOrderBtn"
+                ).disabled = true;
+
+
+                return;
+
+            }
+
+
+            const price =
+                parseFloat(cake.price) || 0;
+
+
+            const total =
+                price * buyNowQuantity;
+
+
+            document.getElementById(
+                "checkoutItems"
+            ).innerHTML = `
+
+                <div class="summary-item">
+
+                    <span>
+
+                        ${escapeHtml(cake.name)}
+
+                        × ${buyNowQuantity}
+
+                    </span>
+
+
+                    <strong>
+
+                        ₹${total.toFixed(2)}
+
+                    </strong>
+
+                </div>
+
+            `;
+
+
+            document.getElementById(
+                "checkoutTotal"
+            ).textContent =
+                "₹" + total.toFixed(2);
+
+
+            return;
+
+        }
+
+
+        /* =====================================
+           NORMAL CART CHECKOUT
+        ====================================== */
 
         const response =
             await fetch(
@@ -335,6 +688,7 @@ async function loadCheckout() {
             logoutUser();
 
             return;
+
         }
 
 
@@ -364,16 +718,18 @@ async function loadCheckout() {
 
             `;
 
+
             document.getElementById(
                 "placeOrderBtn"
             ).disabled = true;
 
+
             return;
+
         }
 
 
         let total = 0;
-
 
         let itemsHTML = "";
 
@@ -396,7 +752,7 @@ async function loadCheckout() {
 
                         <span>
 
-                            ${item.cake_name}
+                            ${escapeHtml(item.cake_name)}
 
                             × ${item.quantity}
 
@@ -436,12 +792,13 @@ async function loadCheckout() {
             error
         );
 
+
         document.getElementById(
             "checkoutItems"
         ).innerHTML = `
 
             <p>
-                Unable to load your cart.
+                Unable to load your order.
             </p>
 
         `;
@@ -449,7 +806,6 @@ async function loadCheckout() {
     }
 
 }
-
 
 /* =========================================
    LOAD ADDRESSES
@@ -466,6 +822,7 @@ async function loadAddresses() {
     if (!token) {
 
         return;
+
     }
 
 
@@ -496,6 +853,7 @@ async function loadAddresses() {
             logoutUser();
 
             return;
+
         }
 
 
@@ -518,6 +876,7 @@ async function loadAddresses() {
             `;
 
             return;
+
         }
 
 
@@ -742,11 +1101,14 @@ document.getElementById(
                 await response.json();
 
 
-            if (response.status === 401) {
+            if (
+                response.status === 401
+            ) {
 
                 logoutUser();
 
                 return;
+
             }
 
 
@@ -754,6 +1116,7 @@ document.getElementById(
 
                 message.textContent =
                     "Address saved successfully.";
+
 
                 message.className =
                     "form-message success";
@@ -776,7 +1139,10 @@ document.getElementById(
             } else {
 
                 message.textContent =
-                    getCheckoutError(data);
+                    getCheckoutError(
+                        data
+                    );
+
 
                 message.className =
                     "form-message error";
@@ -791,8 +1157,10 @@ document.getElementById(
                 error
             );
 
+
             message.textContent =
                 "Unable to save address.";
+
 
             message.className =
                 "form-message error";
@@ -842,14 +1210,18 @@ document.getElementById(
             message.textContent =
                 "Please select a delivery address.";
 
+
             message.className =
                 "form-message error";
 
+
             return;
+
         }
 
 
         this.disabled = true;
+
 
         this.textContent =
             "Processing Order...";
@@ -861,9 +1233,58 @@ document.getElementById(
                CREATE ORDER
             ============================= */
 
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            const buyNowCakeId =
+                params.get("buy_now");
+
+
+            const buyNowQuantity =
+                parseInt(
+                    params.get("quantity"),
+                    10
+                );
+
+
+            const isBuyNow =
+                Boolean(
+                    buyNowCakeId &&
+                    Number.isInteger(buyNowQuantity) &&
+                    buyNowQuantity > 0
+                );
+
+
+            const orderEndpoint =
+                isBuyNow
+                    ? "/api/orders/orders/buy-now-checkout/"
+                    : "/api/orders/orders/checkout/";
+
+
+            const orderPayload =
+                isBuyNow
+                    ? {
+                        address:
+                            selectedAddress.value,
+
+                        cake:
+                            buyNowCakeId,
+
+                        quantity:
+                            buyNowQuantity
+                    }
+                    : {
+                        address:
+                            selectedAddress.value
+                    };
+
+
             const orderResponse =
                 await fetch(
-                    "/api/orders/orders/checkout/",
+                    orderEndpoint,
                     {
                         method: "POST",
 
@@ -877,12 +1298,10 @@ document.getElementById(
 
                         },
 
-                        body: JSON.stringify({
-
-                            address:
-                                selectedAddress.value
-
-                        })
+                        body:
+                            JSON.stringify(
+                                orderPayload
+                            )
 
                     }
                 );
@@ -900,6 +1319,7 @@ document.getElementById(
                 logoutUser();
 
                 return;
+
             }
 
 
@@ -910,15 +1330,20 @@ document.getElementById(
                         orderData
                     );
 
+
                 message.className =
                     "form-message error";
 
+
                 this.disabled = false;
+
 
                 this.textContent =
                     "Place Order";
 
+
                 return;
+
             }
 
 
@@ -942,15 +1367,16 @@ document.getElementById(
 
                         },
 
-                        body: JSON.stringify({
+                        body:
+                            JSON.stringify({
 
-                            order:
-                                orderData.id,
+                                order:
+                                    orderData.id,
 
-                            payment_method:
-                                paymentMethod
+                                payment_method:
+                                    paymentMethod
 
-                        })
+                            })
 
                     }
                 );
@@ -968,6 +1394,7 @@ document.getElementById(
                 logoutUser();
 
                 return;
+
             }
 
 
@@ -976,15 +1403,20 @@ document.getElementById(
                 message.textContent =
                     "Order created, but payment could not be created.";
 
+
                 message.className =
                     "form-message error";
 
+
                 this.disabled = false;
+
 
                 this.textContent =
                     "Place Order";
 
+
                 return;
+
             }
 
 
@@ -993,20 +1425,22 @@ document.getElementById(
             ============================= */
 
             message.textContent =
-                "Order placed successfully!";
+                "";
+
 
             message.className =
-                "form-message success";
+                "form-message";
 
 
-            setTimeout(
-                function () {
+            this.disabled = false;
 
-                    window.location.href =
-                        "/orders/";
 
-                },
-                1200
+            this.textContent =
+                "Order Placed";
+
+
+            showOrderSuccess(
+                orderData.id
             );
 
 
@@ -1021,11 +1455,13 @@ document.getElementById(
             message.textContent =
                 "Something went wrong. Please try again.";
 
+
             message.className =
                 "form-message error";
 
 
             this.disabled = false;
+
 
             this.textContent =
                 "Place Order";
@@ -1034,6 +1470,248 @@ document.getElementById(
 
     }
 );
+
+
+/* =========================================
+   SHOW ORDER SUCCESS
+========================================= */
+
+function showOrderSuccess(
+    orderId
+) {
+
+    const overlay =
+        document.getElementById(
+            "orderSuccessOverlay"
+        );
+
+
+    const orderNumber =
+        document.getElementById(
+            "orderSuccessNumber"
+        );
+
+
+    if (!overlay) {
+
+        window.location.href =
+            "/orders/";
+
+        return;
+
+    }
+
+
+    if (orderNumber) {
+
+        orderNumber.textContent =
+            "Order #" + orderId;
+
+    }
+
+
+    overlay.classList.add(
+        "show"
+    );
+
+
+    overlay.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+
+    createConfetti();
+
+
+    setTimeout(
+        function () {
+
+            const successCard =
+                overlay.querySelector(
+                    ".order-success-card"
+                );
+
+
+            if (successCard) {
+
+                successCard.classList.add(
+                    "celebrate"
+                );
+
+            }
+
+        },
+        80
+    );
+
+}
+
+
+/* =========================================
+   CLOSE SUCCESS POPUP
+========================================= */
+
+function closeSuccessPopup() {
+
+    const overlay =
+        document.getElementById(
+            "orderSuccessOverlay"
+        );
+
+
+    if (!overlay) {
+
+        return;
+
+    }
+
+
+    overlay.classList.remove(
+        "show"
+    );
+
+
+    overlay.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+}
+
+
+/* =========================================
+   CREATE CONFETTI
+========================================= */
+
+function createConfetti() {
+
+    const container =
+        document.getElementById(
+            "orderConfetti"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    const pieces = 46;
+
+
+    for (
+        let index = 0;
+        index < pieces;
+        index++
+    ) {
+
+        const piece =
+            document.createElement(
+                "span"
+            );
+
+
+        piece.className =
+            "order-confetti-piece";
+
+
+        const left =
+            8 +
+            Math.random() * 84;
+
+
+        const delay =
+            Math.random() * 0.35;
+
+
+        const duration =
+            1.8 +
+            Math.random() * 1.3;
+
+
+        const rotation =
+            Math.random() * 360;
+
+
+        const drift =
+            -90 +
+            Math.random() * 180;
+
+
+        piece.style.left =
+            left + "%";
+
+
+        piece.style.setProperty(
+            "--confetti-delay",
+            delay + "s"
+        );
+
+
+        piece.style.setProperty(
+            "--confetti-duration",
+            duration + "s"
+        );
+
+
+        piece.style.setProperty(
+            "--confetti-rotation",
+            rotation + "deg"
+        );
+
+
+        piece.style.setProperty(
+            "--confetti-drift",
+            drift + "px"
+        );
+
+
+        piece.style.setProperty(
+            "--confetti-shape",
+            index % 3
+        );
+
+
+        container.appendChild(
+            piece
+        );
+
+    }
+
+
+    setTimeout(
+        function () {
+
+            container.innerHTML =
+                "";
+
+        },
+        3500
+    );
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(value) {
+
+    return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
 
 
 /* =========================================
@@ -1046,9 +1724,11 @@ function logoutUser() {
         "access_token"
     );
 
+
     localStorage.removeItem(
         "refresh_token"
     );
+
 
     window.location.href =
         "/login/";
@@ -1123,5 +1803,6 @@ function getCheckoutError(data) {
 }
 
 </script>
+
 
 {% endblock %}

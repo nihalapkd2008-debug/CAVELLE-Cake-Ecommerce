@@ -136,7 +136,7 @@
 
 
         <!-- =====================================
-             ADD TO CART
+             ADD TO CART + ORDER NOW
         ====================================== -->
 
         {% if cake.is_available and cake.stock > 0 %}
@@ -164,17 +164,41 @@
             </div>
 
 
-            <button
-                type="submit"
-                class="primary-btn"
-            >
-                Add to Cart
-            </button>
+            <div class="detail-order-actions">
+
+                <!-- Existing main.js handles this form submission. -->
+                <button
+                    type="submit"
+                    class="primary-btn add-to-cart-btn"
+                >
+                    Add to Cart
+                </button>
+
+
+                <!-- Direct checkout: this does NOT add the cake to cart. -->
+                <button
+                    type="button"
+                    id="orderNowBtn"
+                    class="secondary-btn order-now-product-btn"
+                    data-cake-id="{{ cake.id }}"
+                >
+                    Order Now
+                </button>
+
+            </div>
 
 
             <p
                 id="cartMessage"
                 class="form-message"
+                aria-live="polite"
+            ></p>
+
+
+            <p
+                id="orderNowMessage"
+                class="form-message"
+                aria-live="polite"
             ></p>
 
         </form>
@@ -354,6 +378,122 @@
 
 const currentCakeId =
     "{{ cake.id }}";
+
+
+/* =========================================
+   ORDER NOW
+========================================= */
+
+const orderNowButton =
+    document.getElementById(
+        "orderNowBtn"
+    );
+
+
+if (orderNowButton) {
+
+    orderNowButton.addEventListener(
+        "click",
+        function () {
+
+            const token =
+                localStorage.getItem(
+                    "access_token"
+                );
+
+
+            /* ================================
+               LOGIN CHECK
+            ================================= */
+
+            if (!token) {
+
+                window.location.href =
+                    "/login/";
+
+                return;
+            }
+
+
+            const quantityInput =
+                document.getElementById(
+                    "quantity"
+                );
+
+
+            const message =
+                document.getElementById(
+                    "orderNowMessage"
+                );
+
+
+            const quantity =
+                parseInt(
+                    quantityInput?.value || "1",
+                    10
+                );
+
+
+            const maxStock =
+                parseInt(
+                    quantityInput?.max || "0",
+                    10
+                );
+
+
+            /* ================================
+               QUANTITY CHECK
+            ================================= */
+
+            if (
+                !Number.isInteger(quantity) ||
+                quantity < 1
+            ) {
+
+                if (message) {
+
+                    message.textContent =
+                        "Please select a valid quantity.";
+
+                    message.className =
+                        "form-message error";
+
+                }
+
+                return;
+            }
+
+
+            if (
+                maxStock > 0 &&
+                quantity > maxStock
+            ) {
+
+                if (message) {
+
+                    message.textContent =
+                        `Only ${maxStock} item(s) are available.`;
+
+                    message.className =
+                        "form-message error";
+
+                }
+
+                return;
+            }
+
+
+            /* ================================
+               DIRECT CHECKOUT
+            ================================= */
+
+            window.location.href =
+                `/checkout/?buy_now=${encodeURIComponent(currentCakeId)}&quantity=${encodeURIComponent(quantity)}`;
+
+        }
+    );
+
+}
 
 
 /* =========================================

@@ -1032,19 +1032,16 @@ main {
 
 
 /* PRODUCT CARD */
-
 .product-card {
     overflow: hidden;
 
-    background:
-        #FFFFFF;
+    background: #FFFFFF;
 
-    border-radius:
-        18px;
+    border-radius: 18px;
 
-    border:
-        1px solid
-        rgba(43, 29, 24, 0.08);
+    border: none;
+
+    position: relative;
 
     transition:
         transform 0.35s ease,
@@ -1119,6 +1116,19 @@ main {
 
 .product-info {
     padding: 24px;
+
+    border:
+        1px solid
+        #B89B87;
+
+    border-top: 0;
+
+    border-radius:
+        0 0 18px 18px;
+
+    box-sizing: border-box;
+
+    background: #FFFFFF;
 }
 
 .product-category {
@@ -3310,227 +3320,314 @@ main {
 
 .featured-section {
     position: relative;
-    padding: 95px 7% 105px;
+
+    padding:
+        95px
+        7%
+        105px;
+
     overflow: hidden;
+
     z-index: 1;
 }
 
 
-
-
-/* Heading */
+/* =========================================
+   FEATURED HEADING
+========================================= */
 
 .featured-heading {
     position: relative;
+
     z-index: 1;
 
     max-width: 1100px;
-    margin: 0 auto 55px;
+
+    margin:
+        0
+        auto
+        55px;
 
     display: flex;
+
     align-items: flex-end;
+
     justify-content: space-between;
+
     gap: 50px;
 }
+
 
 .featured-heading-text {
     max-width: 620px;
 }
 
+
 .featured-heading .section-label {
     margin-bottom: 15px;
 }
 
+
 .featured-heading h2 {
     margin: 0;
 
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(38px, 4.5vw, 58px);
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            38px,
+            4.5vw,
+            58px
+        );
+
     line-height: 1.08;
+
     font-weight: 400;
+
     letter-spacing: -1.2px;
 
     color: #2B1D18;
 }
 
+
 .featured-heading-description {
     max-width: 320px;
+
     padding-bottom: 4px;
 }
 
+
 .featured-heading-description p {
-    margin: 0 0 16px;
+    margin:
+        0
+        0
+        16px;
 
     color: #6F5548;
+
     font-size: 14px;
+
     line-height: 1.75;
 }
 
+
 .text-link {
     color: #2B1D18;
+
     text-decoration: none;
 
     font-size: 13px;
+
     font-weight: 600;
+
     letter-spacing: 0.3px;
 
-    border-bottom: 1px solid rgba(43, 29, 24, 0.35);
+    border-bottom:
+        1px solid
+        rgba(
+            43,
+            29,
+            24,
+            0.35
+        );
+
     padding-bottom: 3px;
 
-    transition: opacity 0.3s ease;
+    transition:
+        opacity
+        0.3s
+        ease;
 }
+
 
 .text-link:hover {
     opacity: 0.6;
 }
 
 
-/* SIGNATURE CAKES GRID */
 /* =========================================
-   SIGNATURE CAKES
+   FEATURED CAKES GRID
 ========================================= */
 
 .featured-grid {
-    width: min(960px, calc(100% - 80px));
-    margin: 0 auto;
+    width:
+        min(
+            960px,
+            calc(100% - 80px)
+        );
+
+    margin:
+        0
+        auto;
 
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+
+    grid-template-columns:
+        repeat(
+            4,
+            1fr
+        );
+
     gap: 24px;
 }
 
+
+/* =========================================
+   FEATURED CARD
+========================================= */
+
 .featured-card {
     min-width: 0;
+
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    color: inherit;
+
+    text-decoration: none;
 }
+
+
+/* =========================================
+   FEATURED IMAGE
+========================================= */
 
 .featured-card-image {
     width: 100%;
+
     height: 270px;
 
     overflow: hidden;
+
     border-radius: 14px;
 
-    background: #EFE4DB;
+    background:
+        #EFE4DB;
+
+    flex-shrink: 0;
 }
+
 
 .featured-card-image img {
     width: 100%;
+
     height: 100%;
 
     display: block;
 
     object-fit: cover;
+
     object-position: center;
 
-    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition:
+        transform
+        0.6s
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
 }
 
-.featured-card:hover .featured-card-image img {
-    transform: scale(1.04);
+
+.featured-card:hover
+.featured-card-image img {
+    transform:
+        scale(1.04);
 }
 
 
-/* CARD INFORMATION */
+.featured-card-content {
+    width: 100%;
+    height: 212px;
+    margin-top: 8px;
 
-.featured-card-info {
-    padding-top: 20px;
-
-    min-height: 175px;
+    padding: 18px 18px 20px;
 
     display: flex;
     flex-direction: column;
-}
+    justify-content: flex-start;
 
-.featured-card-category {
-    margin-bottom: 8px;
+    box-sizing: border-box;
+    position: relative;
 
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    /* SOFT BACKGROUND */
+    background: #F8F3EE; 
+    
 
-    color: #8C5F4A;
-}
+    /* LIGHT BORDER */
+    border: 1px solid rgba(184, 155, 135, 0.35);
 
-.featured-card-info h3 {
-    margin: 0;
-
-    min-height: 68px;
-
-    font-family: Georgia, serif;
-    font-size: 25px;
-    font-weight: 400;
-    line-height: 1.15;
-
-    color: #2B1D18;
-}
-
-.featured-card-meta {
-    margin-top: auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 12px;
-}
-
-.featured-card-flavour {
-    margin: 0;
-
-    font-size: 14px;
-    color: #8C6C5D;
-}
-
-.featured-card-price {
-    margin: 0;
-
-    font-size: 17px;
-    font-weight: 500;
-    color: #2B1D18;
-
-    white-space: nowrap;
+    border-radius: 14px;
 }
 
 
-/* Card Content */
+/* small elegant top detail */
+.featured-card-content::before {
+    content: "";
+    position: absolute;
 
-.featured-card-content {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
+    top: -1px;
+    left: 18px;
 
-    gap: 20px;
+    width: 38px;
+    height: 2px;
 
-    padding: 16px 3px 0;
+    background: #B89B87;
+
+    border-radius: 2px;
 }
 
+
+/* CATEGORY */
 .featured-category {
-    margin: 0 0 5px;
+    margin: 0 0 7px;
 
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     font-size: 9px;
     font-weight: 600;
 
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+    letter-spacing: 1.7px;
+    line-height: 1.4;
 
-    color: #96786A;
+    text-transform: uppercase;
+    background-color: #f1d8cc; 
+    color: #5d2f19;
 }
 
+
+/* CAKE NAME */
 .featured-card-content h3 {
     margin: 0;
 
-    font-family: Georgia, "Times New Roman", serif;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
     font-size: 23px;
     line-height: 1.2;
-    font-weight: 400;
 
+    font-weight: 400;
+    
     color: #2B1D18;
 }
 
+
+/* FLAVOUR */
 .featured-flavour {
-    margin: 6px 0 0;
+    margin: 7px 0 0;
 
     color: #7A6256;
 
@@ -3538,26 +3635,83 @@ main {
     line-height: 1.5;
 }
 
-.featured-price {
-    flex-shrink: 0;
 
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 18px;
+/* BOTTOM AREA */
+.featured-card-bottom {
+    margin-top: auto;
 
-    color: #2B1D18;
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
 }
 
 
-/* Empty State */
+/* LIGHT DIVIDER */
+.featured-line {
+    display: block;
+
+    width: 100%;
+    height: 1px;
+
+    background:
+        rgba(124, 84, 59, 0.35);
+}
+
+
+/* PRICE */
+.featured-price {
+    align-self: flex-end;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 17px;
+    font-weight: 500;
+
+    color: #4b3127;
+
+    line-height: 1.2;
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
 
 .featured-empty {
-    grid-column: 1 / -1;
+
+    grid-column:
+        1 / -1;
 
     text-align: center;
 
-    padding: 55px 20px;
+    padding:
+        55px
+        20px;
 
     color: #6F5548;
+}
+
+
+/* =========================================
+   FEATURED HOVER
+========================================= */
+
+.featured-card {
+
+    transition:
+        transform
+        0.35s
+        ease;
+}
+
+
+.featured-card:hover {
+
+    transform:
+        translateY(-3px);
 }
 
 
@@ -3568,25 +3722,41 @@ main {
 @media (max-width: 1000px) {
 
     .featured-section {
-        padding: 85px 6% 95px;
+
+        padding:
+            85px
+            6%
+            95px;
     }
 
+
     .featured-heading {
+
         margin-bottom: 48px;
+
         gap: 35px;
     }
 
+
     .featured-heading h2 {
+
         font-size: 48px;
     }
 
+
     .featured-grid {
-        gap: 36px 20px;
+
+        gap:
+            36px
+            20px;
     }
 
+
     .featured-card-content h3 {
+
         font-size: 21px;
     }
+
 }
 
 
@@ -3597,63 +3767,100 @@ main {
 @media (max-width: 700px) {
 
     .featured-section {
-        padding: 70px 6% 80px;
+
+        padding:
+            70px
+            6%
+            80px;
     }
 
+
     .featured-section::before {
+
         width: 340px;
+
         height: 340px;
+
         opacity: 0.045;
     }
 
+
     .featured-heading {
+
         display: block;
 
         margin-bottom: 38px;
     }
 
+
     .featured-heading-text {
+
         max-width: 100%;
     }
 
+
     .featured-heading h2 {
+
         font-size: 38px;
+
         letter-spacing: -0.7px;
     }
 
+
     .featured-heading-description {
-        max-width: 450px;
+
+        max-width: 100%;
 
         padding: 0;
+
         margin-top: 18px;
     }
 
+
     .featured-heading-description p {
+
         font-size: 13px;
+
         line-height: 1.7;
     }
 
+
     .featured-grid {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+            1fr;
+
         gap: 34px;
     }
 
+
     .featured-card-image {
+
+        height: auto;
+
+        aspect-ratio:
+            1 / 0.72;
+
         border-radius: 16px;
-        aspect-ratio: 1 / 0.72;
     }
+
 
     .featured-card-content {
-        padding-top: 13px;
+
+        height: 205px;
+
+        padding:
+            16px
+            2px
+            20px;
     }
+
 
     .featured-card-content h3 {
-        font-size: 20px;
+
+        font-size: 22px;
     }
 
-    .featured-price {
-        font-size: 17px;
-    }
 }
 
 
@@ -3664,39 +3871,45 @@ main {
 @media (max-width: 430px) {
 
     .featured-section {
+
         padding-left: 5%;
+
         padding-right: 5%;
     }
 
-    .featured-section::before {
-        width: 280px;
-        height: 280px;
-    }
 
     .featured-heading h2 {
-        font-size: 33px;
+
+        font-size: 34px;
     }
 
+
     .featured-grid {
+
         gap: 30px;
     }
 
-    .featured-card-image {
-        border-radius: 14px;
+
+    .featured-card-content {
+
+        height: 200px;
     }
+
 
     .featured-card-content h3 {
-        font-size: 18px;
+
+        font-size: 20px;
     }
 
-    .featured-flavour {
-        font-size: 11px;
-    }
-
-    .featured-price {
-        font-size: 16px;
-    }
 }
+
+  .featured-price {
+        font-size: 17px;
+    }
+
+
+
+
 
 /* =========================================
    CAVELLE BAKERY GALLERY
@@ -4238,4 +4451,659 @@ main {
         font-size: 19px;
     }
 
+}
+
+/* =========================================
+   COMPACT CAKES PAGE
+========================================= */
+
+/* =========================================
+   CAVELLE PRODUCTS PAGE - COMPACT HEADER
+========================================= */
+
+.products-page-header {
+    padding:
+        28px 6.5% 22px;
+}
+
+.products-heading-layout {
+    max-width: 1250px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns:
+        minmax(220px, 1fr)
+        auto
+        minmax(220px, 1fr);
+
+    align-items: center;
+
+    gap: 30px;
+}
+
+.products-search-wrap {
+    justify-self: start;
+}
+
+.products-search-wrap input {
+    width: 220px;
+
+    padding:
+        11px 15px;
+
+    border:
+        1px solid #B89B87;
+
+    border-radius: 10px;
+
+    background:
+        #F5EDE5;
+
+    color:
+        #2B1D18;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.products-search-wrap input::placeholder {
+    color:
+        #8C5F4A;
+
+    opacity: 0.75;
+}
+
+.products-search-wrap input:focus {
+    border-color:
+        #2B1D18;
+}
+
+.products-heading-copy {
+    text-align: center;
+}
+
+.products-heading-copy h1 {
+    margin:
+        0 0 8px;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        56px;
+
+    font-weight:
+        500;
+
+    line-height:
+        1.05;
+}
+
+.products-heading-copy p {
+    margin:
+        0;
+
+    color:
+        #6F5548;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.6;
+}
+
+.products-page-section {
+    padding-top:
+        18px;
+}
+
+.products-page-section .product-grid {
+    margin-top:
+        0;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .products-page-header {
+        padding:
+            28px 6% 20px;
+    }
+
+    .products-heading-layout {
+        grid-template-columns:
+            1fr;
+
+        gap:
+            20px;
+    }
+
+    .products-heading-copy {
+        order:
+            1;
+    }
+
+    /* =========================================
+   CAKE SEARCH
+========================================= */
+
+.products-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.products-search-wrap input {
+    width: 210px;
+
+    padding:
+        11px 14px;
+
+    border:
+        1px solid #B89B87;
+
+    border-radius: 10px;
+
+    background:
+        #F5EDE5;
+
+    color:
+        #2B1D18;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.products-search-wrap input:focus {
+    border-color:
+        #2B1D18;
+}
+
+.cake-search-button {
+    padding:
+        11px 18px;
+
+    border:
+        1px solid #2B1D18;
+
+    border-radius: 10px;
+
+    background:
+        #2B1D18;
+
+    color:
+        #FFFFFF;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+.cake-search-button:hover {
+    background:
+        #8C5F4A;
+
+    transform:
+        translateY(-1px);
+}
+
+    .products-heading-balance {
+        display:
+            none;
+    }
+
+    .products-heading-copy h1 {
+        font-size:
+            42px;
+    }
+
+}
+
+/* =========================================
+   COMPACT INNER PAGE HEADERS
+   Wishlist / Cart / Orders / Products
+========================================= */
+
+.page-header {
+    padding:
+        28px 30px 20px;
+}
+
+
+/* Remove small eyebrow labels such as
+   "YOUR CAVELLE" / "CAVELLE COLLECTION" */
+
+.page-header .section-label {
+    display:
+        none;
+}
+
+
+.page-header h1 {
+    margin:
+        0 0 8px;
+
+    font-size:
+        56px;
+
+    line-height:
+        1.08;
+}
+
+
+.page-header > p:last-child {
+    margin:
+        0;
+
+    color:
+        #6F5548;
+
+    line-height:
+        1.6;
+}
+
+
+/* Bring actual page content closer */
+
+.products-section,
+.cart-section,
+.orders-section,
+.checkout-section {
+    padding-top:
+        18px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .page-header {
+        padding:
+            28px 20px 18px;
+    }
+
+
+    .page-header h1 {
+        font-size:
+            42px;
+    }
+
+
+    .products-section,
+    .cart-section,
+    .orders-section,
+    .checkout-section {
+        padding-top:
+            12px;
+    }
+
+}
+
+/* =========================================
+   PRODUCT DETAIL - ORDER ACTIONS
+========================================= */
+
+.detail-order-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.detail-order-actions .primary-btn,
+.detail-order-actions .secondary-btn {
+    min-width: 150px;
+    text-align: center;
+}
+
+.order-now-product-btn {
+    background: transparent;
+}
+
+@media (max-width: 600px) {
+
+    .detail-order-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .detail-order-actions .primary-btn,
+    .detail-order-actions .secondary-btn {
+        width: 100%;
+    }
+
+}
+
+/* =========================================
+   CAVELLE ORDER SUCCESS POPUP
+========================================= */
+
+.order-success-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(43, 29, 24, 0.34);
+
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.30s ease,
+        visibility 0.30s ease;
+
+    z-index: 5000;
+}
+
+.order-success-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.order-success-card {
+    position: relative;
+    z-index: 2;
+
+    width: min(470px, 100%);
+
+    padding: 42px 36px 34px;
+
+    text-align: center;
+
+    border:
+        1px solid rgba(43, 29, 24, 0.08);
+
+    border-radius: 28px;
+
+    background: rgba(255, 255, 255, 0.97);
+
+    box-shadow:
+        0 30px 80px rgba(43, 29, 24, 0.22);
+
+    transform: translateY(18px) scale(0.96);
+    opacity: 0;
+
+    transition:
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.30s ease;
+}
+
+.order-success-overlay.show .order-success-card {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.order-success-card.celebrate {
+    animation:
+        cavelleSuccessPop 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes cavelleSuccessPop {
+    0% {
+        transform: scale(0.96);
+    }
+
+    55% {
+        transform: scale(1.025);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* SUCCESS ICON */
+
+.order-success-icon {
+    width: 74px;
+    height: 74px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #F5EDE5;
+    color: #8C5F4A;
+}
+
+.order-success-icon svg {
+    width: 50px;
+    height: 50px;
+    overflow: visible;
+}
+
+.order-success-icon circle {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}
+
+.order-success-icon path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+
+    animation:
+        cavelleSuccessCheck 0.70s 0.20s ease forwards;
+}
+
+@keyframes cavelleSuccessCheck {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* TEXT */
+
+.order-success-label {
+    margin: 0 0 10px;
+
+    color: #8C5F4A;
+
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.order-success-card h2 {
+    margin: 0;
+
+    color: #2B1D18;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 1.15;
+}
+
+.order-success-message {
+    max-width: 340px;
+
+    margin: 14px auto 8px;
+
+    color: #6F5548;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.order-success-number {
+    margin: 8px 0 26px;
+
+    color: #8C5F4A;
+
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* BUTTONS */
+
+.order-success-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.order-success-actions .primary-btn,
+.order-success-actions .secondary-btn {
+    width: 100%;
+}
+
+/* CONFETTI */
+
+.order-confetti-container {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+    z-index: 1;
+}
+
+.order-confetti-piece {
+    position: absolute;
+    top: -24px;
+
+    width: 8px;
+    height: 14px;
+
+    opacity: 0;
+
+    border-radius: 2px;
+
+    background: #B89B87;
+
+    animation:
+        cavelleConfettiFall
+        var(--confetti-duration)
+        var(--confetti-delay)
+        cubic-bezier(0.20, 0.72, 0.34, 1)
+        forwards;
+}
+
+.order-confetti-piece:nth-child(3n + 1) {
+    background: #8C5F4A;
+}
+
+.order-confetti-piece:nth-child(3n + 2) {
+    background: #D8C1AF;
+}
+
+.order-confetti-piece:nth-child(3n) {
+    background: #2B1D18;
+}
+
+.order-confetti-piece:nth-child(4n) {
+    width: 6px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+@keyframes cavelleConfettiFall {
+    0% {
+        opacity: 0;
+
+        transform:
+            translate3d(0, -20px, 0)
+            rotate(var(--confetti-rotation));
+    }
+
+    12% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate3d(
+                var(--confetti-drift),
+                700px,
+                0
+            )
+            rotate(
+                calc(
+                    var(--confetti-rotation) + 720deg
+                )
+            );
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .order-success-overlay {
+        padding: 18px;
+    }
+
+    .order-success-card {
+        padding: 34px 22px 26px;
+        border-radius: 24px;
+    }
+
+    .order-success-card h2 {
+        font-size: 29px;
+    }
+
+    .order-success-message {
+        font-size: 13px;
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .order-success-card,
+    .order-success-icon path,
+    .order-confetti-piece {
+        animation: none !important;
+    }
 }

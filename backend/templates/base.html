@@ -25,13 +25,136 @@
     <style>
 
         /* =========================================
-           CAVELLE ACCOUNT MENU
+           CAVELLE ACCOUNT
         ========================================= */
 
         .cavelle-account {
             position: relative;
+
             display: flex;
             align-items: center;
+        }
+
+
+        /* =========================================
+           NAVBAR SEARCH
+        ========================================= */
+
+        .navbar-search {
+            position: relative;
+
+            width: 195px;
+
+            flex-shrink: 0;
+        }
+
+
+        .navbar-search input {
+            width: 100%;
+            height: 54px;
+
+            padding:
+                0 42px 0 18px;
+
+            border:
+                1px solid
+                rgba(43, 29, 24, 0.20);
+
+            border-radius:
+                13px;
+
+            background:
+                rgba(255, 255, 255, 0.48);
+
+            color:
+                #2B1D18;
+
+            font-family:
+                inherit;
+
+            font-size:
+                13px;
+
+            outline:
+                none;
+
+            box-sizing:
+                border-box;
+
+            transition:
+                border-color 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .navbar-search input::placeholder {
+            color:
+                #6F5548;
+
+            opacity:
+                0.78;
+        }
+
+
+        .navbar-search input:focus {
+            border-color:
+                rgba(43, 29, 24, 0.35);
+
+            background:
+                rgba(255, 255, 255, 0.65);
+
+            box-shadow:
+                0 6px 18px
+                rgba(43, 29, 24, 0.06);
+        }
+
+
+        /* =========================================
+           SEARCH ICON
+        ========================================= */
+
+        .navbar-search-icon {
+            position: absolute;
+
+            top: 50%;
+            right: 15px;
+
+            width: 18px;
+            height: 18px;
+
+            transform:
+                translateY(-50%);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            pointer-events: none;
+
+            color:
+                #6F5548;
+        }
+
+
+        .navbar-search-icon svg {
+            width: 18px;
+            height: 18px;
+
+            stroke:
+                currentColor;
+
+            stroke-width:
+                1.7;
+
+            stroke-linecap:
+                round;
+
+            stroke-linejoin:
+                round;
+
+            fill:
+                none;
         }
 
 
@@ -47,17 +170,21 @@
             align-items: center;
             justify-content: center;
 
-            border: 1px solid
+            border:
+                1px solid
                 rgba(43, 29, 24, 0.12);
 
-            border-radius: 50%;
+            border-radius:
+                50%;
 
             background:
                 rgba(255, 255, 255, 0.45);
 
-            color: #2B1D18;
+            color:
+                #2B1D18;
 
-            cursor: pointer;
+            cursor:
+                pointer;
 
             transition:
                 background 0.25s ease,
@@ -83,11 +210,14 @@
             width: 21px;
             height: 21px;
 
-            stroke: currentColor;
+            stroke:
+                currentColor;
 
-            stroke-width: 1.8;
+            stroke-width:
+                1.8;
 
-            fill: none;
+            fill:
+                none;
         }
 
 
@@ -98,12 +228,17 @@
         .cavelle-account-dropdown {
             position: absolute;
 
-            top: calc(100% + 12px);
-            right: 0;
+            top:
+                calc(100% + 12px);
 
-            width: 235px;
+            right:
+                0;
 
-            padding: 10px;
+            width:
+                215px;
+
+            padding:
+                10px;
 
             background:
                 rgba(255, 255, 255, 0.94);
@@ -112,7 +247,8 @@
                 1px solid
                 rgba(43, 29, 24, 0.10);
 
-            border-radius: 18px;
+            border-radius:
+                18px;
 
             box-shadow:
                 0 20px 45px
@@ -124,11 +260,14 @@
             -webkit-backdrop-filter:
                 blur(18px);
 
-            opacity: 0;
+            opacity:
+                0;
 
-            visibility: hidden;
+            visibility:
+                hidden;
 
-            pointer-events: none;
+            pointer-events:
+                none;
 
             transform:
                 translateY(-8px);
@@ -138,16 +277,20 @@
                 visibility 0.2s ease,
                 transform 0.2s ease;
 
-            z-index: 1000;
+            z-index:
+                1000;
         }
 
 
         .cavelle-account-dropdown.open {
-            opacity: 1;
+            opacity:
+                1;
 
-            visibility: visible;
+            visibility:
+                visible;
 
-            pointer-events: auto;
+            pointer-events:
+                auto;
 
             transform:
                 translateY(0);
@@ -162,7 +305,8 @@
             padding:
                 12px 12px 14px;
 
-            margin-bottom: 5px;
+            margin-bottom:
+                5px;
 
             border-bottom:
                 1px solid
@@ -171,24 +315,32 @@
 
 
         .cavelle-account-name {
-            color: #2B1D18;
+            color:
+                #2B1D18;
 
-            font-size: 14px;
+            font-size:
+                14px;
 
-            font-weight: 600;
+            font-weight:
+                600;
         }
 
 
         .cavelle-account-role {
-            margin-top: 3px;
+            margin-top:
+                3px;
 
-            color: #9B8071;
+            color:
+                #9B8071;
 
-            font-size: 10px;
+            font-size:
+                10px;
 
-            letter-spacing: 0.7px;
+            letter-spacing:
+                0.7px;
 
-            text-transform: uppercase;
+            text-transform:
+                uppercase;
         }
 
 
@@ -197,23 +349,32 @@
         ========================================= */
 
         .cavelle-account-link {
-            width: 100%;
+            width:
+                100%;
 
-            display: flex;
-            align-items: center;
+            display:
+                flex;
 
-            gap: 10px;
+            align-items:
+                center;
+
+            gap:
+                10px;
 
             padding:
                 11px 12px;
 
-            border-radius: 11px;
+            border-radius:
+                11px;
 
-            color: #4B382F;
+            color:
+                #4B382F;
 
-            text-decoration: none;
+            text-decoration:
+                none;
 
-            font-size: 13px;
+            font-size:
+                13px;
 
             transition:
                 background 0.2s ease,
@@ -225,33 +386,50 @@
             background:
                 rgba(140, 95, 74, 0.08);
 
-            color: #2B1D18;
+            color:
+                #2B1D18;
         }
 
 
         .cavelle-account-link-icon {
-            width: 18px;
-            height: 18px;
+            width:
+                18px;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height:
+                18px;
 
-            color: #8C5F4A;
+            display:
+                flex;
 
-            flex-shrink: 0;
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            color:
+                #8C5F4A;
+
+            flex-shrink:
+                0;
         }
 
 
         .cavelle-account-link-icon svg {
-            width: 17px;
-            height: 17px;
+            width:
+                17px;
 
-            stroke: currentColor;
+            height:
+                17px;
 
-            stroke-width: 1.7;
+            stroke:
+                currentColor;
 
-            fill: none;
+            stroke-width:
+                1.7;
+
+            fill:
+                none;
         }
 
 
@@ -260,34 +438,47 @@
         ========================================= */
 
         .cavelle-logout-button {
-            width: 100%;
+            width:
+                100%;
 
-            display: flex;
-            align-items: center;
+            display:
+                flex;
 
-            gap: 10px;
+            align-items:
+                center;
+
+            gap:
+                10px;
 
             padding:
                 11px 12px;
 
-            margin-top: 4px;
+            margin-top:
+                4px;
 
-            border: none;
+            border:
+                none;
 
-            border-radius: 11px;
+            border-radius:
+                11px;
 
             background:
                 transparent;
 
-            color: #8C5F4A;
+            color:
+                #8C5F4A;
 
-            font-family: inherit;
+            font-family:
+                inherit;
 
-            font-size: 13px;
+            font-size:
+                13px;
 
-            cursor: pointer;
+            cursor:
+                pointer;
 
-            text-align: left;
+            text-align:
+                left;
 
             transition:
                 background 0.2s ease,
@@ -299,7 +490,8 @@
             background:
                 rgba(140, 95, 74, 0.08);
 
-            color: #6E4636;
+            color:
+                #6E4636;
         }
 
 
@@ -309,25 +501,66 @@
 
         .cavelle-account-logged-out,
         .cavelle-account-logged-in {
-            display: none;
+            display:
+                none;
         }
 
 
         /* =========================================
-           MOBILE
+           RESPONSIVE - 1050PX
+        ========================================= */
+
+        @media (max-width: 1050px) {
+
+            .navbar-search {
+                width:
+                    175px;
+            }
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE - 850PX
+        ========================================= */
+
+        @media (max-width: 850px) {
+
+            .navbar-search {
+                width:
+                    150px;
+            }
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE - 700PX
         ========================================= */
 
         @media (max-width: 700px) {
 
-            .cavelle-account-button {
-                width: 40px;
-                height: 40px;
+            .navbar-search {
+                display:
+                    none;
             }
 
-            .cavelle-account-dropdown {
-                right: -5px;
 
-                width: 220px;
+            .cavelle-account-button {
+                width:
+                    40px;
+
+                height:
+                    40px;
+            }
+
+
+            .cavelle-account-dropdown {
+                right:
+                    -5px;
+
+                width:
+                    205px;
             }
 
         }
@@ -366,7 +599,9 @@
         <div class="nav-container">
 
 
-            <!-- CAVELLE LOGO -->
+            <!-- =====================================
+                 CAVELLE LOGO
+            ====================================== -->
 
             <a
                 href="/"
@@ -382,11 +617,55 @@
 
 
             <!-- =====================================
+                 SEARCH
+            ====================================== -->
+
+            <div class="navbar-search">
+
+                <input
+                    type="text"
+                    id="cakeSearch"
+                    placeholder="Search cakes..."
+                    aria-label="Search cakes"
+                >
+
+
+                <span
+                    class="navbar-search-icon"
+                    aria-hidden="true"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                    >
+
+                        <circle
+                            cx="11"
+                            cy="11"
+                            r="6.5"
+                        >
+                        </circle>
+
+                        <path
+                            d="M16 16L21 21"
+                        >
+                        </path>
+
+                    </svg>
+
+                </span>
+
+            </div>
+
+
+            <!-- =====================================
                  NAVIGATION
             ====================================== -->
 
             <nav class="nav-links">
 
+
+                <!-- CAKES -->
 
                 <a href="/products/">
                     Cakes
@@ -487,13 +766,19 @@
                             id="loggedOutMenu"
                         >
 
-                            <div class="cavelle-account-header">
+                            <div
+                                class="cavelle-account-header"
+                            >
 
-                                <div class="cavelle-account-name">
+                                <div
+                                    class="cavelle-account-name"
+                                >
                                     Welcome to CAVELLE
                                 </div>
 
-                                <div class="cavelle-account-role">
+                                <div
+                                    class="cavelle-account-role"
+                                >
                                     Your sweet journey starts here
                                 </div>
 
@@ -589,7 +874,9 @@
                             id="loggedInMenu"
                         >
 
-                            <div class="cavelle-account-header">
+                            <div
+                                class="cavelle-account-header"
+                            >
 
                                 <div
                                     class="cavelle-account-name"
@@ -638,70 +925,6 @@
                                 </span>
 
                                 Profile
-
-                            </a>
-
-
-                            <!-- ORDERS -->
-
-                            <a
-                                href="/orders/"
-                                class="cavelle-account-link"
-                            >
-
-                                <span
-                                    class="cavelle-account-link-icon"
-                                >
-
-                                    <svg
-                                        viewBox="0 0 24 24"
-                                    >
-
-                                        <path
-                                            d="M6 3h12l2 4v14H4V7l2-4z"
-                                        />
-
-                                        <path
-                                            d="M4 7h16"
-                                        />
-
-                                        <path
-                                            d="M9 11h6"
-                                        />
-
-                                    </svg>
-
-                                </span>
-
-                                Orders
-
-                            </a>
-
-
-                            <!-- WISHLIST -->
-
-                            <a
-                                href="/wishlist/"
-                                class="cavelle-account-link"
-                            >
-
-                                <span
-                                    class="cavelle-account-link-icon"
-                                >
-
-                                    <svg
-                                        viewBox="0 0 24 24"
-                                    >
-
-                                        <path
-                                            d="M20.8 8.7c0 5.4-8.8 10.5-8.8 10.5S3.2 14.1 3.2 8.7A4.7 4.7 0 0 1 12 6.1a4.7 4.7 0 0 1 8.8 2.6z"
-                                        />
-
-                                    </svg>
-
-                                </span>
-
-                                Wishlist
 
                             </a>
 
@@ -894,7 +1117,7 @@
 
         /* =========================================
            ACCOUNT MENU
-        ========================================== */
+        ========================================= */
 
         function initializeAccountMenu() {
 
@@ -903,10 +1126,12 @@
                     "accountButton"
                 );
 
+
             const accountDropdown =
                 document.getElementById(
                     "accountDropdown"
                 );
+
 
             const logoutButton =
                 document.getElementById(
@@ -932,6 +1157,7 @@
 
                     event.stopPropagation();
 
+
                     const isOpen =
                         accountDropdown.classList.contains(
                             "open"
@@ -947,6 +1173,7 @@
                         accountDropdown.classList.add(
                             "open"
                         );
+
 
                         accountButton.setAttribute(
                             "aria-expanded",
@@ -1025,6 +1252,7 @@
                     "accountButton"
                 );
 
+
             const accountDropdown =
                 document.getElementById(
                     "accountDropdown"
@@ -1063,15 +1291,18 @@
                     "loggedOutMenu"
                 );
 
+
             const loggedInMenu =
                 document.getElementById(
                     "loggedInMenu"
                 );
 
+
             const accountName =
                 document.getElementById(
                     "accountName"
                 );
+
 
             const accountRole =
                 document.getElementById(
@@ -1104,8 +1335,10 @@
                 loggedOutMenu.style.display =
                     "block";
 
+
                 loggedInMenu.style.display =
                     "none";
+
 
                 return;
 
@@ -1114,13 +1347,11 @@
 
             /* =====================================
                TOKEN EXISTS
-
-               IMPORTANT:
-               Show logged-in menu immediately.
             ====================================== */
 
             loggedOutMenu.style.display =
                 "none";
+
 
             loggedInMenu.style.display =
                 "block";
@@ -1152,19 +1383,19 @@
                     await fetch(
                         "/api/users/profile/",
                         {
-                            method: "GET",
+                            method:
+                                "GET",
 
                             headers: {
                                 "Authorization":
-                                    "Bearer " + token
+                                    "Bearer " +
+                                    token
                             }
                         }
                     );
 
 
-                /* =================================
-                   TOKEN EXPIRED
-                ================================== */
+                /* TOKEN EXPIRED */
 
                 if (
                     response.status === 401
@@ -1172,20 +1403,21 @@
 
                     clearAuth();
 
+
                     loggedOutMenu.style.display =
                         "block";
 
+
                     loggedInMenu.style.display =
                         "none";
+
 
                     return;
 
                 }
 
 
-                /* =================================
-                   PROFILE LOADED
-                ================================== */
+                /* PROFILE LOADED */
 
                 if (response.ok) {
 
@@ -1237,13 +1469,13 @@
 
 
                 /*
-                    Even if profile API fails,
-                    keep logged-in menu visible
-                    because valid token exists.
+                    Keep logged-in menu
+                    visible because token exists.
                 */
 
                 loggedOutMenu.style.display =
                     "none";
+
 
                 loggedInMenu.style.display =
                     "block";
@@ -1263,11 +1495,8 @@
 
             closeAccountMenu();
 
-            /*
-                Go to home after logout.
-            */
-
-            window.location.href = "/";
+            window.location.href =
+                "/";
 
         }
 
@@ -1300,6 +1529,7 @@
                     "access_token"
                 );
 
+
             const countElement =
                 document.getElementById(
                     "wishlistCount"
@@ -1329,7 +1559,8 @@
                     await fetch(
                         "/api/products/cakes/wishlist/",
                         {
-                            method: "GET",
+                            method:
+                                "GET",
 
                             headers: {
                                 "Authorization":
@@ -1339,18 +1570,16 @@
                     );
 
 
-                /* =================================
-                   EXPIRED TOKEN
-                ================================== */
-
                 if (
                     response.status === 401
                 ) {
 
                     clearAuth();
 
+
                     countElement.style.display =
                         "none";
+
 
                     return;
 
@@ -1378,6 +1607,7 @@
 
                     countElement.textContent =
                         count;
+
 
                     countElement.style.display =
                         "inline-flex";

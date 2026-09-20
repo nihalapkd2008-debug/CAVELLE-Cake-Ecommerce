@@ -11,19 +11,19 @@ CAVELLE | Cakes
      PAGE HEADER
 ========================================= -->
 
-<section class="page-header">
+<section class="page-header products-page-header">
 
-    <p class="section-label">
-        CAVELLE COLLECTION
-    </p>
+    <div class="products-heading-copy">
 
-    <h1>
-        Our Cakes
-    </h1>
+        <h1>
+            Our Cakes
+        </h1>
 
-    <p>
-        Explore our collection of handcrafted cakes.
-    </p>
+        <p>
+            Explore our handcrafted cake collection.
+        </p>
+
+    </div>
 
 </section>
 
@@ -32,91 +32,65 @@ CAVELLE | Cakes
      PRODUCTS
 ========================================= -->
 
-<section class="products-section">
+<section class="products-section products-page-section">
 
 
-    <div class="products-toolbar">
+    <!-- =====================================
+         HIDDEN LEGACY CONTROLS
+         Kept for existing main.js
+    ====================================== -->
+
+    <div hidden>
+
+        <span id="cakeCount">
+
+            {{ cakes|length }}
+
+            {% if cakes|length == 1 %}
+                Cake
+            {% else %}
+                Cakes
+            {% endif %}
+
+        </span>
 
 
-        <div>
+        <select id="categoryFilter">
 
-            <span id="cakeCount">
+            <option value="all">
+                All Categories
+            </option>
 
-                {{ cakes|length }}
+            {% for category in categories %}
 
-                {% if cakes|length == 1 %}
-                    Cake
-                {% else %}
-                    Cakes
-                {% endif %}
-
-            </span>
-
-        </div>
-
-
-        <div class="product-filters">
-
-
-            <!-- SEARCH -->
-
-            <input
-                type="text"
-                id="cakeSearch"
-                placeholder="Search cakes..."
-                aria-label="Search cakes"
-            >
-
-
-            <!-- CATEGORY -->
-
-            <select
-                id="categoryFilter"
-            >
-
-                <option value="all">
-                    All Categories
+                <option value="{{ category.name }}">
+                    {{ category.name }}
                 </option>
 
+            {% endfor %}
 
-                {% for category in categories %}
-
-                    <option
-                        value="{{ category.name }}"
-                    >
-                        {{ category.name }}
-                    </option>
-
-                {% endfor %}
-
-            </select>
+        </select>
 
 
-            <!-- SORT -->
+        <select id="sortFilter">
 
-            <select
-                id="sortFilter"
-            >
+            <option value="">
+                Sort By
+            </option>
 
-                <option value="">
-                    Sort By
-                </option>
+            <option value="price-low">
+                Price: Low to High
+            </option>
 
-                <option value="price-low">
-                    Price: Low to High
-                </option>
+            <option value="price-high">
+                Price: High to Low
+            </option>
 
-                <option value="price-high">
-                    Price: High to Low
-                </option>
+            <option value="newest">
+                Newest
+            </option>
 
-                <option value="newest">
-                    Newest
-                </option>
-
-            </select>
-
-        </div>
+        </select>
 
     </div>
 
@@ -136,17 +110,11 @@ CAVELLE | Cakes
 
         <article
             class="product-card"
-
             data-category="{{ cake.category.name }}"
-
             data-price="{{ cake.price }}"
-
             data-created="{{ cake.created_at|date:'U' }}"
-
             data-name="{{ cake.name|lower }}"
-
             data-flavour="{{ cake.flavour|lower }}"
-
             data-cake-id="{{ cake.id }}"
         >
 
@@ -155,6 +123,7 @@ CAVELLE | Cakes
                 href="{% url 'product-detail' cake.id %}"
             >
 
+                <!-- PRODUCT IMAGE -->
 
                 <div class="product-image">
 
@@ -174,46 +143,26 @@ CAVELLE | Cakes
 
                     {% endif %}
 
-
-                    <!-- =================================
-                         WISHLIST HEART
-                    ================================== -->
-
-                    <button
-                        type="button"
-                        class="wishlist-heart"
-                        data-cake-id="{{ cake.id }}"
-                        data-wishlisted="false"
-                        aria-label="Add {{ cake.name }} to wishlist"
-                    >
-                        ♡
-                    </button>
-
-
                 </div>
 
+
+                <!-- PRODUCT INFO -->
 
                 <div class="product-info">
 
 
                     <p class="product-category">
-
                         {{ cake.category.name }}
-
                     </p>
 
 
                     <h3>
-
                         {{ cake.name }}
-
                     </h3>
 
 
                     <p class="product-flavour">
-
                         {{ cake.flavour }}
-
                     </p>
 
 
@@ -221,26 +170,20 @@ CAVELLE | Cakes
 
 
                         <span class="product-price">
-
                             ₹{{ cake.price }}
-
                         </span>
 
 
                         {% if cake.is_available and cake.stock > 0 %}
 
                             <span class="stock-status">
-
                                 Available
-
                             </span>
 
                         {% else %}
 
                             <span class="stock-status">
-
                                 Out of stock
-
                             </span>
 
                         {% endif %}
@@ -253,6 +196,19 @@ CAVELLE | Cakes
 
 
             </a>
+
+
+            <!-- WISHLIST HEART -->
+
+            <button
+                type="button"
+                class="wishlist-heart"
+                data-cake-id="{{ cake.id }}"
+                data-wishlisted="false"
+                aria-label="Add {{ cake.name }} to wishlist"
+            >
+                ♡
+            </button>
 
 
         </article>
@@ -277,7 +233,9 @@ CAVELLE | Cakes
         {% endfor %}
 
 
-        <!-- NO SEARCH RESULT -->
+        <!-- =====================================
+             NO SEARCH RESULT
+        ====================================== -->
 
         <div
             id="noSearchResults"
@@ -290,7 +248,7 @@ CAVELLE | Cakes
             </h2>
 
             <p>
-                Try another cake name or category.
+                Try another cake name.
             </p>
 
         </div>
@@ -329,7 +287,7 @@ async function initializeWishlist() {
 
     /* =====================================
        GUEST USER
-    ===================================== */
+    ====================================== */
 
     if (!token) {
 
@@ -346,6 +304,7 @@ async function initializeWishlist() {
         );
 
         return;
+
     }
 
 
@@ -376,12 +335,14 @@ async function initializeWishlist() {
             );
 
             return;
+
         }
 
 
         if (!response.ok) {
 
             return;
+
         }
 
 
@@ -448,7 +409,7 @@ async function initializeWishlist() {
 
     /* =====================================
        HEART CLICK
-    ===================================== */
+    ====================================== */
 
     heartButtons.forEach(
         function (button) {
@@ -491,7 +452,7 @@ async function handleWishlistClick(event) {
 
     /* =====================================
        LOGIN
-    ===================================== */
+    ====================================== */
 
     if (!token) {
 
@@ -499,6 +460,7 @@ async function handleWishlistClick(event) {
             "/login/";
 
         return;
+
     }
 
 
@@ -550,6 +512,7 @@ async function handleWishlistClick(event) {
                 "/login/";
 
             return;
+
         }
 
 
@@ -565,9 +528,8 @@ async function handleWishlistClick(event) {
             );
 
 
-            /* Update navbar count */
-
             updateWishlistCount();
+
 
         } else {
 
@@ -590,7 +552,6 @@ async function handleWishlistClick(event) {
         alert(
             "Something went wrong. Please try again."
         );
-
 
     } finally {
 
@@ -673,6 +634,7 @@ async function updateWishlistCount() {
     ) {
 
         return;
+
     }
 
 
@@ -695,6 +657,7 @@ async function updateWishlistCount() {
         if (!response.ok) {
 
             return;
+
         }
 
 
@@ -734,5 +697,6 @@ async function updateWishlistCount() {
 }
 
 </script>
+
 
 {% endblock %}
