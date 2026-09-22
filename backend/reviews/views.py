@@ -41,6 +41,10 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
         cake = serializer.validated_data["cake"]
 
+        # Check whether the logged-in customer
+        # has purchased this cake.
+        #
+        # Cancelled orders are not considered purchases.
         purchased = OrderItem.objects.filter(
             order__user=self.request.user,
             cake=cake
@@ -49,20 +53,23 @@ class ReviewViewSet(viewsets.ModelViewSet):
         ).exists()
 
         if not purchased:
+            raise ValidationError({
+                "detail": "You can review a cake only after purchasing it."
+            })
 
-            raise ValidationError(
-                "You can review a cake only after purchasing it."
-            )
-
-        if Review.objects.filter(
+        # Prevent multiple reviews for the same cake
+        # by the same customer.
+        already_reviewed = Review.objects.filter(
             user=self.request.user,
             cake=cake
-        ).exists():
+        ).exists()
 
-            raise ValidationError(
-                "You have already reviewed this cake."
-            )
+        if already_reviewed:
+            raise ValidationError({
+                "detail": "You have already reviewed this cake."
+            })
 
+        # Save review with the logged-in user.
         serializer.save(
             user=self.request.user
         )

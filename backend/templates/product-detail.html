@@ -175,7 +175,7 @@
                 </button>
 
 
-                <!-- Direct checkout: this does NOT add the cake to cart. -->
+                <!-- Direct checkout: does NOT add the cake to cart. -->
                 <button
                     type="button"
                     id="orderNowBtn"
@@ -220,7 +220,7 @@
 
 
 <!-- =========================================
-     REVIEWS SECTION
+     CUSTOMER REVIEWS
 ========================================= -->
 
 <section class="reviews-section">
@@ -251,6 +251,8 @@
 
     <!-- =====================================
          REVIEW LIST
+         Existing reviews are displayed here.
+         Review submission happens from My Orders.
     ====================================== -->
 
     <div
@@ -265,105 +267,6 @@
             </h2>
 
         </div>
-
-    </div>
-
-
-    <!-- =====================================
-         ADD REVIEW
-    ====================================== -->
-
-    <div
-        id="reviewFormContainer"
-        class="review-form-container"
-    >
-
-        <h3>
-            Share your experience
-        </h3>
-
-
-        <form
-            id="reviewForm"
-            class="auth-form"
-        >
-
-            <!-- RATING -->
-
-            <div class="form-group">
-
-                <label for="reviewRating">
-                    Rating
-                </label>
-
-                <select
-                    id="reviewRating"
-                    required
-                >
-
-                    <option value="">
-                        Select rating
-                    </option>
-
-                    <option value="5">
-                        ★★★★★ — Excellent
-                    </option>
-
-                    <option value="4">
-                        ★★★★☆ — Very Good
-                    </option>
-
-                    <option value="3">
-                        ★★★☆☆ — Good
-                    </option>
-
-                    <option value="2">
-                        ★★☆☆☆ — Fair
-                    </option>
-
-                    <option value="1">
-                        ★☆☆☆☆ — Poor
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <!-- COMMENT -->
-
-            <div class="form-group">
-
-                <label for="reviewComment">
-                    Comment
-                </label>
-
-                <textarea
-                    id="reviewComment"
-                    rows="5"
-                    placeholder="Share your thoughts about this cake..."
-                ></textarea>
-
-            </div>
-
-
-            <!-- SUBMIT -->
-
-            <button
-                type="submit"
-                class="primary-btn"
-                id="reviewSubmitBtn"
-            >
-                Submit Review
-            </button>
-
-
-            <p
-                id="reviewMessage"
-                class="form-message"
-            ></p>
-
-        </form>
 
     </div>
 
@@ -412,6 +315,7 @@ if (orderNowButton) {
                     "/login/";
 
                 return;
+
             }
 
 
@@ -461,6 +365,7 @@ if (orderNowButton) {
                 }
 
                 return;
+
             }
 
 
@@ -480,6 +385,7 @@ if (orderNowButton) {
                 }
 
                 return;
+
             }
 
 
@@ -561,6 +467,7 @@ async function loadReviews() {
                 "Reviews unavailable.";
 
             return;
+
         }
 
 
@@ -579,7 +486,7 @@ async function loadReviews() {
                     </h2>
 
                     <p>
-                        Be the first to share your experience.
+                        Customer reviews will appear here after purchases.
                     </p>
 
                 </div>
@@ -590,6 +497,7 @@ async function loadReviews() {
                 "No ratings yet.";
 
             return;
+
         }
 
 
@@ -684,7 +592,9 @@ async function loadReviews() {
                             <div>
 
                                 <strong>
-                                    ${username}
+                                    ${escapeHtml(
+                                        username
+                                    )}
                                 </strong>
 
                                 <div
@@ -711,7 +621,9 @@ async function loadReviews() {
                             review.comment
                                 ? `
                                     <p class="review-comment">
-                                        ${review.comment}
+                                        ${escapeHtml(
+                                            review.comment
+                                        )}
                                     </p>
                                 `
                                 : ""
@@ -762,223 +674,6 @@ async function loadReviews() {
 
 
 /* =========================================
-   SUBMIT REVIEW
-========================================= */
-
-const reviewForm =
-    document.getElementById(
-        "reviewForm"
-    );
-
-
-if (reviewForm) {
-
-    reviewForm.addEventListener(
-        "submit",
-        async function (event) {
-
-            event.preventDefault();
-
-
-            const token =
-                localStorage.getItem(
-                    "access_token"
-                );
-
-
-            const message =
-                document.getElementById(
-                    "reviewMessage"
-                );
-
-
-            const rating =
-                document.getElementById(
-                    "reviewRating"
-                ).value;
-
-
-            const comment =
-                document.getElementById(
-                    "reviewComment"
-                ).value.trim();
-
-
-            /* ================================
-               LOGIN CHECK
-            ================================= */
-
-            if (!token) {
-
-                message.textContent =
-                    "Please login to submit a review.";
-
-                message.className =
-                    "form-message error";
-
-
-                setTimeout(
-                    function () {
-
-                        window.location.href =
-                            "/login/";
-
-                    },
-                    1000
-                );
-
-                return;
-            }
-
-
-            /* ================================
-               RATING CHECK
-            ================================= */
-
-            if (!rating) {
-
-                message.textContent =
-                    "Please select a rating.";
-
-                message.className =
-                    "form-message error";
-
-                return;
-            }
-
-
-            const submitButton =
-                document.getElementById(
-                    "reviewSubmitBtn"
-                );
-
-
-            submitButton.disabled =
-                true;
-
-
-            submitButton.textContent =
-                "Submitting...";
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        "/api/reviews/reviews/",
-                        {
-                            method: "POST",
-
-                            headers: {
-
-                                "Content-Type":
-                                    "application/json",
-
-                                "Authorization":
-                                    "Bearer " + token
-
-                            },
-
-                            body: JSON.stringify({
-
-                                cake:
-                                    currentCakeId,
-
-                                rating:
-                                    Number(
-                                        rating
-                                    ),
-
-                                comment:
-                                    comment
-
-                            })
-                        }
-                    );
-
-
-                const data =
-                    await response.json();
-
-
-                /* ================================
-                   TOKEN EXPIRED
-                ================================= */
-
-                if (
-                    response.status === 401
-                ) {
-
-                    logoutUser();
-
-                    return;
-                }
-
-
-                /* ================================
-                   SUCCESS
-                ================================= */
-
-                if (response.ok) {
-
-                    message.textContent =
-                        "Your review has been submitted successfully.";
-
-                    message.className =
-                        "form-message success";
-
-
-                    reviewForm.reset();
-
-
-                    await loadReviews();
-
-
-                } else {
-
-                    message.textContent =
-                        getReviewErrorMessage(
-                            data
-                        );
-
-                    message.className =
-                        "form-message error";
-
-                }
-
-
-            } catch (error) {
-
-                console.error(
-                    "Review submit error:",
-                    error
-                );
-
-
-                message.textContent =
-                    "Something went wrong. Please try again.";
-
-                message.className =
-                    "form-message error";
-
-
-            } finally {
-
-                submitButton.disabled =
-                    false;
-
-                submitButton.textContent =
-                    "Submit Review";
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================
    FORMAT REVIEW DATE
 ========================================= */
 
@@ -986,10 +681,20 @@ function formatReviewDate(
     dateString
 ) {
 
+    if (!dateString) {
+        return "";
+    }
+
+
     const date =
         new Date(
             dateString
         );
+
+
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    }
 
 
     return date.toLocaleDateString(
@@ -1005,62 +710,17 @@ function formatReviewDate(
 
 
 /* =========================================
-   REVIEW ERROR
+   HTML ESCAPE
 ========================================= */
 
-function getReviewErrorMessage(
-    data
-) {
+function escapeHtml(value) {
 
-    if (data.cake) {
-
-        return data.cake[0];
-
-    }
-
-
-    if (data.rating) {
-
-        return data.rating[0];
-
-    }
-
-
-    if (data.comment) {
-
-        return data.comment[0];
-
-    }
-
-
-    if (data.detail) {
-
-        return data.detail;
-
-    }
-
-
-    return "Something went wrong. Please try again.";
-
-}
-
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-function logoutUser() {
-
-    localStorage.removeItem(
-        "access_token"
-    );
-
-    localStorage.removeItem(
-        "refresh_token"
-    );
-
-    window.location.href =
-        "/login/";
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 
 }
 

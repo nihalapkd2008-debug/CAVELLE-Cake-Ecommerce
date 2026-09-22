@@ -6,22 +6,271 @@ My Orders | CAVELLE
 
 {% block content %}
 
+<!-- =========================================
+     REVIEW MODAL STYLES
+     Kept here so the modal works independently
+     of the main stylesheet.
+========================================= -->
+
+<style>
+
+    .review-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 6000;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 20px;
+
+        background: rgba(43, 29, 24, 0.38);
+
+        backdrop-filter: blur(7px);
+        -webkit-backdrop-filter: blur(7px);
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        transition:
+            opacity 0.25s ease,
+            visibility 0.25s ease;
+
+        box-sizing: border-box;
+    }
+
+
+    .review-modal.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+
+    .review-modal[hidden] {
+        display: none !important;
+    }
+
+
+    .review-modal-card {
+        width: min(520px, 100%);
+        max-height: calc(100vh - 40px);
+
+        overflow-y: auto;
+
+        padding: 30px;
+
+        background: #FFFFFF;
+
+        border: 1px solid rgba(43, 29, 24, 0.10);
+        border-radius: 22px;
+
+        box-shadow:
+            0 25px 70px rgba(43, 29, 24, 0.18);
+
+        box-sizing: border-box;
+
+        transform: translateY(12px) scale(0.98);
+
+        transition:
+            transform 0.25s ease;
+    }
+
+
+    .review-modal.show .review-modal-card {
+        transform: translateY(0) scale(1);
+    }
+
+
+    .review-modal-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 18px;
+
+        margin-bottom: 22px;
+    }
+
+
+    .review-modal-header h2 {
+        margin: 6px 0 0;
+
+        font-family:
+            Georgia,
+            "Times New Roman",
+            serif;
+
+        font-size: 34px;
+        line-height: 1.1;
+        font-weight: 400;
+
+        color: #2B1D18;
+    }
+
+
+    .review-modal-cake-name {
+        margin: 7px 0 0;
+
+        color: #6F5548;
+
+        font-size: 13px;
+    }
+
+
+    .review-modal-close {
+        width: 40px;
+        height: 40px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        border: 1px solid #B89B87;
+        border-radius: 50%;
+
+        background: transparent;
+        color: #2B1D18;
+
+        font-size: 24px;
+        line-height: 1;
+
+        cursor: pointer;
+
+        transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+
+    .review-modal-close:hover {
+        background: #2B1D18;
+        color: #FFFFFF;
+        transform: scale(1.04);
+    }
+
+
+    .review-modal-actions {
+        display: flex;
+        justify-content: flex-end;
+
+        gap: 12px;
+
+        margin-top: 8px;
+    }
+
+
+    .order-review-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 38px;
+
+        padding: 8px 14px;
+
+        border: 1px solid #8C5F4A;
+        border-radius: 8px;
+
+        background: transparent;
+        color: #6F5548;
+
+        font-size: 12px;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        pointer-events: auto;
+
+        white-space: nowrap;
+
+        transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+
+    .order-review-btn:hover {
+        background: #8C5F4A;
+        color: #FFFFFF;
+        border-color: #8C5F4A;
+        transform: translateY(-1px);
+    }
+
+
+    .order-review-btn:disabled {
+        opacity: 0.6;
+        cursor: wait;
+        transform: none;
+    }
+
+
+    @media (max-width: 700px) {
+
+        .review-modal {
+            padding: 14px;
+        }
+
+        .review-modal-card {
+            padding: 24px;
+            max-height: calc(100vh - 28px);
+        }
+
+        .review-modal-header h2 {
+            font-size: 28px;
+        }
+
+        .review-modal-actions {
+            flex-direction: column-reverse;
+        }
+
+        .review-modal-actions button {
+            width: 100%;
+        }
+
+    }
+
+</style>
+
+
+<!-- =========================================
+     PAGE HEADER
+========================================= -->
+
 <section class="page-header">
 
     <p class="section-label">
-        YOUR CAVELLE
+        YOUR PURCHASES
     </p>
 
     <h1>
         My Orders
     </h1>
 
+    <p>
+        View your CAVELLE purchases and share your experience.
+    </p>
+
 </section>
 
 
-<section class="orders-section">
+<!-- =========================================
+     ORDERS
+========================================= -->
 
-    <div id="ordersContainer">
+<section class="orders-section orders-page-section">
+
+    <div
+        id="ordersContainer"
+        aria-live="polite"
+    >
 
         <div class="empty-state">
 
@@ -36,7 +285,345 @@ My Orders | CAVELLE
 </section>
 
 
+<!-- =========================================
+     REVIEW MODAL
+     IMPORTANT:
+     hidden = modal will NOT appear at bottom
+========================================= -->
+
+<div
+    id="reviewModal"
+    class="review-modal"
+    aria-hidden="true"
+    hidden
+>
+
+    <div
+        class="review-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="reviewModalTitle"
+    >
+
+        <div class="review-modal-header">
+
+            <div>
+
+                <p class="section-label">
+                    YOUR EXPERIENCE
+                </p>
+
+                <h2 id="reviewModalTitle">
+                    Rate this cake
+                </h2>
+
+                <p
+                    id="reviewCakeName"
+                    class="review-modal-cake-name"
+                >
+                    Cake
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="review-modal-close"
+                id="closeReviewModal"
+                aria-label="Close review form"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- =================================
+             REVIEW FORM
+        ================================== -->
+
+        <form
+            id="orderReviewForm"
+            class="auth-form"
+        >
+
+            <input
+                type="hidden"
+                id="reviewCakeId"
+            >
+
+
+            <div class="form-group">
+
+                <label for="orderReviewRating">
+                    Rating
+                </label>
+
+                <select
+                    id="orderReviewRating"
+                    required
+                >
+
+                    <option value="">
+                        Select rating
+                    </option>
+
+                    <option value="5">
+                        ★★★★★ — Excellent
+                    </option>
+
+                    <option value="4">
+                        ★★★★☆ — Very Good
+                    </option>
+
+                    <option value="3">
+                        ★★★☆☆ — Good
+                    </option>
+
+                    <option value="2">
+                        ★★☆☆☆ — Fair
+                    </option>
+
+                    <option value="1">
+                        ★☆☆☆☆ — Poor
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="orderReviewComment">
+                    Comment
+                </label>
+
+                <textarea
+                    id="orderReviewComment"
+                    rows="5"
+                    placeholder="Share your experience with this cake..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="review-modal-actions">
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    id="cancelReviewBtn"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                    id="submitOrderReviewBtn"
+                >
+                    Submit Review
+                </button>
+
+            </div>
+
+
+            <p
+                id="orderReviewMessage"
+                class="form-message"
+                aria-live="polite"
+            ></p>
+
+        </form>
+
+    </div>
+
+</div>
+
+
 <script>
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+function formatOrderDate(dateString) {
+
+    if (!dateString) {
+        return "";
+    }
+
+    const date = new Date(dateString);
+
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    }
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+function formatMoney(value) {
+
+    const amount =
+        Number.parseFloat(value ?? 0);
+
+    if (!Number.isFinite(amount)) {
+        return "₹0.00";
+    }
+
+    return "₹" + amount.toFixed(2);
+
+}
+
+
+function getOrderItems(order) {
+
+    if (Array.isArray(order?.items)) {
+        return order.items;
+    }
+
+    if (Array.isArray(order?.order_items)) {
+        return order.order_items;
+    }
+
+    return [];
+
+}
+
+
+function getCakeId(item) {
+
+    if (item?.cake_id) {
+        return item.cake_id;
+    }
+
+    if (
+        item?.cake &&
+        typeof item.cake === "object"
+    ) {
+        return item.cake.id;
+    }
+
+    if (item?.cake) {
+        return item.cake;
+    }
+
+    return "";
+
+}
+
+
+function getCakeName(item) {
+
+    if (item?.cake_name) {
+        return item.cake_name;
+    }
+
+    if (item?.name) {
+        return item.name;
+    }
+
+    if (
+        item?.cake &&
+        typeof item.cake === "object"
+    ) {
+        return item.cake.name || "CAVELLE Cake";
+    }
+
+    return "CAVELLE Cake";
+
+}
+
+
+function getItemSubtotal(item) {
+
+    if (
+        item?.subtotal !== undefined &&
+        item?.subtotal !== null
+    ) {
+        return Number.parseFloat(
+            item.subtotal
+        ) || 0;
+    }
+
+    const unitPrice =
+        Number.parseFloat(
+            item?.unit_price
+        ) || 0;
+
+    const quantity =
+        Number.parseInt(
+            item?.quantity,
+            10
+        ) || 0;
+
+    return unitPrice * quantity;
+
+}
+
+
+function getReviewErrorMessage(data) {
+
+    if (data?.cake) {
+
+        return Array.isArray(data.cake)
+            ? data.cake[0]
+            : data.cake;
+
+    }
+
+    if (data?.rating) {
+
+        return Array.isArray(data.rating)
+            ? data.rating[0]
+            : data.rating;
+
+    }
+
+    if (data?.comment) {
+
+        return Array.isArray(data.comment)
+            ? data.comment[0]
+            : data.comment;
+
+    }
+
+    if (data?.detail) {
+        return data.detail;
+    }
+
+    return "Unable to submit the review. Please try again.";
+
+}
+
+
+/* =========================================
+   LOAD ORDERS
+========================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -44,11 +631,12 @@ document.addEventListener(
 );
 
 
-/* =========================================
-   LOAD ORDERS
-========================================= */
-
 async function loadOrders() {
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
 
     const container =
         document.getElementById(
@@ -56,42 +644,13 @@ async function loadOrders() {
         );
 
 
-    const token =
-        localStorage.getItem(
-            "access_token"
-        );
-
-
-    /* =====================================
-       LOGIN CHECK
-    ===================================== */
-
     if (!token) {
 
-        container.innerHTML = `
-
-            <div class="empty-state">
-
-                <h2>
-                    Please login
-                </h2>
-
-                <p>
-                    Login to view your orders.
-                </p>
-
-                <a
-                    href="/login/"
-                    class="primary-btn"
-                >
-                    Login
-                </a>
-
-            </div>
-
-        `;
+        window.location.href =
+            "/login/";
 
         return;
+
     }
 
 
@@ -102,42 +661,55 @@ async function loadOrders() {
                 "/api/orders/orders/",
                 {
                     method: "GET",
-
                     headers: {
-
                         "Authorization":
                             "Bearer " + token
-
                     }
-
                 }
             );
 
 
-        /* ================================
-           TOKEN EXPIRED
-        ================================= */
-
         if (response.status === 401) {
 
-            logoutUser();
+            localStorage.removeItem(
+                "access_token"
+            );
+
+            localStorage.removeItem(
+                "refresh_token"
+            );
+
+            window.location.href =
+                "/login/";
 
             return;
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data?.detail ||
+                "Unable to load orders."
+            );
+
         }
 
 
         const orders =
-            await response.json();
+            Array.isArray(data)
+                ? data
+                : Array.isArray(data?.results)
+                    ? data.results
+                    : [];
 
 
-        /* =================================
-           NO ORDERS
-        ================================= */
-
-        if (
-            !response.ok ||
-            !orders.length
-        ) {
+        if (!orders.length) {
 
             container.innerHTML = `
 
@@ -148,8 +720,7 @@ async function loadOrders() {
                     </h2>
 
                     <p>
-                        Your sweet journey
-                        starts here.
+                        Your purchased cakes will appear here.
                     </p>
 
                     <a
@@ -164,57 +735,124 @@ async function loadOrders() {
             `;
 
             return;
+
         }
 
 
-        /* =================================
-           DISPLAY ORDERS
-        ================================= */
-
-        let ordersHTML = "";
+        let ordersHtml = "";
 
 
         orders.forEach(
             function (order) {
 
-                let itemsHTML = "";
+                const items =
+                    getOrderItems(order);
 
 
-                if (
-                    order.items &&
-                    order.items.length
-                ) {
+                const status =
+                    String(
+                        order.status || "pending"
+                    )
+                    .replaceAll(
+                        "_",
+                        " "
+                    );
 
-                    order.items.forEach(
+
+                let itemsHtml = "";
+
+
+                if (!items.length) {
+
+                    itemsHtml = `
+
+                        <div class="order-item">
+
+                            <span>
+                                Order items
+                            </span>
+
+                            <strong>
+                                Details unavailable
+                            </strong>
+
+                        </div>
+
+                    `;
+
+                } else {
+
+                    items.forEach(
                         function (item) {
 
-                            const subtotal =
-                                parseFloat(
+                            const cakeId =
+                                getCakeId(item);
+
+
+                            const cakeName =
+                                getCakeName(item);
+
+
+                            const quantity =
+                                Number.parseInt(
+                                    item.quantity,
+                                    10
+                                ) || 0;
+
+
+                            const unitPrice =
+                                Number.parseFloat(
                                     item.unit_price
-                                ) *
-                                item.quantity;
+                                ) || 0;
 
 
-                            itemsHTML += `
+                            const subtotal =
+                                getItemSubtotal(item);
 
-                                <div class="order-item">
 
-                                    <div>
+                            const reviewButton =
+                                cakeId
+                                    ? `
 
-                                        <strong>
-                                            Cake #${item.cake}
+                                        <button
+                                            type="button"
+                                            class="secondary-btn order-review-btn"
+                                            data-cake-id="${escapeHtml(cakeId)}"
+                                            data-cake-name="${escapeHtml(cakeName)}"
+                                        >
+                                            Rate &amp; Review
+                                        </button>
+
+                                    `
+                                    : "";
+
+
+                            itemsHtml += `
+
+                                <div class="order-item order-item-expanded">
+
+                                    <div class="order-item-main">
+
+                                        <strong class="order-item-name">
+                                            ${escapeHtml(cakeName)}
                                         </strong>
 
-                                        <span>
-                                            × ${item.quantity}
+                                        <span class="order-item-meta">
+                                            ${quantity} × ${formatMoney(unitPrice)}
                                         </span>
 
                                     </div>
 
 
-                                    <strong>
-                                        ₹${subtotal.toFixed(2)}
-                                    </strong>
+                                    <div class="order-item-actions">
+
+                                        <strong class="order-item-subtotal">
+                                            ${formatMoney(subtotal)}
+                                        </strong>
+
+                                        ${reviewButton}
+
+                                    </div>
 
                                 </div>
 
@@ -226,38 +864,46 @@ async function loadOrders() {
                 }
 
 
-                ordersHTML += `
+                const total =
+                    Number.parseFloat(
+                        order.total_amount
+                    ) || 0;
 
-                    <div
-                        class="order-card"
-                        data-order-id="${order.id}"
-                    >
+
+                ordersHtml += `
+
+                    <article class="order-card">
 
                         <div class="order-header">
 
                             <div>
 
-                                <p class="section-label">
-                                    CAVELLE ORDER
-                                </p>
+                                <span>
+                                    ORDER #${escapeHtml(order.id ?? "—")}
+                                </span>
 
-                                <h2>
-                                    Order #${order.id}
-                                </h2>
+                                <h3>
+                                    ${escapeHtml(
+                                        formatOrderDate(
+                                            order.created_at
+                                        ) ||
+                                        "CAVELLE Order"
+                                    )}
+                                </h3>
 
                             </div>
 
 
                             <span class="order-status">
-                                ${order.status}
+                                ${escapeHtml(status)}
                             </span>
 
                         </div>
 
 
-                        <div class="order-items">
+                        <div class="order-items-list">
 
-                            ${itemsHTML}
+                            ${itemsHtml}
 
                         </div>
 
@@ -265,28 +911,16 @@ async function loadOrders() {
                         <div class="order-footer">
 
                             <span>
-                                Total
+                                Order Total
                             </span>
 
                             <strong>
-                                ₹${parseFloat(
-                                    order.total_amount
-                                ).toFixed(2)}
+                                ${formatMoney(total)}
                             </strong>
 
                         </div>
 
-
-                        <div class="order-date">
-
-                            Ordered on:
-                            ${formatDate(
-                                order.created_at
-                            )}
-
-                        </div>
-
-                    </div>
+                    </article>
 
                 `;
 
@@ -295,13 +929,13 @@ async function loadOrders() {
 
 
         container.innerHTML =
-            ordersHTML;
+            ordersHtml;
 
 
     } catch (error) {
 
         console.error(
-            "Orders error:",
+            "Orders loading error:",
             error
         );
 
@@ -311,19 +945,12 @@ async function loadOrders() {
             <div class="empty-state">
 
                 <h2>
-                    Something went wrong
+                    Unable to load orders
                 </h2>
 
                 <p>
-                    Please try again.
+                    Please refresh the page and try again.
                 </p>
-
-                <a
-                    href="/products/"
-                    class="primary-btn"
-                >
-                    Explore Cakes
-                </a>
 
             </div>
 
@@ -335,45 +962,516 @@ async function loadOrders() {
 
 
 /* =========================================
-   DATE FORMAT
+   OPEN REVIEW MODAL
 ========================================= */
 
-function formatDate(dateString) {
+function openReviewModal(
+    cakeId,
+    cakeName
+) {
 
-    const date =
-        new Date(dateString);
+    const modal =
+        document.getElementById(
+            "reviewModal"
+        );
+
+    const cakeIdInput =
+        document.getElementById(
+            "reviewCakeId"
+        );
+
+    const cakeNameElement =
+        document.getElementById(
+            "reviewCakeName"
+        );
+
+    const message =
+        document.getElementById(
+            "orderReviewMessage"
+        );
+
+    const rating =
+        document.getElementById(
+            "orderReviewRating"
+        );
+
+    const comment =
+        document.getElementById(
+            "orderReviewComment"
+        );
 
 
-    return date.toLocaleDateString(
-        "en-IN",
-        {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
+    if (!modal) {
+        return;
+    }
+
+
+    cakeIdInput.value =
+        cakeId || "";
+
+
+    cakeNameElement.textContent =
+        cakeName || "CAVELLE Cake";
+
+
+    rating.value = "";
+
+
+    comment.value = "";
+
+
+    message.textContent =
+        "";
+
+
+    message.className =
+        "form-message";
+
+
+    /* =====================================
+       SHOW MODAL
+    ====================================== */
+
+    modal.hidden = false;
+
+
+    requestAnimationFrame(
+        function () {
+
+            modal.classList.add(
+                "show"
+            );
+
         }
+    );
+
+
+    modal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    rating.focus();
+
+}
+
+
+/* =========================================
+   CLOSE REVIEW MODAL
+========================================= */
+
+function closeReviewModal() {
+
+    const modal =
+        document.getElementById(
+            "reviewModal"
+        );
+
+
+    if (!modal) {
+        return;
+    }
+
+
+    modal.classList.remove(
+        "show"
+    );
+
+
+    modal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    document.body.style.overflow =
+        "";
+
+
+    /* Hide completely after closing animation */
+
+    setTimeout(
+        function () {
+
+            if (
+                !modal.classList.contains(
+                    "show"
+                )
+            ) {
+
+                modal.hidden = true;
+
+            }
+
+        },
+        250
     );
 
 }
 
 
 /* =========================================
-   LOGOUT
+   REVIEW BUTTON CLICK
+   EVENT DELEGATION
 ========================================= */
 
-function logoutUser() {
+document.addEventListener(
+    "click",
+    function (event) {
 
-    localStorage.removeItem(
-        "access_token"
-    );
+        const button =
+            event.target.closest(
+                ".order-review-btn"
+            );
 
-    localStorage.removeItem(
-        "refresh_token"
-    );
 
-    window.location.href =
-        "/login/";
+        if (!button) {
+            return;
+        }
 
-}
+
+        event.preventDefault();
+        event.stopPropagation();
+
+
+        const cakeId =
+            button.dataset.cakeId;
+
+
+        const cakeName =
+            button.dataset.cakeName;
+
+
+        openReviewModal(
+            cakeId,
+            cakeName
+        );
+
+    }
+);
+
+
+/* =========================================
+   CLOSE BUTTON
+========================================= */
+
+document.getElementById(
+    "closeReviewModal"
+).addEventListener(
+    "click",
+    function () {
+
+        closeReviewModal();
+
+    }
+);
+
+
+/* =========================================
+   CANCEL BUTTON
+========================================= */
+
+document.getElementById(
+    "cancelReviewBtn"
+).addEventListener(
+    "click",
+    function () {
+
+        closeReviewModal();
+
+    }
+);
+
+
+/* =========================================
+   CLICK OUTSIDE MODAL
+========================================= */
+
+document.getElementById(
+    "reviewModal"
+).addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            event.target.id ===
+            "reviewModal"
+        ) {
+
+            closeReviewModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   ESCAPE KEY
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        const modal =
+            document.getElementById(
+                "reviewModal"
+            );
+
+
+        if (
+            event.key === "Escape" &&
+            modal &&
+            modal.classList.contains("show")
+        ) {
+
+            closeReviewModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   SUBMIT REVIEW
+========================================= */
+
+document.getElementById(
+    "orderReviewForm"
+).addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+
+        const token =
+            localStorage.getItem(
+                "access_token"
+            );
+
+
+        const cakeId =
+            document.getElementById(
+                "reviewCakeId"
+            ).value;
+
+
+        const rating =
+            document.getElementById(
+                "orderReviewRating"
+            ).value;
+
+
+        const comment =
+            document.getElementById(
+                "orderReviewComment"
+            ).value.trim();
+
+
+        const message =
+            document.getElementById(
+                "orderReviewMessage"
+            );
+
+
+        const submitButton =
+            document.getElementById(
+                "submitOrderReviewBtn"
+            );
+
+
+        /* =================================
+           LOGIN CHECK
+        ================================== */
+
+        if (!token) {
+
+            window.location.href =
+                "/login/";
+
+            return;
+
+        }
+
+
+        /* =================================
+           CAKE CHECK
+        ================================== */
+
+        if (!cakeId) {
+
+            message.textContent =
+                "We could not identify this cake.";
+
+            message.className =
+                "form-message error";
+
+            return;
+
+        }
+
+
+        /* =================================
+           RATING CHECK
+        ================================== */
+
+        if (!rating) {
+
+            message.textContent =
+                "Please select a rating.";
+
+            message.className =
+                "form-message error";
+
+            return;
+
+        }
+
+
+        submitButton.disabled = true;
+
+        submitButton.textContent =
+            "Submitting...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/reviews/reviews/",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " + token
+                        },
+
+                        body: JSON.stringify({
+                            cake: cakeId,
+                            rating: Number(rating),
+                            comment: comment
+                        })
+                    }
+                );
+
+
+            let data = {};
+
+
+            try {
+
+                data =
+                    await response.json();
+
+            } catch (error) {
+
+                data = {};
+
+            }
+
+
+            /* =============================
+               AUTH EXPIRED
+            ============================== */
+
+            if (
+                response.status === 401
+            ) {
+
+                localStorage.removeItem(
+                    "access_token"
+                );
+
+                localStorage.removeItem(
+                    "refresh_token"
+                );
+
+                window.location.href =
+                    "/login/";
+
+                return;
+
+            }
+
+
+            /* =============================
+               API ERROR
+            ============================== */
+
+            if (!response.ok) {
+
+                message.textContent =
+                    getReviewErrorMessage(
+                        data
+                    );
+
+                message.className =
+                    "form-message error";
+
+                return;
+
+            }
+
+
+            /* =============================
+               SUCCESS
+            ============================== */
+
+            message.textContent =
+                "Your review has been submitted successfully.";
+
+            message.className =
+                "form-message success";
+
+
+            setTimeout(
+                function () {
+
+                    closeReviewModal();
+
+                },
+                900
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Order review error:",
+                error
+            );
+
+
+            message.textContent =
+                "Something went wrong. Please try again.";
+
+            message.className =
+                "form-message error";
+
+        } finally {
+
+            submitButton.disabled =
+                false;
+
+            submitButton.textContent =
+                "Submit Review";
+
+        }
+
+    }
+);
 
 </script>
 
