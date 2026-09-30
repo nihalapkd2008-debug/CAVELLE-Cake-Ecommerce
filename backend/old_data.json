@@ -1,0 +1,2319 @@
+[
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$3JKnqnfpqiqWBJm1s7OFjc$lTahKuxnu3KzVjggyIyf7BUxAv0mytA2F3DrMiqU/uc=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "nihala",
+    "first_name": "",
+    "last_name": "",
+    "email": "nihala@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-17T08:45:34.731Z",
+    "role": "customer",
+    "phone": "9876543210",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$35UAkvpFlBzuMOKZb1PqSs$U4EvE5PEtu8uZSB5VtWD1uzk86VgQHnSwoSfdMdDqqc=",
+    "last_login": "2026-09-17T11:06:18.055Z",
+    "is_superuser": true,
+    "username": "niha",
+    "first_name": "",
+    "last_name": "",
+    "email": "niha@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-09-17T10:03:10.634Z",
+    "role": "customer",
+    "phone": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$uqSZMuse2MEbXi5dgIMrqR$I4w0nO/CwMMw4vskGLfFIJRCny+H6jDuobL33rE/17Q=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "nihu",
+    "first_name": "Nihala",
+    "last_name": "nasreen AS",
+    "email": "nihu@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-17T15:06:06.133Z",
+    "role": "customer",
+    "phone": "9876543212",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$Mt1VBfjDOZ2fdlQDj9A1gc$WOSb6ASYXVX5/eTsNswEOv02knkoDXlBD1D4iwajP5s=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "nihalanasreen",
+    "first_name": "nihala",
+    "last_name": "nasreen",
+    "email": "nihala16@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-20T14:26:30.080Z",
+    "role": "customer",
+    "phone": "9876543212",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "products.category",
+  "pk": 1,
+  "fields": {
+    "name": "Chocolate",
+    "description": "Rich and indulgent chocolate cakes.",
+    "image": "",
+    "created_at": "2026-09-17T15:26:48.137Z",
+    "updated_at": "2026-09-17T15:26:48.137Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 2,
+  "fields": {
+    "name": "Birthday",
+    "description": "",
+    "image": "",
+    "created_at": "2026-09-17T15:27:22.051Z",
+    "updated_at": "2026-09-17T15:27:22.051Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 3,
+  "fields": {
+    "name": "Celebration",
+    "description": "",
+    "image": "",
+    "created_at": "2026-09-17T15:27:31.417Z",
+    "updated_at": "2026-09-17T15:27:31.417Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 4,
+  "fields": {
+    "name": "Red Velvet",
+    "description": "",
+    "image": "",
+    "created_at": "2026-09-17T15:27:42.250Z",
+    "updated_at": "2026-09-17T15:27:42.250Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 5,
+  "fields": {
+    "name": "Eggless Chocolate Cake",
+    "description": "",
+    "image": "",
+    "created_at": "2026-09-17T15:27:54.099Z",
+    "updated_at": "2026-09-18T03:24:52.532Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 6,
+  "fields": {
+    "name": "Vanilla",
+    "description": "",
+    "image": "",
+    "created_at": "2026-09-17T15:28:10.221Z",
+    "updated_at": "2026-09-17T15:28:10.221Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 7,
+  "fields": {
+    "name": "Chocolate Truffle",
+    "description": "",
+    "image": "",
+    "created_at": "2026-09-17T15:29:06.899Z",
+    "updated_at": "2026-09-17T15:29:06.899Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 8,
+  "fields": {
+    "name": "Black Forest",
+    "description": "",
+    "image": "",
+    "created_at": "2026-09-17T15:30:02.040Z",
+    "updated_at": "2026-09-17T15:30:02.040Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 9,
+  "fields": {
+    "name": "Blueberry Cheese cake",
+    "description": "",
+    "image": "",
+    "created_at": "2026-09-17T15:30:16.308Z",
+    "updated_at": "2026-09-19T05:43:04.246Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 10,
+  "fields": {
+    "name": "Strawberry Cake",
+    "description": "",
+    "image": "",
+    "created_at": "2026-09-18T03:24:35.557Z",
+    "updated_at": "2026-09-18T03:24:35.557Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 11,
+  "fields": {
+    "name": "Carrot Cake",
+    "description": "",
+    "image": "",
+    "created_at": "2026-09-18T03:25:07.113Z",
+    "updated_at": "2026-09-18T03:25:07.113Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 12,
+  "fields": {
+    "name": "Lotus Biscoff cake",
+    "description": "",
+    "image": "categories/Lotus_Biscoff_Cake.jpg",
+    "created_at": "2026-09-20T11:22:32.681Z",
+    "updated_at": "2026-09-20T11:22:32.681Z"
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 2,
+  "fields": {
+    "name": "Chocolate Velvet Cake",
+    "description": "Rich and indulgent chocolate cake crafted for special moments.",
+    "category": 1,
+    "flavour": "Chocolate",
+    "price": "850.00",
+    "weight": "1.00",
+    "image": "cakes/choclate_velevet.png",
+    "stock": 4,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-18T03:27:33.253Z",
+    "updated_at": "2026-09-18T03:27:33.253Z",
+    "wishlist_users": [
+      [
+        "nihu"
+      ]
+    ]
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 3,
+  "fields": {
+    "name": "Red Velvet Cake",
+    "description": "A soft and elegant red velvet cake with a rich creamy finish.",
+    "category": 4,
+    "flavour": "Red Velvet",
+    "price": "950.00",
+    "weight": "2.00",
+    "image": "cakes/red_velevet.jpg",
+    "stock": 0,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-18T03:29:46.184Z",
+    "updated_at": "2026-09-18T03:29:46.184Z",
+    "wishlist_users": [
+      [
+        "nihu"
+      ]
+    ]
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 4,
+  "fields": {
+    "name": "Strawberry Cake",
+    "description": "A light and delicious strawberry cake made for joyful celebrations.",
+    "category": 3,
+    "flavour": "Strawberry Cake",
+    "price": "900.00",
+    "weight": "1.00",
+    "image": "cakes/strawberry_5gFrJI2.jpg",
+    "stock": 14,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-18T03:31:10.623Z",
+    "updated_at": "2026-09-18T03:31:10.623Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 5,
+  "fields": {
+    "name": "Black Forest Cake",
+    "description": "A classic chocolate cake layered with cream and rich cherry flavour.",
+    "category": 1,
+    "flavour": "Black Forest",
+    "price": "900.00",
+    "weight": "1.00",
+    "image": "cakes/black_forest.jpg",
+    "stock": 9,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-18T04:08:46.173Z",
+    "updated_at": "2026-09-18T04:08:46.173Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 6,
+  "fields": {
+    "name": "Vanilla Cake",
+    "description": "A soft vanilla cake designed for elegant celebrations.",
+    "category": 6,
+    "flavour": "Vanilla",
+    "price": "800.00",
+    "weight": "1.00",
+    "image": "cakes/vannilla_3GnV8VP.jpg",
+    "stock": 10,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-18T04:10:19.176Z",
+    "updated_at": "2026-09-18T04:10:19.176Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 7,
+  "fields": {
+    "name": "Eggless Chocolate Cake",
+    "description": "A rich chocolate cake crafted without eggs.",
+    "category": 5,
+    "flavour": "Chocolate",
+    "price": "900.00",
+    "weight": "1.00",
+    "image": "cakes/eggless_VIxwEkL.jpg",
+    "stock": 10,
+    "is_available": true,
+    "eggless": true,
+    "created_at": "2026-09-18T04:11:38.887Z",
+    "updated_at": "2026-09-18T04:11:38.887Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 8,
+  "fields": {
+    "name": "Carrot Cake",
+    "description": "A beautifully spiced carrot cake with a soft and comforting texture.",
+    "category": 3,
+    "flavour": "Carrot",
+    "price": "850.00",
+    "weight": "1.00",
+    "image": "cakes/carrot_2FaexY2.jpg",
+    "stock": 10,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-18T04:13:05.699Z",
+    "updated_at": "2026-09-18T04:13:05.700Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 9,
+  "fields": {
+    "name": "Blueberry Cheesecake",
+    "description": "Creamy cheesecake finished with a delicate blueberry topping.",
+    "category": 9,
+    "flavour": "Blue berry",
+    "price": "1100.00",
+    "weight": "1.00",
+    "image": "cakes/blue_berry_cheese.jpg",
+    "stock": 7,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-18T04:14:09.083Z",
+    "updated_at": "2026-09-18T04:14:09.083Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 10,
+  "fields": {
+    "name": "Chocolate Truffle Cake",
+    "description": "A decadent chocolate cake finished with a smooth and rich truffle layer.",
+    "category": 1,
+    "flavour": "Chocolate Truffle",
+    "price": "1000.00",
+    "weight": "1.00",
+    "image": "cakes/choco_truffle.jpg",
+    "stock": 5,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-18T04:15:21.813Z",
+    "updated_at": "2026-09-18T04:15:21.813Z",
+    "wishlist_users": [
+      [
+        "nihalanasreen"
+      ]
+    ]
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 11,
+  "fields": {
+    "name": "Celebration Birthday Cake",
+    "description": "A beautifully crafted cake made for memorable birthday celebrations.",
+    "category": 3,
+    "flavour": "Vanilla",
+    "price": "950.00",
+    "weight": "1.00",
+    "image": "cakes/celebrate_bdy.jpg",
+    "stock": 5,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-18T04:16:30.395Z",
+    "updated_at": "2026-09-18T04:16:30.396Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 12,
+  "fields": {
+    "name": "Vancho Cake",
+    "description": "A rich layered cake combining smooth vanilla cream and indulgent chocolate flavours.",
+    "category": 1,
+    "flavour": "Chocolate & Vanilla",
+    "price": "650.00",
+    "weight": "1.00",
+    "image": "cakes/vancho_AjAQ7d7.jpg",
+    "stock": 9,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-20T11:17:10.745Z",
+    "updated_at": "2026-09-20T11:17:10.745Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 13,
+  "fields": {
+    "name": "Dream Cake",
+    "description": "A decadent chocolate cake layered with creamy chocolate filling for a rich dessert experience.",
+    "category": 1,
+    "flavour": "Rich Chocolate",
+    "price": "700.00",
+    "weight": "1.00",
+    "image": "cakes/dream_cake.jpg",
+    "stock": 8,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-20T11:17:56.524Z",
+    "updated_at": "2026-09-20T11:18:25.046Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 14,
+  "fields": {
+    "name": "Rainbow Cake",
+    "description": "A colourful multi-layered cake with soft sponge layers and creamy frosting.",
+    "category": 3,
+    "flavour": "Vanilla & Cream",
+    "price": "850.00",
+    "weight": "1.00",
+    "image": "cakes/rainbow_cake.jpg",
+    "stock": 10,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-20T11:19:32.604Z",
+    "updated_at": "2026-09-20T11:19:32.604Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 15,
+  "fields": {
+    "name": "Ferrero Rocher Cake",
+    "description": "A luxurious chocolate cake with hazelnut cream and crunchy chocolate elements.",
+    "category": 3,
+    "flavour": "Chocolate & Hazelnut",
+    "price": "950.00",
+    "weight": "1.00",
+    "image": "cakes/ferrero-rochers-chocolate-cake_eF183gg.jpg",
+    "stock": 3,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-20T11:20:54.944Z",
+    "updated_at": "2026-09-20T11:20:54.944Z",
+    "wishlist_users": [
+      [
+        "nihalanasreen"
+      ]
+    ]
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 16,
+  "fields": {
+    "name": "Lotus Biscoff Cake",
+    "description": "Creamy caramelised biscuit cake finished with smooth Biscoff spread and crumbs.",
+    "category": 12,
+    "flavour": "Biscoff & Caramel",
+    "price": "850.00",
+    "weight": "1.00",
+    "image": "cakes/Lotus_Biscoff_Cake_YKKSIDl.jpg",
+    "stock": 7,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-20T11:22:41.623Z",
+    "updated_at": "2026-09-20T11:22:41.623Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 17,
+  "fields": {
+    "name": "Ombre Floral Cake",
+    "description": "A beautifully crafted celebration cake with soft sponge, smooth cream and elegant decoration, perfect for birthdays and special occasions.",
+    "category": 3,
+    "flavour": "Vanilla & Cream",
+    "price": "1000.00",
+    "weight": "1.00",
+    "image": "cakes/MacaronCake_fda2f927-2833-4fbf-aaa0-77e746dfc503_720x_geLgkQc.jpg",
+    "stock": 5,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-20T11:26:56.685Z",
+    "updated_at": "2026-09-20T11:26:56.685Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 18,
+  "fields": {
+    "name": "Pastel Ombre Butterfly Cake",
+    "description": "A beautifully crafted celebration cake with soft sponge, smooth cream and elegant decoration, perfect for birthdays and special occasions.",
+    "category": 3,
+    "flavour": "Vanilla & Cream",
+    "price": "1700.00",
+    "weight": "1.00",
+    "image": "cakes/ce_8YekBK5.jpg",
+    "stock": 4,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-20T11:29:09.869Z",
+    "updated_at": "2026-09-20T11:29:09.869Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 19,
+  "fields": {
+    "name": "Chocolate Ombre Drip Cake",
+    "description": "A beautifully crafted celebration cake with soft sponge, smooth cream and elegant decoration",
+    "category": 3,
+    "flavour": "Chocolate",
+    "price": "1800.00",
+    "weight": "1.00",
+    "image": "cakes/celeb_C9HSw9K.jpg",
+    "stock": 10,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-20T11:30:47.772Z",
+    "updated_at": "2026-09-20T11:30:47.772Z",
+    "wishlist_users": []
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 20,
+  "fields": {
+    "name": "Chocolate Pinata Cake",
+    "description": "A beautifully crafted celebration cake with soft sponge, smooth cream and elegant decoration",
+    "category": 3,
+    "flavour": "Rich Chocolate",
+    "price": "2000.00",
+    "weight": "1.00",
+    "image": "cakes/Pinatacakeinaheartshapepinatacake_720x_3p95muM.jpg",
+    "stock": 9,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-20T11:34:33.349Z",
+    "updated_at": "2026-09-20T11:34:33.349Z",
+    "wishlist_users": [
+      [
+        "nihalanasreen"
+      ]
+    ]
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 21,
+  "fields": {
+    "name": "Ivory Gold Floral Cake",
+    "description": "A beautifully crafted celebration cake with soft sponge, smooth cream and elegant decoration",
+    "category": 3,
+    "flavour": "Chocolate",
+    "price": "2500.00",
+    "weight": "2.00",
+    "image": "cakes/celebrate4_dDnnDAW.jpg",
+    "stock": 19,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-20T11:37:50.571Z",
+    "updated_at": "2026-09-20T11:38:09.730Z",
+    "wishlist_users": [
+      [
+        "nihu"
+      ]
+    ]
+  }
+},
+{
+  "model": "products.cake",
+  "pk": 22,
+  "fields": {
+    "name": "Hazelnut Cake",
+    "description": "A beautifully crafted celebration cake with soft sponge, smooth cream and elegant decoration",
+    "category": 1,
+    "flavour": "Chocolate",
+    "price": "1890.00",
+    "weight": "1.00",
+    "image": "cakes/images_O7lEkNi.jpg",
+    "stock": 5,
+    "is_available": true,
+    "eggless": false,
+    "created_at": "2026-09-20T11:40:41.410Z",
+    "updated_at": "2026-09-20T11:40:41.410Z",
+    "wishlist_users": [
+      [
+        "nihu"
+      ]
+    ]
+  }
+},
+{
+  "model": "products.bakeryitem",
+  "pk": 1,
+  "fields": {
+    "name": "Ice Cream Sundae",
+    "description": "Cool, creamy and made for sweet little moments.",
+    "image": "cakes/ice_cream_sundae3.jpg",
+    "is_active": true,
+    "created_at": "2026-09-18T10:26:14.611Z"
+  }
+},
+{
+  "model": "products.bakeryitem",
+  "pk": 2,
+  "fields": {
+    "name": "Pastry",
+    "description": "Delicate layers and indulgent flavours.",
+    "image": "cakes/pastry1_bfVIXC7.jpg",
+    "is_active": true,
+    "created_at": "2026-09-18T10:27:01.222Z"
+  }
+},
+{
+  "model": "products.bakeryitem",
+  "pk": 3,
+  "fields": {
+    "name": "Cake Pops",
+    "description": "Small bites made for happy moments.",
+    "image": "cakes/pops3_Kt4wfXS.jpg",
+    "is_active": true,
+    "created_at": "2026-09-18T10:27:36.894Z"
+  }
+},
+{
+  "model": "products.bakeryitem",
+  "pk": 4,
+  "fields": {
+    "name": "Cakes",
+    "description": "Beautifully crafted centrepieces for unforgettable celebrations.",
+    "image": "cakes/redvelvet_fX3IUBy.jpg",
+    "is_active": true,
+    "created_at": "2026-09-18T10:28:08.487Z"
+  }
+},
+{
+  "model": "products.bakeryitem",
+  "pk": 5,
+  "fields": {
+    "name": "Donuts",
+    "description": "A little sweetness for every craving.",
+    "image": "cakes/donut1_udzAqfv.jpg",
+    "is_active": true,
+    "created_at": "2026-09-18T10:28:37.460Z"
+  }
+},
+{
+  "model": "products.bakeryitem",
+  "pk": 6,
+  "fields": {
+    "name": "Cupcakes",
+    "description": "Little treats with beautifully finished details.",
+    "image": "cakes/cupcake1_cgfZvIj.jpg",
+    "is_active": true,
+    "created_at": "2026-09-18T10:29:05.948Z"
+  }
+},
+{
+  "model": "products.bakeryitem",
+  "pk": 7,
+  "fields": {
+    "name": "Celebration Cakes",
+    "description": "Made to make every celebration feel special.",
+    "image": "cakes/celebrate_bdy2.jpg",
+    "is_active": true,
+    "created_at": "2026-09-18T10:29:43.747Z"
+  }
+},
+{
+  "model": "products.bakeryitem",
+  "pk": 8,
+  "fields": {
+    "name": "Eggless Cakes",
+    "description": "Deliciously crafted cakes made without eggs.",
+    "image": "cakes/eggless4_k3l1gls.jpg",
+    "is_active": true,
+    "created_at": "2026-09-19T02:49:31.468Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 1,
+  "fields": {
+    "bakery_item": 1,
+    "image": "cakes/ice_cream_sundae2.jpg",
+    "created_at": "2026-09-19T06:10:22.209Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 2,
+  "fields": {
+    "bakery_item": 1,
+    "image": "cakes/ice_cream_sundae1_wPw4w4s.jpg",
+    "created_at": "2026-09-19T06:12:19.606Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 3,
+  "fields": {
+    "bakery_item": 1,
+    "image": "cakes/ice_cream_sundae3_WAMLOb7.jpg",
+    "created_at": "2026-09-19T06:12:34.295Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 4,
+  "fields": {
+    "bakery_item": 1,
+    "image": "cakes/ice_cream_sundae4.jpg",
+    "created_at": "2026-09-19T06:12:48.494Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 5,
+  "fields": {
+    "bakery_item": 1,
+    "image": "cakes/ice_cream_sundae5.jpg",
+    "created_at": "2026-09-19T06:13:30.181Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 6,
+  "fields": {
+    "bakery_item": 2,
+    "image": "cakes/pastry1_bfVIXC7_uqZVU57.jpg",
+    "created_at": "2026-09-19T06:15:03.176Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 7,
+  "fields": {
+    "bakery_item": 2,
+    "image": "cakes/pastry2_sJPMs35.jpg",
+    "created_at": "2026-09-19T06:15:15.376Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 8,
+  "fields": {
+    "bakery_item": 2,
+    "image": "cakes/pastry3_7Qo9Llj.jpg",
+    "created_at": "2026-09-19T06:15:30.315Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 9,
+  "fields": {
+    "bakery_item": 2,
+    "image": "cakes/pastry4_y2gb2oV.jpg",
+    "created_at": "2026-09-19T06:15:43.273Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 10,
+  "fields": {
+    "bakery_item": 3,
+    "image": "cakes/pops1_ToU85Wi_xlS8igY.jpg",
+    "created_at": "2026-09-19T06:16:01.928Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 11,
+  "fields": {
+    "bakery_item": 3,
+    "image": "cakes/pops2_KWuAXHv.jpg",
+    "created_at": "2026-09-19T06:16:13.261Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 12,
+  "fields": {
+    "bakery_item": 3,
+    "image": "cakes/pops3_Kt4wfXS_W9KJoGt.jpg",
+    "created_at": "2026-09-19T06:16:29.917Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 13,
+  "fields": {
+    "bakery_item": 7,
+    "image": "cakes/ceebrate6_etjDh6r.jpg",
+    "created_at": "2026-09-19T06:16:57.553Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 14,
+  "fields": {
+    "bakery_item": 7,
+    "image": "cakes/celebrate_bdy_im6wd7d.jpg",
+    "created_at": "2026-09-19T06:17:11.711Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 15,
+  "fields": {
+    "bakery_item": 7,
+    "image": "cakes/celebrate_bdy2_pAQVjxG.jpg",
+    "created_at": "2026-09-19T06:17:20.756Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 16,
+  "fields": {
+    "bakery_item": 7,
+    "image": "cakes/celebrate3_Jbj9D0h.jpg",
+    "created_at": "2026-09-19T06:17:34.732Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 17,
+  "fields": {
+    "bakery_item": 7,
+    "image": "cakes/celebrate5_1osgeRH.jpg",
+    "created_at": "2026-09-19T06:17:48.027Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 18,
+  "fields": {
+    "bakery_item": 7,
+    "image": "cakes/celebrate7_lZjzTdH.jpg",
+    "created_at": "2026-09-19T06:17:59.065Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 19,
+  "fields": {
+    "bakery_item": 7,
+    "image": "cakes/celebrate8_FUrDhgb.jpg",
+    "created_at": "2026-09-19T06:18:10.341Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 20,
+  "fields": {
+    "bakery_item": 5,
+    "image": "cakes/donut1_udzAqfv_aBAUNUs.jpg",
+    "created_at": "2026-09-19T06:18:38.063Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 21,
+  "fields": {
+    "bakery_item": 5,
+    "image": "cakes/donut2_Lkxr67S.jpg",
+    "created_at": "2026-09-19T06:18:51.136Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 22,
+  "fields": {
+    "bakery_item": 5,
+    "image": "cakes/donut3_qBLEFpD.jpg",
+    "created_at": "2026-09-19T06:19:07.445Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 23,
+  "fields": {
+    "bakery_item": 6,
+    "image": "cakes/cupcake1_yUmm8mM.jpg",
+    "created_at": "2026-09-19T06:19:35.886Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 24,
+  "fields": {
+    "bakery_item": 6,
+    "image": "cakes/cupcake2_mpsg9rY.jpg",
+    "created_at": "2026-09-19T06:19:51.444Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 25,
+  "fields": {
+    "bakery_item": 6,
+    "image": "cakes/cupcake3_HB6dyUo.jpg",
+    "created_at": "2026-09-19T06:20:06.450Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 26,
+  "fields": {
+    "bakery_item": 6,
+    "image": "cakes/cupcake4_kKbaXh6.jpg",
+    "created_at": "2026-09-19T06:20:22.551Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 27,
+  "fields": {
+    "bakery_item": 8,
+    "image": "cakes/eggless_VIxwEkL_KWROjLC.jpg",
+    "created_at": "2026-09-19T06:20:50.886Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 28,
+  "fields": {
+    "bakery_item": 8,
+    "image": "cakes/eggless2_iq7clSL.jpg",
+    "created_at": "2026-09-19T06:21:11.603Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 29,
+  "fields": {
+    "bakery_item": 8,
+    "image": "cakes/eggless3_ixixGNC.jpg",
+    "created_at": "2026-09-19T06:21:30.759Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 30,
+  "fields": {
+    "bakery_item": 8,
+    "image": "cakes/eggless4_k3l1gls_u8CHA9T.jpg",
+    "created_at": "2026-09-19T06:21:48.686Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 31,
+  "fields": {
+    "bakery_item": 4,
+    "image": "cakes/black_forest_z27Opbi.jpg",
+    "created_at": "2026-09-19T06:22:12.621Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 32,
+  "fields": {
+    "bakery_item": 4,
+    "image": "cakes/carrot_y96cNok.jpg",
+    "created_at": "2026-09-19T06:22:24.215Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 33,
+  "fields": {
+    "bakery_item": 4,
+    "image": "cakes/redvelvet_fX3IUBy_QoUFrQO.jpg",
+    "created_at": "2026-09-19T06:22:49.112Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 34,
+  "fields": {
+    "bakery_item": 4,
+    "image": "cakes/blue_berry_cheese_e8j1nos.jpg",
+    "created_at": "2026-09-19T06:23:17.379Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 35,
+  "fields": {
+    "bakery_item": 4,
+    "image": "cakes/choclate_velevet_VEhxrGf.png",
+    "created_at": "2026-09-19T06:23:42.380Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 36,
+  "fields": {
+    "bakery_item": 4,
+    "image": "cakes/choco_truffle_CBdyd6N.jpg",
+    "created_at": "2026-09-19T06:24:17.716Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 37,
+  "fields": {
+    "bakery_item": 4,
+    "image": "cakes/red_velevet_3Yo5pIG.jpg",
+    "created_at": "2026-09-19T06:24:46.307Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 38,
+  "fields": {
+    "bakery_item": 4,
+    "image": "cakes/vannilla_TT1ursc.jpg",
+    "created_at": "2026-09-19T06:25:00.107Z"
+  }
+},
+{
+  "model": "products.bakerygalleryimage",
+  "pk": 39,
+  "fields": {
+    "bakery_item": 4,
+    "image": "cakes/strawberry_5gFrJI2_T2QojQh.jpg",
+    "created_at": "2026-09-19T06:25:10.338Z"
+  }
+},
+{
+  "model": "orders.cart",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "created_at": "2026-09-18T05:06:12.683Z",
+    "updated_at": "2026-09-18T05:06:12.683Z"
+  }
+},
+{
+  "model": "orders.cart",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "created_at": "2026-09-20T16:19:20.779Z",
+    "updated_at": "2026-09-20T16:19:20.780Z"
+  }
+},
+{
+  "model": "orders.cartitem",
+  "pk": 20,
+  "fields": {
+    "cart": 1,
+    "cake": 2,
+    "quantity": 1
+  }
+},
+{
+  "model": "orders.cartitem",
+  "pk": 23,
+  "fields": {
+    "cart": 2,
+    "cake": 15,
+    "quantity": 1
+  }
+},
+{
+  "model": "orders.address",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "full_name": "Nihala nasreen",
+    "phone": "9876543212",
+    "address_line": "23 Rose Villa, Park Street",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "pincode": "400001",
+    "is_default": false,
+    "created_at": "2026-09-18T05:08:39.910Z",
+    "updated_at": "2026-09-18T05:08:39.910Z"
+  }
+},
+{
+  "model": "orders.address",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "full_name": "NIHALA NASREEN",
+    "phone": "9876543212",
+    "address_line": "Dubai Road 111,Abudabi",
+    "city": "Dubai",
+    "state": "Abudabi",
+    "pincode": "333008",
+    "is_default": false,
+    "created_at": "2026-09-20T14:30:13.862Z",
+    "updated_at": "2026-09-20T14:30:13.862Z"
+  }
+},
+{
+  "model": "orders.address",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "full_name": "Fathima",
+    "phone": "9818293450",
+    "address_line": "Flat No. 402, Blue Mist Apartments, Green Glen Layout, Bellandur",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "pincode": "566103",
+    "is_default": false,
+    "created_at": "2026-09-21T02:49:08.159Z",
+    "updated_at": "2026-09-21T02:49:08.159Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "3550.00",
+    "status": "pending",
+    "created_at": "2026-09-19T12:18:51.943Z",
+    "updated_at": "2026-09-19T12:18:51.943Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "950.00",
+    "status": "pending",
+    "created_at": "2026-09-19T12:33:28.600Z",
+    "updated_at": "2026-09-19T12:33:28.600Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "850.00",
+    "status": "pending",
+    "created_at": "2026-09-19T14:15:51.731Z",
+    "updated_at": "2026-09-19T14:15:51.731Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "2000.00",
+    "status": "pending",
+    "created_at": "2026-09-20T04:46:58.281Z",
+    "updated_at": "2026-09-20T04:46:58.281Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "950.00",
+    "status": "pending",
+    "created_at": "2026-09-20T04:52:23.225Z",
+    "updated_at": "2026-09-20T04:52:23.225Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "1100.00",
+    "status": "pending",
+    "created_at": "2026-09-20T05:11:01.544Z",
+    "updated_at": "2026-09-20T05:11:01.545Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 7,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "950.00",
+    "status": "pending",
+    "created_at": "2026-09-20T10:46:04.239Z",
+    "updated_at": "2026-09-20T10:46:04.239Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 8,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "1100.00",
+    "status": "pending",
+    "created_at": "2026-09-20T11:04:59.349Z",
+    "updated_at": "2026-09-20T11:04:59.350Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 9,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "950.00",
+    "status": "pending",
+    "created_at": "2026-09-20T11:57:57.700Z",
+    "updated_at": "2026-09-20T11:57:57.700Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 10,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "900.00",
+    "status": "pending",
+    "created_at": "2026-09-20T12:05:07.325Z",
+    "updated_at": "2026-09-20T12:05:07.325Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 11,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "address": 2,
+    "total_amount": "2000.00",
+    "status": "pending",
+    "created_at": "2026-09-20T14:30:35.482Z",
+    "updated_at": "2026-09-20T14:30:35.482Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 12,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "address": 2,
+    "total_amount": "950.00",
+    "status": "pending",
+    "created_at": "2026-09-20T15:29:18.276Z",
+    "updated_at": "2026-09-20T15:29:18.276Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 13,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "address": 2,
+    "total_amount": "950.00",
+    "status": "pending",
+    "created_at": "2026-09-20T15:29:20.992Z",
+    "updated_at": "2026-09-20T15:29:20.992Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 14,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "address": 2,
+    "total_amount": "950.00",
+    "status": "pending",
+    "created_at": "2026-09-20T15:29:21.902Z",
+    "updated_at": "2026-09-20T15:29:21.902Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 15,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "address": 2,
+    "total_amount": "950.00",
+    "status": "pending",
+    "created_at": "2026-09-20T15:29:22.103Z",
+    "updated_at": "2026-09-20T15:29:22.103Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 16,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "address": 2,
+    "total_amount": "950.00",
+    "status": "pending",
+    "created_at": "2026-09-20T15:29:22.334Z",
+    "updated_at": "2026-09-20T15:29:22.334Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 17,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "address": 2,
+    "total_amount": "950.00",
+    "status": "pending",
+    "created_at": "2026-09-20T15:29:27.172Z",
+    "updated_at": "2026-09-20T15:29:27.172Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 18,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "850.00",
+    "status": "pending",
+    "created_at": "2026-09-20T15:32:30.819Z",
+    "updated_at": "2026-09-20T15:32:30.819Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 19,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "850.00",
+    "status": "pending",
+    "created_at": "2026-09-20T15:38:45.384Z",
+    "updated_at": "2026-09-20T15:38:45.384Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 20,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "900.00",
+    "status": "pending",
+    "created_at": "2026-09-20T15:46:16.571Z",
+    "updated_at": "2026-09-20T15:46:16.571Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 21,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "650.00",
+    "status": "pending",
+    "created_at": "2026-09-20T15:54:56.356Z",
+    "updated_at": "2026-09-20T15:54:56.356Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 22,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "850.00",
+    "status": "pending",
+    "created_at": "2026-09-20T16:07:47.386Z",
+    "updated_at": "2026-09-20T16:07:47.386Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 23,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "address": 2,
+    "total_amount": "1100.00",
+    "status": "pending",
+    "created_at": "2026-09-20T16:17:43.778Z",
+    "updated_at": "2026-09-20T16:17:43.778Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 24,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "address": 2,
+    "total_amount": "1900.00",
+    "status": "pending",
+    "created_at": "2026-09-21T02:49:13.437Z",
+    "updated_at": "2026-09-21T02:49:13.437Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 25,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "address": 3,
+    "total_amount": "950.00",
+    "status": "pending",
+    "created_at": "2026-09-21T02:51:34.790Z",
+    "updated_at": "2026-09-21T02:51:34.790Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 26,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "address": 2,
+    "total_amount": "1000.00",
+    "status": "pending",
+    "created_at": "2026-09-21T06:53:56.239Z",
+    "updated_at": "2026-09-21T06:53:56.239Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 27,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "address": 1,
+    "total_amount": "1000.00",
+    "status": "pending",
+    "created_at": "2026-09-21T14:55:44.176Z",
+    "updated_at": "2026-09-21T14:55:44.176Z"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 1,
+  "fields": {
+    "order": 1,
+    "cake": 2,
+    "quantity": 3,
+    "unit_price": "850.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "cake": 10,
+    "quantity": 1,
+    "unit_price": "1000.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 3,
+  "fields": {
+    "order": 2,
+    "cake": 3,
+    "quantity": 1,
+    "unit_price": "950.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 4,
+  "fields": {
+    "order": 3,
+    "cake": 2,
+    "quantity": 1,
+    "unit_price": "850.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 5,
+  "fields": {
+    "order": 4,
+    "cake": 10,
+    "quantity": 2,
+    "unit_price": "1000.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 6,
+  "fields": {
+    "order": 5,
+    "cake": 3,
+    "quantity": 1,
+    "unit_price": "950.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 7,
+  "fields": {
+    "order": 6,
+    "cake": 9,
+    "quantity": 1,
+    "unit_price": "1100.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 8,
+  "fields": {
+    "order": 7,
+    "cake": 3,
+    "quantity": 1,
+    "unit_price": "950.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 9,
+  "fields": {
+    "order": 8,
+    "cake": 9,
+    "quantity": 1,
+    "unit_price": "1100.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 10,
+  "fields": {
+    "order": 9,
+    "cake": 3,
+    "quantity": 1,
+    "unit_price": "950.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 11,
+  "fields": {
+    "order": 10,
+    "cake": 5,
+    "quantity": 1,
+    "unit_price": "900.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 12,
+  "fields": {
+    "order": 11,
+    "cake": 20,
+    "quantity": 1,
+    "unit_price": "2000.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 13,
+  "fields": {
+    "order": 12,
+    "cake": 3,
+    "quantity": 1,
+    "unit_price": "950.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 14,
+  "fields": {
+    "order": 13,
+    "cake": 3,
+    "quantity": 1,
+    "unit_price": "950.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 15,
+  "fields": {
+    "order": 14,
+    "cake": 3,
+    "quantity": 1,
+    "unit_price": "950.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 16,
+  "fields": {
+    "order": 15,
+    "cake": 3,
+    "quantity": 1,
+    "unit_price": "950.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 17,
+  "fields": {
+    "order": 16,
+    "cake": 3,
+    "quantity": 1,
+    "unit_price": "950.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 18,
+  "fields": {
+    "order": 17,
+    "cake": 3,
+    "quantity": 1,
+    "unit_price": "950.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 19,
+  "fields": {
+    "order": 18,
+    "cake": 2,
+    "quantity": 1,
+    "unit_price": "850.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 20,
+  "fields": {
+    "order": 19,
+    "cake": 2,
+    "quantity": 1,
+    "unit_price": "850.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 21,
+  "fields": {
+    "order": 20,
+    "cake": 4,
+    "quantity": 1,
+    "unit_price": "900.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 22,
+  "fields": {
+    "order": 21,
+    "cake": 12,
+    "quantity": 1,
+    "unit_price": "650.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 23,
+  "fields": {
+    "order": 22,
+    "cake": 16,
+    "quantity": 1,
+    "unit_price": "850.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 24,
+  "fields": {
+    "order": 23,
+    "cake": 9,
+    "quantity": 1,
+    "unit_price": "1100.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 25,
+  "fields": {
+    "order": 24,
+    "cake": 15,
+    "quantity": 2,
+    "unit_price": "950.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 26,
+  "fields": {
+    "order": 25,
+    "cake": 15,
+    "quantity": 1,
+    "unit_price": "950.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 27,
+  "fields": {
+    "order": 26,
+    "cake": 10,
+    "quantity": 1,
+    "unit_price": "1000.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 28,
+  "fields": {
+    "order": 27,
+    "cake": 10,
+    "quantity": 1,
+    "unit_price": "1000.00"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 1,
+  "fields": {
+    "order": 1,
+    "amount": "3550.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-19T12:18:52.016Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 2,
+  "fields": {
+    "order": 2,
+    "amount": "950.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-19T12:33:28.660Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 3,
+  "fields": {
+    "order": 3,
+    "amount": "850.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-19T14:15:51.776Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 4,
+  "fields": {
+    "order": 4,
+    "amount": "2000.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T04:46:58.309Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 5,
+  "fields": {
+    "order": 5,
+    "amount": "950.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T04:52:23.254Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 6,
+  "fields": {
+    "order": 6,
+    "amount": "1100.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T05:11:01.603Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 7,
+  "fields": {
+    "order": 7,
+    "amount": "950.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T10:46:04.296Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 8,
+  "fields": {
+    "order": 8,
+    "amount": "1100.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T11:04:59.412Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 9,
+  "fields": {
+    "order": 9,
+    "amount": "950.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T11:57:57.723Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 10,
+  "fields": {
+    "order": 10,
+    "amount": "900.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T12:05:07.396Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 11,
+  "fields": {
+    "order": 11,
+    "amount": "2000.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T14:30:35.521Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 12,
+  "fields": {
+    "order": 12,
+    "amount": "950.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T15:29:18.332Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 13,
+  "fields": {
+    "order": 13,
+    "amount": "950.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T15:29:21.041Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 14,
+  "fields": {
+    "order": 14,
+    "amount": "950.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T15:29:21.919Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 15,
+  "fields": {
+    "order": 15,
+    "amount": "950.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T15:29:22.124Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 16,
+  "fields": {
+    "order": 16,
+    "amount": "950.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T15:29:22.356Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 17,
+  "fields": {
+    "order": 17,
+    "amount": "950.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T15:29:27.195Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 18,
+  "fields": {
+    "order": 18,
+    "amount": "850.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T15:32:30.875Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 19,
+  "fields": {
+    "order": 19,
+    "amount": "850.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T15:38:45.405Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 20,
+  "fields": {
+    "order": 20,
+    "amount": "900.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T15:46:16.628Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 21,
+  "fields": {
+    "order": 21,
+    "amount": "650.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T15:54:56.414Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 22,
+  "fields": {
+    "order": 22,
+    "amount": "850.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T16:07:47.407Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 23,
+  "fields": {
+    "order": 23,
+    "amount": "1100.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-20T16:17:43.819Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 24,
+  "fields": {
+    "order": 24,
+    "amount": "1900.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-21T02:49:13.503Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 25,
+  "fields": {
+    "order": 25,
+    "amount": "950.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-21T02:51:34.853Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 26,
+  "fields": {
+    "order": 26,
+    "amount": "1000.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-21T06:53:56.313Z"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 27,
+  "fields": {
+    "order": 27,
+    "amount": "1000.00",
+    "payment_method": "cod",
+    "payment_status": "pending",
+    "transaction_id": "",
+    "paid_at": null,
+    "created_at": "2026-09-21T14:55:44.246Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "cake": 2,
+    "rating": 5,
+    "comment": "",
+    "created_at": "2026-09-19T14:19:32.304Z",
+    "updated_at": "2026-09-19T14:19:32.304Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "cake": 3,
+    "rating": 3,
+    "comment": "dede",
+    "created_at": "2026-09-19T14:21:52.282Z",
+    "updated_at": "2026-09-19T14:21:52.282Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "cake": 10,
+    "rating": 5,
+    "comment": "hhhh",
+    "created_at": "2026-09-20T12:05:58.246Z",
+    "updated_at": "2026-09-20T12:05:58.246Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "cake": 5,
+    "rating": 5,
+    "comment": "good",
+    "created_at": "2026-09-20T12:07:04.852Z",
+    "updated_at": "2026-09-20T12:07:04.852Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "cake": 4,
+    "rating": 5,
+    "comment": "ghj",
+    "created_at": "2026-09-20T15:47:21.931Z",
+    "updated_at": "2026-09-20T15:47:21.931Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "cake": 12,
+    "rating": 5,
+    "comment": "goood",
+    "created_at": "2026-09-20T15:55:08.127Z",
+    "updated_at": "2026-09-20T15:55:08.127Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 7,
+  "fields": {
+    "user": [
+      "nihu"
+    ],
+    "cake": 16,
+    "rating": 3,
+    "comment": "ok set",
+    "created_at": "2026-09-20T16:08:02.657Z",
+    "updated_at": "2026-09-20T16:08:02.657Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 8,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "cake": 9,
+    "rating": 4,
+    "comment": "very good",
+    "created_at": "2026-09-20T16:18:05.598Z",
+    "updated_at": "2026-09-20T16:18:05.598Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 9,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "cake": 15,
+    "rating": 5,
+    "comment": "Exceeded expectations! beautiful presentation and incredible taste.",
+    "created_at": "2026-09-21T02:52:23.220Z",
+    "updated_at": "2026-09-21T02:52:23.220Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 10,
+  "fields": {
+    "user": [
+      "nihalanasreen"
+    ],
+    "cake": 10,
+    "rating": 5,
+    "comment": "gud",
+    "created_at": "2026-09-21T06:54:09.884Z",
+    "updated_at": "2026-09-21T06:54:09.884Z"
+  }
+}
+]

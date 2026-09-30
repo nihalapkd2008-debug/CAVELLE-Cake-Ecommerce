@@ -177,10 +177,8 @@ document.addEventListener(
 
                         const response =
                             await fetch(
-                                "/api/token/",
-                                {
-                                    method: "POST",
-
+                                "/api/token/", 
+                                { method: "POST",
                                     headers: {
                                         "Content-Type":
                                             "application/json"
